@@ -9,7 +9,7 @@
 package metier;
 
 public class Carte {
-	private static String[] COULEURS = { "ROUGE", "JAUNE", "VERT", "BLEU", "GRIS"};
+	private final static String[] COULEURS = { "ROUGE", "JAUNE", "VERT", "BLEU", "GRIS"};
 
 	private String couleur = "NULL";
 	private int valeur;
@@ -21,4 +21,7 @@ public class Carte {
 				
 		this.valeur = valeur;
 	}
+	
+	public String getCouleur () { return this.couleur; }
+	public int    getValeur  () { return this.valeur;  }
 }
