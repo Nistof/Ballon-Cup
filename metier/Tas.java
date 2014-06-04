@@ -28,7 +28,7 @@ public class Tas {
 		return alCartes.remove(0);
 	}
 
-	public void getAlCartes() {
+	public ArrayList<Carte> getAlCartes() {
 		return alCartes;
 	}
 
