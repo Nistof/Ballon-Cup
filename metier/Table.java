@@ -27,7 +27,7 @@ public class Table {
 			gauche.add(c);
 			return true;
 		}
-		else if(cote == 'D' && droite.size < nbMaximum) {
+		else if(cote == 'D' && droite.size() < nbMaximum) {
 			droite.add(c);
 			return true;
 		}
@@ -36,9 +36,9 @@ public class Table {
 
 	public void vider (Tas t) {
 		for(Carte c : gauche)
-			t.add(c);
+			t.ajouter(c);
 		for(Carte c : droite)
-			t.add(c);
+			t.ajouter(c);
 		droite.clear();
 		gauche.clear();
 	}

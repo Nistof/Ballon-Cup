@@ -16,13 +16,14 @@ public class Defausse extends Tas {
 	}	
 		
 	public ArrayList<Carte> transferer () {
-		ArrayList<Carte> alTemp = this.melanger().clone();
+		ArrayList<Carte> alTemp = (ArrayList<Carte>)this.melanger().clone();
 		vider();
 		return alTemp;	
 	}
 
 	private ArrayList<Carte>  melanger () {
-		return Collections.shuffle(getAlCartes());
+		Collections.shuffle(getAlCartes());
+		return getAlCartes();
 	}
 
 	private void vider () {
