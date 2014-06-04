@@ -9,7 +9,7 @@ package metier;
 import java.util.*;
 
 public class Table {
-	private static String[] typesPaysage = {"PAYSAGE","MONTAGNE"};
+	private static String[] typesPaysage = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
 	private int nbMaximum;
