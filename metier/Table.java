@@ -5,8 +5,8 @@
  * Group : I2
  */
 
-import java.util.*;
 package metier;
+import java.util.*;
 
 public class Table {
 	private static String[] typesPaysage = {"PAYSAGE","MONTAGNE"};
@@ -16,8 +16,8 @@ public class Table {
 	private String paysage;
 
 	public Table (int nbMax, String paysage) {
-		gauche = new ArrayList<Carte>;
-		droite = new ArrayList<Carte>;
+		gauche = new ArrayList<Carte>();
+		droite = new ArrayList<Carte>();
 		nbMaximum = nbMax;
 		this.paysage = paysage;
 	}

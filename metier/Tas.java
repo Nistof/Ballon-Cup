@@ -6,8 +6,8 @@
  * @version 1 du 04/06/2014
 **/
 
-import java.util.*;
 package metier;
+import java.util.*;
 
 public class Tas {
 	ArrayList<Carte> alCartes;
