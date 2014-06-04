@@ -6,6 +6,34 @@
  * @version 1 du 04/06/2014
 **/
 
-public class Joueur {
+package metier;
 
+import java.util.ArrayList;
+
+public class Joueur {
+	private final static int NB_CARTE_MAX=8; 
+	
+	private ArrayList<Carte> jeu;
+	private String nom;
+	private char cote;
+	
+	
+	public Joueur( String nom, char cote ) {
+		this.nom = nom;
+		this.jeu = new ArrayList<Carte>();
+		this.cote = cote;
+	}
+	
+	public boolean piocher( Carte c ) {
+		if( this.jeu.size()<this.NB_CARTE_MAX ) {
+			this.jeu.add( c );
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void defausse() {
+	
+	}
 }
