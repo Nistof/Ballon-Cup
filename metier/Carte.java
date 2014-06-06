@@ -8,20 +8,17 @@
 
 package metier;
 
-public class Carte {
-	private final static String[] COULEURS = { "ROUGE", "JAUNE", "VERT", "BLEU", "GRIS"};
+import util.Couleur;
 
-	private String couleur = "NULL";
+public class Carte {
+	private Couleur couleur;
 	private int valeur;
 	
 	public Carte ( String couleur, int valeur) {
-		for ( String ch : COULEURS)
-			if ( ch.equals(couleur))
-				this.couleur = couleur;
-				
+		this.couleur = Couleur.getCouleur( couleur);				
 		this.valeur = valeur;
 	}
 	
-	public String getCouleur () { return this.couleur; }
-	public int    getValeur  () { return this.valeur;  }
+	public Couleur getCouleur () { return this.couleur; }
+	public int     getValeur  () { return this.valeur;  }
 }
