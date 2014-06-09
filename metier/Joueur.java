@@ -33,10 +33,13 @@ public class Joueur {
 		return false;
 	}
 	
-	public void defausse( Carte c ) {
+	public boolean defausse( Carte c ) {
 		for( int i=0; i<this.jeu.size(); i++ ) {
-			if( this.jeu.get(i).equals(c) )
+			if( this.jeu.get(i) == c ) {
 				this.jeu.remove(i);
+				return true;
+			}
 		}
+		return false;
 	}
 }
