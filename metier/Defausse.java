@@ -16,7 +16,7 @@ public class Defausse extends Tas {
 	}	
 		
 	public ArrayList<Carte> transferer () {
-		ArrayList<Carte> alTemp = (ArrayList<Carte>)this.melanger().clone();
+		ArrayList<Carte> alTemp = new ArrayList<Carte>( this.melanger());
 		vider();
 		return alTemp;	
 	}
