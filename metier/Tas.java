@@ -24,10 +24,6 @@ public class Tas {
 		alCartes.add(c);
 	}
 
-	public Carte enlever () {
-		return alCartes.remove(0);
-	}
-
 	public ArrayList<Carte> getAlCartes() {
 		return alCartes;
 	}
