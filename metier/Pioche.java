@@ -18,7 +18,7 @@ public class Pioche<E> extends Tas<E> {
 		super( alE);
 	}
 
-	public Carte piocher () {
+	public E piocher () {
 		return getAlE().remove(0);
 	}
 }
