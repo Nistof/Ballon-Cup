@@ -22,12 +22,12 @@ public class Defausse extends Tas<Carte> {
 	}
 
 	private ArrayList<Carte>  melanger () {
-		Collections.shuffle(getE());
-		return getE();
+		Collections.shuffle(getAlE());
+		return getAlE();
 	}
 
 	private void vider () {
-		getE().clear();
+		getAlE().clear();
 	}
 
 }

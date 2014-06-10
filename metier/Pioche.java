@@ -9,16 +9,16 @@
 package metier;
 import java.util.*;
 
-public class Pioche extends Tas {
+public class Pioche<E> extends Tas<E> {
 	public Pioche () {
 		super();
 	}
 
-	public Pioche (ArrayList<Carte> alCartes) {
-		super( alCartes);
+	public Pioche (ArrayList<E> alE) {
+		super( alE);
 	}
 
-	public Carte enlever () {
-		return getAlCartes().remove(0);
+	public Carte piocher () {
+		return getAlE().remove(0);
 	}
 }

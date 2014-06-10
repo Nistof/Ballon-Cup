@@ -10,7 +10,7 @@ package metier;
 import java.util.*;
 
 public class Tas<E> {
-	ArrayList<E>> alE;
+	private ArrayList<E> alE;
 
 	public Tas () {
 		alE = new ArrayList<E>();
