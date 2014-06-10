@@ -9,7 +9,7 @@
 package metier;
 import java.util.*;
 
-public class Defausse extends Tas {
+public class Defausse extends Tas<Carte> {
 
 	public Defausse () {
 		super();
@@ -22,12 +22,12 @@ public class Defausse extends Tas {
 	}
 
 	private ArrayList<Carte>  melanger () {
-		Collections.shuffle(getAlCartes());
-		return getAlCartes();
+		Collections.shuffle(getAlE());
+		return getAlE();
 	}
 
 	private void vider () {
-		getAlCartes().clear();
+		getAlE().clear();
 	}
 
 }
