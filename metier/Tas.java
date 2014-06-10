@@ -9,27 +9,27 @@
 package metier;
 import java.util.*;
 
-public class Tas {
-	ArrayList<Carte> alCartes;
+public class Tas<E> {
+	ArrayList<E>> alE;
 
 	public Tas () {
-		alCartes = new ArrayList<Carte>();
+		alE = new ArrayList<E>();
 	}
 
-	public Tas (ArrayList<Carte> alCartes) {
-		this.alCartes = alCartes;
+	public Tas (ArrayList<E> alE) {
+		this.alE = alE;
 	}
 
-	public void ajouter (Carte c) {
-		alCartes.add(c);
+	public void ajouter (E e) {
+		alE.add(e);
 	}
 
-	public ArrayList<Carte> getAlCartes() {
-		return alCartes;
+	public ArrayList<E> getAlE() {
+		return alE;
 	}
 
 	public int taille() {
-		return alCartes.size();
+		return alE.size();
 	}
 
 }
