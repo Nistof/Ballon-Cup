@@ -1,4 +1,5 @@
 metier/Carte.java
+metier/Cube.java
 metier/Defausse.java
 metier/Joueur.java
 metier/Pioche.java
@@ -6,3 +7,4 @@ metier/Table.java
 metier/Tas.java
 util/Couleur.java
 util/FichierCartes.java
+
