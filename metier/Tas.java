@@ -21,7 +21,7 @@ public class Tas<E> {
 	}
 
 	public void ajouter (E e) {
-		alE.add(e);
+		alE.add( 0, e );
 	}
 
 	public ArrayList<E> getAlE() {

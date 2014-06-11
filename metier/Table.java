@@ -33,6 +33,15 @@ public class Table {
 		}
 		return false;
 	}
+	
+	public void oterCartes( Pioche<Carte> pioche ) {
+		while( !this.gauche.isEmpty() )
+			pioche.ajouter( this.gauche.remove(0) );
+		
+		while( !this.droite.isEmpty() )
+			pioche.ajouter( this.droite.remove(0) );
+		
+	} 
 
 	public void vider (Tas<Carte> t) {
 		for(Carte c : gauche)
