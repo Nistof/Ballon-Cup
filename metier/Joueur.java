@@ -24,7 +24,7 @@ public class Joueur {
 		this.cote = cote;
 	}
 	
-	public boolean piocher( Carte c ) {
+	public boolean ajouterCarte( Carte c ) {
 		if( this.jeu.size()<this.NB_CARTE_MAX ) {
 			this.jeu.add( c );
 			return true;

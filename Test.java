@@ -80,5 +80,11 @@ public class Test {
 		System.out.println(pioche);
 		System.out.println("Nombre de cartes : " + pioche.taille());
 		System.out.println("Est vide? " + pioche.estVide());
+		
+		System.out.println("Melange : " );
+		pioche.melanger();
+		System.out.println(pioche);
+		System.out.println("Pioche une carte :" + pioche.piocher());
+		System.out.println(pioche);
 	}
 }
