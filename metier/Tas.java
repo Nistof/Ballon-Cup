@@ -32,4 +32,7 @@ public class Tas<E> {
 		return alE.size();
 	}
 
+	public boolean estVide() {
+		return (alE.size()==0);
+
 }
