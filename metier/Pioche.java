@@ -19,7 +19,7 @@ public class Pioche<E> extends Tas<E> {
 	}
 
 	public E piocher () {
-		return getAlE().remove(0);
+		return (super.taille() != 0)?getAlE().remove(0):null;
 	}
 	
 	public String toString() {
