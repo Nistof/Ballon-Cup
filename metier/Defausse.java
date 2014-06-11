@@ -16,14 +16,9 @@ public class Defausse extends Tas<Carte> {
 	}	
 		
 	public ArrayList<Carte> transferer () {
-		ArrayList<Carte> alTemp = new ArrayList<Carte>( this.melanger());
+		ArrayList<Carte> alTemp = new ArrayList<Carte>( getAlE());
 		vider();
 		return alTemp;	
-	}
-
-	private ArrayList<Carte>  melanger () {
-		Collections.shuffle(getAlE());
-		return getAlE();
 	}
 
 	private void vider () {
