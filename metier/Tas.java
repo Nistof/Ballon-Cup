@@ -33,6 +33,6 @@ public class Tas<E> {
 	}
 
 	public boolean estVide() {
-		return (alE.size()==0);
+		return alE.isEmpty();
 	}
 }
