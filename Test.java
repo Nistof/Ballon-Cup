@@ -1,6 +1,6 @@
 /* Classe: Test
  * @author MARECAL Thomas
- * @author QUENTIN Thibaut
+ * @author QUENTIN Thibault
  * @author MARTIN Florian
  * Groupe I2
  * @version 1 du 11/06/2014
@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.io.File;
+import java.io.FileNotFoundException;
 import metier.*;
 
 public class Test {
@@ -42,8 +43,8 @@ public class Test {
 			if ( sc.hasNext())
 				fichier = sc.nextLine();
 			
-		} catch ( Exception e) { e.printStackTrace(); }
-		
+		} catch ( FileNotFoundException e) { System.out.println("Le fichier n'existe pas."); System.exit(1); }
+		  
 		p = Pattern.compile("[RVBGJ](0[1-9]|1[0-3])");
 		m = p.matcher( fichier);
 		
@@ -75,5 +76,9 @@ public class Test {
 		}
 		
 		System.out.println(pioche);
+		System.out.println("Pioche une carte :" + pioche.piocher());
+		System.out.println(pioche);
+		System.out.println("Nombre de cartes : " + pioche.taille());
+		System.out.println("Est vide? " + pioche.estVide());
 	}
 }
