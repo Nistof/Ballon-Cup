@@ -1,3 +1,13 @@
+/* Classe: FichierCartes
+ * @author MARECAL Thomas
+ * @author QUENTIN Thibaut
+ * @author MARTIN Florian
+ * Groupe I2
+ * @version 2 du 11/06/2014
+**/
+
+package util;
+
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
@@ -6,7 +16,7 @@ public class FichierCartes {
 	
 	public static void generer () {
 		try {
-			PrintWriter pw = new PrintWriter( new FileWriter("cartes"));
+			PrintWriter pw = new PrintWriter( new FileWriter("ressources/cartes"));
 			int j;
 			//Cartes rouges
 			for ( int i = 1; i <= 13; i++)
