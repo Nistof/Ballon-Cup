@@ -21,4 +21,14 @@ public class Pioche<E> extends Tas<E> {
 	public E piocher () {
 		return getAlE().remove(0);
 	}
+	
+	public String toString() {
+		String s="Pioche :\n";
+		
+		for( E e : super.getAlE() )
+			s += "\t" + e + "\n";
+			
+		return s;
+	}
+
 }

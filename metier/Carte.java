@@ -21,4 +21,8 @@ public class Carte {
 	
 	public Couleur getCouleur () { return this.couleur; }
 	public int     getValeur  () { return this.valeur;  }
+	
+	public String toString() {
+		return "Carte " + this.couleur + " : " + this.valeur; 
+	}
 }
