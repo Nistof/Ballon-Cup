@@ -13,7 +13,7 @@ public class Cube {
 
 	private Couleur couleur;
 	
-	public Cube (Couleur couleur) {
+	public Cube ( String couleur) {
 		this.couleur = Couleur.getCouleur(couleur);
 	}
 
