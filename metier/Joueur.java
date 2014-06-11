@@ -25,7 +25,7 @@ public class Joueur {
 	}
 	
 	public boolean ajouterCarte( Carte c ) {
-		if( this.jeu.size()<this.NB_CARTE_MAX ) {
+		if( this.jeu.size()<Joueur.NB_CARTE_MAX ) {
 			this.jeu.add( c );
 			return true;
 		}
@@ -33,13 +33,10 @@ public class Joueur {
 		return false;
 	}
 	
-	public boolean defausse( Carte c ) {
-		for( int i=0; i<this.jeu.size(); i++ ) {
-			if( this.jeu.get(i) == c ) {
-				this.jeu.remove(i);
-				return true;
-			}
-		}
-		return false;
+	public Carte defausse( int i ) {
+		if( this.jeu.size() < i )
+			return this.jeu.remove(i);
+
+		return null;
 	}
 }
