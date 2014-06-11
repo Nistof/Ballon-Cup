@@ -34,7 +34,7 @@ public class Table {
 		return false;
 	}
 
-	public void vider (Tas t) {
+	public void vider (Tas<Carte> t) {
 		for(Carte c : gauche)
 			t.ajouter(c);
 		for(Carte c : droite)
