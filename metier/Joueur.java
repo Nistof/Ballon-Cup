@@ -33,8 +33,8 @@ public class Joueur {
 		return false;
 	}
 	
-	public Carte defausse( int i ) {
-		if( this.jeu.size() < i )
+	public Carte retirerCarte( int i ) {
+		if( this.jeu.size() > i )
 			return this.jeu.remove(i);
 
 		return null;
