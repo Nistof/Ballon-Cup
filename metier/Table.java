@@ -9,7 +9,7 @@ package metier;
 import java.util.*;
 
 public class Table {
-	private static String[] typesPaysage = {"PLAINE","MONTAGNE"};
+	private final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
 	private ArrayList<Cube>  cubes ;
