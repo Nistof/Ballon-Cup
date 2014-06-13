@@ -12,43 +12,51 @@ public class Table {
 	private static String[] typesPaysage = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
-	private int nbMaximum;
+	private ArrayList<Cube>  cubes ;
+	private int nombre;
 	private String paysage;
 
-	public Table (int nbMax, String paysage) {
+	public Table (int nb, String paysage) {
 		gauche = new ArrayList<Carte>();
 		droite = new ArrayList<Carte>();
-		nbMaximum = nbMax;
+		cubes  = new ArrayList<Cube> ();
+		nombre = nb;
 		this.paysage = paysage;
 	}
 
-	public boolean ajouter (char cote, Carte c) {
-		if(cote == 'G' && gauche.size() < nbMaximum) {
+	//Ajoute une Carte sur le côté de la Table séléctionné
+	//seulement si ce côté n'est pas plein
+	public boolean ajouterCarte (char cote, Carte c) {
+		if(cote == 'G' && gauche.size() < nombre) {
 			gauche.add(c);
 			return true;
 		}
-		else if(cote == 'D' && droite.size() < nbMaximum) {
+		else if(cote == 'D' && droite.size() < nombre) {
 			droite.add(c);
 			return true;
 		}
 		return false;
 	}
 	
-	public void oterCartes( Pioche<Carte> pioche ) {
+	//Retire toutes les Cartes de la Table et les place
+	//dans l'objet de type Tas passé en paramètre.
+	public void oterCartes( Tas<Carte> tas ) {
 		while( !this.gauche.isEmpty() )
-			pioche.ajouter( this.gauche.remove(0) );
+			tas.ajouter( this.gauche.remove(0) );
 		
 		while( !this.droite.isEmpty() )
-			pioche.ajouter( this.droite.remove(0) );
+			tas.ajouter( this.droite.remove(0) );
 		
 	} 
-
-	public void vider (Tas<Carte> t) {
-		for(Carte c : gauche)
-			t.ajouter(c);
-		for(Carte c : droite)
-			t.ajouter(c);
-		droite.clear();
-		gauche.clear();
+	
+	//Ajoute un Cube sur la Table seulement si
+	//le nombre de Cube possible n'est pas atteint
+	public boolean ajouterCube( Cube c) {
+		if ( cubes.size() < nombre) {
+			cubes.add(c);
+			return true;
+		}
+		
+		return false;
 	}
 }
