@@ -49,6 +49,11 @@ public class Table {
 		
 	} 
 	
+	public void oterCubes (Joueur j) {
+		for(Cube c : cubes ) 
+			j.ajouterCube(cubes.remove(0));
+	}
+	
 	//Ajoute un Cube sur la Table seulement si
 	//le nombre de Cube possible n'est pas atteint
 	public boolean ajouterCube( Cube c) {

@@ -14,6 +14,7 @@ public class Joueur {
 	private final static int NB_CARTE_MAX=8; 
 	
 	private ArrayList<Carte> jeu;
+	private ArrayList<Cube> cubes;
 	private String nom;
 	private char cote;
 	
@@ -38,5 +39,9 @@ public class Joueur {
 			return this.jeu.remove(i);
 
 		return null;
+	}
+	
+	public void ajouterCube (Cube c){
+		cubes.add(c);
 	}
 }
