@@ -47,4 +47,11 @@ public class Joueur {
 	public void ajouterCube (Cube c){
 		cubes.add(c);
 	}
+	
+	public String toString () {
+		String s = "";
+		for(Carte c : jeu) 
+			s += c + "\n";
+		return s;
+	}
 }
