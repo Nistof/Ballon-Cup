@@ -22,7 +22,6 @@ public class Table {
 		cubes  = new ArrayList<Cube> ();
 		nombre = nb;
 		this.paysage = paysage;
-		}
 	}
 
 	//Ajoute une Carte sur le côté de la Table séléctionné
@@ -86,9 +85,9 @@ public class Table {
 	
 	public String toString () {
 		String cartes = "",table = "";
-		table += this.type + ":" + cubes.size() + "cubes";
+		table += this.paysage + ":" + cubes.size() + "cubes";
 		for(Cube c : cubes)
-			table += c.getCouleur();
-		for(
-		
+			table += c.getCouleur() + " ";
+		return table;
+	}	
 }
