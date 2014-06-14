@@ -34,7 +34,7 @@ public class Joueur {
 	}
 	
 	public Carte retirerCarte( int i ) {
-		if( this.jeu.size() > i )
+		if( this.jeu.size() > i && i >= 0 )
 			return this.jeu.remove(i);
 
 		return null;
