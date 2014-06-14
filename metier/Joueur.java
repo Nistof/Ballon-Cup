@@ -41,6 +41,9 @@ public class Joueur {
 		return null;
 	}
 	
+	public boolean jouerCarte(int i, Table t) {
+		return t.ajouterCarte(cote, retirerCarte(i));
+	}
 	public void ajouterCube (Cube c){
 		cubes.add(c);
 	}

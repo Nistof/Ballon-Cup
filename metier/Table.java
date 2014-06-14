@@ -27,6 +27,8 @@ public class Table {
 	//Ajoute une Carte sur le côté de la Table séléctionné
 	//seulement si ce côté n'est pas plein
 	public boolean ajouterCarte (char cote, Carte c) {
+		if(c == null)
+			return false;
 		int cubeCouleur = 0 , cartesCouleur = 0;
 		for(Cube cu : cubes)
 			if(cu.getCouleur().equals(c.getCouleur()))
