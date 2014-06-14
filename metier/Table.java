@@ -85,9 +85,11 @@ public class Table {
 	
 	public String toString () {
 		String cartes = "",table = "";
-		table += this.paysage + ":" + cubes.size() + "cubes";
+		table += this.paysage + " : " + cubes.size() + " cubes -> ";
 		for(Cube c : cubes)
 			table += c.getCouleur() + " ";
-		return table;
+		cartes += "Gauche : " + gauche + "\n";
+		cartes += "Droite : " + droite + "\n";
+		return table+"\n"+cartes;
 	}	
 }
