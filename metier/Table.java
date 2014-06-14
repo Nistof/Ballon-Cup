@@ -22,6 +22,7 @@ public class Table {
 		cubes  = new ArrayList<Cube> ();
 		nombre = nb;
 		this.paysage = paysage;
+		}
 	}
 
 	//Ajoute une Carte sur le côté de la Table séléctionné
@@ -34,7 +35,7 @@ public class Table {
 			if(cu.getCouleur().equals(c.getCouleur()))
 				cubeCouleur++;
 		if(cubeCouleur > 0) {
-			if(cote == 'G' && gauche.size() < nombre) {
+			if(cote == 'G') {
 				for(Carte ca : gauche)
 					if(ca.getCouleur().equals(c.getCouleur()))
 						cartesCouleur++;
@@ -43,7 +44,7 @@ public class Table {
 				gauche.add(c);
 				return true;
 			}
-			else if(cote == 'D' && droite.size() < nombre) {
+			else if(cote == 'D') {
 				for(Carte ca : droite)
 					if(ca.getCouleur().equals(c.getCouleur()))
 						cartesCouleur++;
@@ -82,4 +83,12 @@ public class Table {
 		
 		return false;
 	}
+	
+	public String toString () {
+		String cartes = "",table = "";
+		table += this.type + ":" + cubes.size() + "cubes";
+		for(Cube c : cubes)
+			table += c.getCouleur();
+		for(
+		
 }
