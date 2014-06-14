@@ -27,13 +27,29 @@ public class Table {
 	//Ajoute une Carte sur le côté de la Table séléctionné
 	//seulement si ce côté n'est pas plein
 	public boolean ajouterCarte (char cote, Carte c) {
-		if(cote == 'G' && gauche.size() < nombre) {
-			gauche.add(c);
-			return true;
-		}
-		else if(cote == 'D' && droite.size() < nombre) {
-			droite.add(c);
-			return true;
+		int cubeCouleur = 0 , cartesCouleur = 0;
+		for(Cube cu : cubes)
+			if(cu.getCouleur().equals(c.getCouleur()))
+				cubeCouleur++;
+		if(cubeCouleur > 0) {
+			if(cote == 'G' && gauche.size() < nombre) {
+				for(Carte ca : gauche)
+					if(ca.getCouleur().equals(c.getCouleur()))
+						cartesCouleur++;
+				if(cartesCouleur+1 > cubeCouleur) // +1 car on va en ajouter une
+					return false;
+				gauche.add(c);
+				return true;
+			}
+			else if(cote == 'D' && droite.size() < nombre) {
+				for(Carte ca : droite)
+					if(ca.getCouleur().equals(c.getCouleur()))
+						cartesCouleur++;
+				if(cartesCouleur+1 > cubeCouleur) // +1 car on va en ajouter une
+					return false;
+				droite.add(c);
+				return true;
+			}
 		}
 		return false;
 	}

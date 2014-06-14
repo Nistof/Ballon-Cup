@@ -25,4 +25,8 @@ public enum Couleur {
 		
 		return couleur;
 	}
+	
+	public boolean equals (Couleur c) {
+		return this.ordinal() == c.ordinal();
+	}
 };
