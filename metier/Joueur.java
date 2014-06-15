@@ -52,7 +52,7 @@ public class Joueur {
 	public boolean jouerCarte(int i, char cote, Table t) {
 		Carte c = retirerCarte(i);
 		
-		if (t.ajouterCarte(cote, retirerCarte(i))) {
+		if (t.ajouterCarte(cote, c)) {
 			return true;
 		} else {
 			ajouterCarte( c);
