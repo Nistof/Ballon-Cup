@@ -9,7 +9,7 @@ package metier;
 import java.util.*;
 
 public class Table {
-	private final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
+	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
 	private ArrayList<Cube>  cubes ;
@@ -67,9 +67,19 @@ public class Table {
 		
 	} 
 	
+	//Donne à un joueur tout les cubes présents sur cette table
 	public void oterCubes (Joueur j) {
 		for(Cube c : cubes ) 
 			j.ajouterCube(cubes.remove(0));
+	}
+	
+	//Permet de changer le paysage de la table à la fin d'une
+	//manche sur celle-ci
+	public void changerPaysage() {
+		if ( paysage.equals( TYPES_PAYSAGE[0]))
+			paysage = TYPES_PAYSAGE[1];
+		else
+			paysage = TYPES_PAYSAGE[0];
 	}
 	
 	//Ajoute un Cube sur la Table seulement si
@@ -82,6 +92,9 @@ public class Table {
 		
 		return false;
 	}
+	
+	public String getPaysage() { return this.paysage; }
+	public int    getNombre () { return this.nombre ; }
 	
 	public String toString () {
 		String cartes = "",table = "";
