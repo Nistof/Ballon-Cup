@@ -110,18 +110,20 @@ public class Test {
 		j.jouerCarte(3, 'G', t);
 		j.jouerCarte(4, 'G', t);
 		
-		System.out.println(t);
+		System.out.println(j);
 		
 		d.ajouter(j.retirerCarte(0));
-		d.ajouter(j.retirerCarte(1));
-		d.ajouter(j.retirerCarte(2));
-		d.ajouter(j.retirerCarte(3));
+		d.ajouter(j.retirerCarte(0));
+		d.ajouter(j.retirerCarte(0));
+		d.ajouter(j.retirerCarte(0));
 		
 		while ( !pioche.estVide())
 			d.ajouter(pioche.piocher());
 		
-		pioche = new Pioche( d.transferer());
+		pioche = new Pioche<Carte>( d.transferer());
 		pioche.melanger();
+		
+		System.out.println(t);
 		System.out.println(pioche);
 	}
 }
