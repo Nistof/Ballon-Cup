@@ -102,6 +102,37 @@ public class Table {
 		return false;
 	}
 	
+	//Renvoie le côté du joueur gagnant.
+	public char gagnant() {
+		char coteG = ' ';
+		int scoreJ1 = 0, scoreJ2 = 0;
+		
+		if ( gauche.size() == nombre &&
+			 droite.size() == nombre &&
+			 cubes.size()  == nombre ) {
+		
+			for ( Carte c : gauche)
+				scoreJ1 += c.getValeur();
+				
+			for ( Carte c : droite)
+				scoreJ2 += c.getValeur();
+			
+			//Si le paysage est une plaine
+			if ( paysage.equals( TYPES_PAYSAGE[0])) 
+				if ( scoreJ1 < scoreJ2 )
+					coteG = 'G';
+				else if ( scoreJ1 > scoreJ2 )
+					coteG = 'D';
+			else //Si c'est une montagne
+				if ( scoreJ1 < scoreJ2 )
+					coteG = 'G';
+				else if ( scoreJ1 > scoreJ2 )
+					coteG = 'D';
+		}
+		
+		return coteG;
+	}
+	
 	public String getPaysage() { return this.paysage; }
 	public int    getNombre () { return this.nombre ; }
 	
