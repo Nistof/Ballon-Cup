@@ -1,9 +1,9 @@
 /* Classe Cube 
  * @author Quentin Thibaut
- * @author Marécal Thomas
+ * @author MarÃ©cal Thomas
  * @author Martin Florian
  * Groupe I2
- *
+ * @version 2 du 15/06/2014
  */
 
 package metier;
