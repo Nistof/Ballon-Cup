@@ -28,7 +28,7 @@ public class Joueur {
 	//Ajoute une carte dans la main du joueur seulement si sa
 	//main n'est pas pleine
 	public boolean ajouterCarte( Carte c ) {
-		if( this.jeu.size()<Joueur.NB_CARTE_MAX ) {
+		if( this.jeu.size()<Joueur.NB_CARTE_MAX && c != null) {
 			this.jeu.add( c );
 			return true;
 		}
@@ -62,7 +62,8 @@ public class Joueur {
 	
 	//Ajoute un cube au joueur
 	public void ajouterCube (Cube c){
-		cubes.add(c);
+		if ( c != null)
+			cubes.add(c);
 	}
 	
 	public String toString () {

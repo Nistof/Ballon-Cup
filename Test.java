@@ -18,6 +18,9 @@ public class Test {
 		String nom = "";
 		String fichier = "";
 		String carte, couleur;
+		Joueur j = new Joueur("Truc", 'G');
+		Table  t = new Table (3, "PLAINE");
+		Defausse d = new Defausse();
 		int valeur;
 		Pattern p;
 		Matcher m;
@@ -85,6 +88,40 @@ public class Test {
 		pioche.melanger();
 		System.out.println(pioche);
 		System.out.println("Pioche une carte :" + pioche.piocher());
+		System.out.println(pioche);
+		
+		for ( int i = 0; i < 10; i++)
+			j.ajouterCarte( pioche.piocher());
+		System.out.println(j);
+		
+		t.ajouterCube( new Cube("ROUGE"));
+		t.ajouterCube( new Cube("VERT" ));
+		t.ajouterCube( new Cube("BLEU" ));
+		t.ajouterCube( new Cube("GRIS" ));
+		
+		j.jouerCarte(0, 'D', t);
+		j.jouerCarte(1, 'D', t);
+		j.jouerCarte(2, 'D', t);
+		j.jouerCarte(3, 'D', t);
+		j.jouerCarte(4, 'D', t);
+		j.jouerCarte(0, 'G', t);
+		j.jouerCarte(1, 'G', t);
+		j.jouerCarte(2, 'G', t);
+		j.jouerCarte(3, 'G', t);
+		j.jouerCarte(4, 'G', t);
+		
+		System.out.println(t);
+		
+		d.ajouter(j.retirerCarte(0));
+		d.ajouter(j.retirerCarte(1));
+		d.ajouter(j.retirerCarte(2));
+		d.ajouter(j.retirerCarte(3));
+		
+		while ( !pioche.estVide())
+			d.ajouter(pioche.piocher());
+		
+		pioche = new Pioche( d.transferer());
+		pioche.melanger();
 		System.out.println(pioche);
 	}
 }
