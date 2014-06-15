@@ -3,7 +3,7 @@
  * @author QUENTIN Thibaut
  * @author MARTIN Florian
  * Groupe I2
- * @version 1 du 04/06/2014
+ * @version 2 du 15/06/2014
 **/
 
 package metier;
@@ -13,18 +13,20 @@ import java.util.ArrayList;
 public class Joueur {
 	private final static int NB_CARTE_MAX=8; 
 	
-	private ArrayList<Carte> jeu;
-	private ArrayList<Cube> cubes;
-	private String nom;
-	private char cote;
-	
+	private ArrayList<Carte> jeu  ;
+	private ArrayList<Cube>  cubes;	
+	private String			 nom  ;
+	private char			 cote ;
 	
 	public Joueur( String nom, char cote ) {
 		this.nom = nom;
-		this.jeu = new ArrayList<Carte>();
 		this.cote = cote;
+		this.jeu = new ArrayList<Carte>();
+		this.cubes = new ArrayList<Cube>();
 	}
 	
+	//Ajoute une carte dans la main du joueur seulement si sa
+	//main n'est pas pleine
 	public boolean ajouterCarte( Carte c ) {
 		if( this.jeu.size()<Joueur.NB_CARTE_MAX ) {
 			this.jeu.add( c );
@@ -34,6 +36,9 @@ public class Joueur {
 		return false;
 	}
 	
+	//Méthode utile lorsque le joueur souhaite retirer une carte de sa main.
+	//Cette méthode doit être appellée pour se défausser une carte
+	//sinon pour jouer une carte, il faut utiliser jouerCarte
 	public Carte retirerCarte( int i ) {
 		if( this.jeu.size() > i && i >= 0 )
 			return this.jeu.remove(i);
@@ -41,10 +46,29 @@ public class Joueur {
 		return null;
 	}
 	
-	public boolean jouerCarte(int i, Table t) {
-		return t.ajouterCarte(cote, retirerCarte(i));
+	//Joue une carte sur une table en fonction de l'indice dans la main,
+	//le cote sur lequel le joueur veut jouer.
+	//Si le joueur ne peut pas jouer cette carte alors, la méthode renvoie false
+	public boolean jouerCarte(int i, char cote, Table t) {
+		Carte c = retirerCarte(i);
+		
+		if (t.ajouterCarte(cote, c)) {
+			return true;
+		} else {
+			ajouterCarte( c);
+			return false;
+		}
 	}
+	
+	//Ajoute un cube au joueur
 	public void ajouterCube (Cube c){
 		cubes.add(c);
+	}
+	
+	public String toString () {
+		String s = "";
+		for(Carte c : jeu) 
+			s += c + "\n";
+		return s;
 	}
 }

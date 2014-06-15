@@ -14,7 +14,9 @@ public class Defausse extends Tas<Carte> {
 	public Defausse () {
 		super();
 	}	
-		
+	
+	//Fait une copie de la défausse avant de la vider
+	//puis renvoie cette copie.
 	public ArrayList<Carte> transferer () {
 		ArrayList<Carte> alTemp = new ArrayList<Carte>( getAlE());
 		vider();

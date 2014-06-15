@@ -18,5 +18,9 @@ public class Cube {
 	}
 
 	public Couleur getCouleur() { return couleur; }
+	
+	public String toString() {
+		return "Cube " + this.couleur; 
+	}
 
 }

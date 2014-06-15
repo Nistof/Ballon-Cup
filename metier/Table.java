@@ -9,7 +9,7 @@ package metier;
 import java.util.*;
 
 public class Table {
-	private final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
+	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
 	private ArrayList<Cube>  cubes ;
@@ -27,31 +27,40 @@ public class Table {
 	//Ajoute une Carte sur le côté de la Table séléctionné
 	//seulement si ce côté n'est pas plein
 	public boolean ajouterCarte (char cote, Carte c) {
+		int cubeCouleur = 0 , cartesCouleur = 0;
+		ArrayList<Carte> cartes;
+	
 		if(c == null)
 			return false;
-		int cubeCouleur = 0 , cartesCouleur = 0;
+		
+		//Récupération du nombre de cube de la même couleur que la carte
 		for(Cube cu : cubes)
 			if(cu.getCouleur().equals(c.getCouleur()))
 				cubeCouleur++;
+			
+		//Si il y a des cubes de la bonne couleur sur la table
 		if(cubeCouleur > 0) {
-			if(cote == 'G' && gauche.size() < nombre) {
-				for(Carte ca : gauche)
+			//On récupère les cartes correspondant au côté choisi
+			if(cote == 'G')
+				cartes = droite;
+			else if(cote == 'D')
+				cartes = gauche;
+			else
+				return false;
+			
+			//On compte le nombre de cartes de la même couleur que celle
+			//passée en paramètre déjà présentes sur la table
+			for(Carte ca : cartes)
 					if(ca.getCouleur().equals(c.getCouleur()))
 						cartesCouleur++;
-				if(cartesCouleur+1 > cubeCouleur) // +1 car on va en ajouter une
-					return false;
-				gauche.add(c);
-				return true;
-			}
-			else if(cote == 'D' && droite.size() < nombre) {
-				for(Carte ca : droite)
-					if(ca.getCouleur().equals(c.getCouleur()))
-						cartesCouleur++;
-				if(cartesCouleur+1 > cubeCouleur) // +1 car on va en ajouter une
-					return false;
-				droite.add(c);
-				return true;
-			}
+			
+			//Si le nombre de cartes (Avec celle passée en paramètre)
+			//est supérieur au nombre de cube alors on n'ajoute pas la carte.
+			if(cartesCouleur+1 > cubeCouleur) // +1 car on va en ajouter une
+				return false;
+				
+			cartes.add(c);
+			return true;
 		}
 		return false;
 	}
@@ -67,9 +76,19 @@ public class Table {
 		
 	} 
 	
+	//Donne à un joueur tout les cubes présents sur cette table
 	public void oterCubes (Joueur j) {
 		for(Cube c : cubes ) 
 			j.ajouterCube(cubes.remove(0));
+	}
+	
+	//Permet de changer le paysage de la table à la fin d'une
+	//manche sur celle-ci
+	public void changerPaysage() {
+		if ( paysage.equals( TYPES_PAYSAGE[0]))
+			paysage = TYPES_PAYSAGE[1];
+		else
+			paysage = TYPES_PAYSAGE[0];
 	}
 	
 	//Ajoute un Cube sur la Table seulement si
@@ -82,4 +101,17 @@ public class Table {
 		
 		return false;
 	}
+	
+	public String getPaysage() { return this.paysage; }
+	public int    getNombre () { return this.nombre ; }
+	
+	public String toString () {
+		String cartes = "",table = "";
+		table += this.paysage + " : " + cubes.size() + " cubes -> ";
+		for(Cube c : cubes)
+			table += c.getCouleur() + " ";
+		cartes += "Gauche : " + gauche + "\n";
+		cartes += "Droite : " + droite + "\n";
+		return table+"\n"+cartes;
+	}	
 }
