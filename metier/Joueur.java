@@ -67,9 +67,11 @@ public class Joueur {
 	}
 	
 	public String toString () {
+		int i=0;
+	
 		String s = nom + "\nCartes :\n";
 		for(Carte c : jeu) 
-			s += "\t" + c + "\n";
+			s += "\t(Indice " + (i++) + ") " + c + "\n";
 			
 		s += "Cubes :\n";
 		
