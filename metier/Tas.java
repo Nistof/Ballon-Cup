@@ -24,6 +24,11 @@ public class Tas<E> {
 		if ( e != null)
 			alE.add( 0, e );
 	}
+	
+	public void ajouter( ArrayList<E> al ) {
+		for( E e: al)
+			this.ajouter( e);
+	}
 
 	public ArrayList<E> getAlE() {
 		return alE;

@@ -42,9 +42,9 @@ public class Table {
 		if(cubeCouleur > 0) {
 			//On récupère les cartes correspondant au côté choisi
 			if(cote == 'G')
-				cartes = droite;
-			else if(cote == 'D')
 				cartes = gauche;
+			else if(cote == 'D')
+				cartes = droite;
 			else
 				return false;
 			
@@ -78,7 +78,7 @@ public class Table {
 	
 	//Donne à un joueur tout les cubes présents sur cette table
 	public void oterCubes (Joueur j) {
-		for(Cube c : cubes ) 
+		while( !this.cubes.isEmpty() )
 			j.ajouterCube(cubes.remove(0));
 	}
 	
@@ -118,16 +118,17 @@ public class Table {
 				scoreJ2 += c.getValeur();
 			
 			//Si le paysage est une plaine
-			if ( paysage.equals( TYPES_PAYSAGE[0])) 
+			if ( paysage.equals( TYPES_PAYSAGE[0])) {
 				if ( scoreJ1 < scoreJ2 )
 					coteG = 'G';
 				else if ( scoreJ1 > scoreJ2 )
 					coteG = 'D';
-			else //Si c'est une montagne
+			} else { //Si c'est une montagne
 				if ( scoreJ1 < scoreJ2 )
 					coteG = 'G';
 				else if ( scoreJ1 > scoreJ2 )
 					coteG = 'D';
+			}
 		}
 		
 		return coteG;
