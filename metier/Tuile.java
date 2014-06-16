@@ -1,4 +1,4 @@
-/* Classe : Table
+/* Classe : Tuile
  * @author MARECAL Thomas 
  * @author MARTIN Florian
  * @author QUENTIN Thibaut
@@ -8,7 +8,7 @@
 package metier;
 import java.util.*;
 
-public class Table {
+public class Tuile {
 	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
@@ -16,7 +16,7 @@ public class Table {
 	private int nombre;
 	private String paysage;
 
-	public Table (int nb, String paysage) {
+	public Tuile (int nb, String paysage) {
 		gauche = new ArrayList<Carte>();
 		droite = new ArrayList<Carte>();
 		cubes  = new ArrayList<Cube> ();
@@ -24,7 +24,7 @@ public class Table {
 		this.paysage = paysage;
 	}
 
-	//Ajoute une Carte sur le côté de la Table séléctionné
+	//Ajoute une Carte sur le côté de la Tuile séléctionné
 	//seulement si ce côté n'est pas plein
 	public boolean ajouterCarte (char cote, Carte c) {
 		int cubeCouleur = 0 , cartesCouleur = 0;
@@ -38,7 +38,7 @@ public class Table {
 			if(cu.getCouleur().equals(c.getCouleur()))
 				cubeCouleur++;
 			
-		//Si il y a des cubes de la bonne couleur sur la table
+		//Si il y a des cubes de la bonne couleur sur la tuile
 		if(cubeCouleur > 0) {
 			//On récupère les cartes correspondant au côté choisi
 			if(cote == 'G')
@@ -49,7 +49,7 @@ public class Table {
 				return false;
 			
 			//On compte le nombre de cartes de la même couleur que celle
-			//passée en paramètre déjà présentes sur la table
+			//passée en paramètre déjà présentes sur la tuile
 			for(Carte ca : cartes)
 					if(ca.getCouleur().equals(c.getCouleur()))
 						cartesCouleur++;
@@ -65,7 +65,7 @@ public class Table {
 		return false;
 	}
 	
-	//Retire toutes les Cartes de la Table et les place
+	//Retire toutes les Cartes de la Tuile et les place
 	//dans l'objet de type Tas passé en paramètre.
 	public void oterCartes( Tas<Carte> tas ) {
 		while( !this.gauche.isEmpty() )
@@ -76,13 +76,13 @@ public class Table {
 		
 	} 
 	
-	//Donne à un joueur tout les cubes présents sur cette table
+	//Donne à un joueur tout les cubes présents sur cette tuile
 	public void oterCubes (Joueur j) {
 		while( !this.cubes.isEmpty() )
 			j.ajouterCube(cubes.remove(0));
 	}
 	
-	//Permet de changer le paysage de la table à la fin d'une
+	//Permet de changer le paysage de la tuile à la fin d'une
 	//manche sur celle-ci
 	public void changerPaysage() {
 		if ( paysage.equals( TYPES_PAYSAGE[0]))
@@ -91,7 +91,7 @@ public class Table {
 			paysage = TYPES_PAYSAGE[0];
 	}
 	
-	//Ajoute un Cube sur la Table seulement si
+	//Ajoute un Cube sur la Tuile seulement si
 	//le nombre de Cube possible n'est pas atteint
 	public boolean ajouterCube( Cube c) {
 		if ( cubes.size() < nombre) {
@@ -138,12 +138,12 @@ public class Table {
 	public int    getNombre () { return this.nombre ; }
 	
 	public String toString () {
-		String cartes = "",table = "";
-		table += this.paysage + " : " + cubes.size() + " cubes -> ";
+		String cartes = "",tuile = "";
+		tuile += this.paysage + " : " + cubes.size() + " cubes -> ";
 		for(Cube c : cubes)
-			table += c.getCouleur() + " ";
+			tuile += c.getCouleur() + " ";
 		cartes += "Gauche : " + gauche + "\n";
 		cartes += "Droite : " + droite + "\n";
-		return table+"\n"+cartes;
+		return tuile+"\n"+cartes;
 	}	
 }

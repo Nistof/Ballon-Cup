@@ -19,7 +19,7 @@ public class Test {
 		String fichier = "";
 		String carte, couleur;
 		Joueur j = new Joueur("Truc", 'G');
-		Table  t = new Table (3, "PLAINE");
+		Tuile  t = new Tuile (3, "PLAINE");
 		Defausse d = new Defausse();
 		int valeur;
 		Pattern p;
@@ -94,7 +94,7 @@ public class Test {
 			j.ajouterCarte( pioche.piocher());
 		System.out.println( "Main du joueur :\n" + j);
 		
-		System.out.println( "Ajout de cubes sur la table" );
+		System.out.println( "Ajout de cubes sur la tuile" );
 		t.ajouterCube( new Cube("ROUGE"));
 		t.ajouterCube( new Cube("VERT" ));
 		t.ajouterCube( new Cube("BLEU" ));
@@ -106,11 +106,11 @@ public class Test {
 			j.jouerCarte(i, 'G', t);
 		}
 		
-		System.out.println( "Table :\n" + t);
+		System.out.println( "Tuile :\n" + t);
 		System.out.println(pioche);
 		System.out.println("Main du joueur :\n" + j);
 		
-		System.out.println( "Ajout des cartes du joueur et de la table dans la defausse" );
+		System.out.println( "Ajout des cartes du joueur et de la tuile dans la defausse" );
 		d.ajouter(j.retirerCarte(0));
 		d.ajouter(j.retirerCarte(0));
 		d.ajouter(j.retirerCarte(0));
@@ -124,7 +124,7 @@ public class Test {
 		System.out.println( "Transfert des cubes dans un joueur" );
 		t.oterCubes( j );
 		
-		System.out.println( "Table :\n" + t);
+		System.out.println( "Tuile :\n" + t);
 		System.out.println(pioche);
 		System.out.println("Main du joueur :\n" + j);
 		

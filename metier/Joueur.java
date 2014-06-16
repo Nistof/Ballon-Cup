@@ -46,10 +46,10 @@ public class Joueur {
 		return null;
 	}
 	
-	//Joue une carte sur une table en fonction de l'indice dans la main,
+	//Joue une carte sur une tuile en fonction de l'indice dans la main,
 	//le cote sur lequel le joueur veut jouer.
 	//Si le joueur ne peut pas jouer cette carte alors, la méthode renvoie false
-	public boolean jouerCarte(int i, char cote, Table t) {
+	public boolean jouerCarte(int i, char cote, Tuile t) {
 		Carte c = retirerCarte(i);
 		
 		if (t.ajouterCarte(cote, c)) {
