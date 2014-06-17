@@ -164,6 +164,38 @@ public class Jeu {
 			
 		s += "\nJOUEUR 1 : " + this.joueurG.afficherMain() + " || JOUEUR 2 : " + joueurD.afficherMain() + "\n";
 		
+	public String compterTuiles (char dernierCote) {
+		String s = "";
+		for(Tuile t : tuiles) {
+			switch(t.gagnant()) {
+				case 'G':
+					s += "JoueurG gagne " + t.getNombre() + " cubes";
+					t.oterCubes(joueurG);
+					t.oterCartes(defausse);
+					break;
+				case 'D':
+					s += "JoueurD gagne " + t.getNombre() + " cubes";
+					t.oterCubes(joueurD);
+					t.oterCartes(defausse);
+					break;
+				case 'N':
+					if(dernierCote == 'G') {
+						s += "JoueurG gagne " + t.getNombre() + " cubes";
+						t.oterCubes(joueurG);
+						t.oterCartes(defausse);
+					}
+					else {
+						s += "JoueurD gagne " + t.getNombre() + " cubes";
+						t.oterCubes(joueurD);
+						t.oterCartes(defausse);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		if(s.equals(""))
+			s += "Aucun gagnant";
 		return s;
 	}
 
@@ -172,22 +204,29 @@ public class Jeu {
 		Jeu j = new Jeu();
 		while(j.continuer()) {
 			try {
+				int carte , tuile;
 				System.out.println(j);
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Joueur 1 : Jouez une carte");
 				System.out.println("Choisissez l'index de la carte : ");
-				j.jouerCarte('G',sc.nextInt());
+				carte = sc.nextInt();
+				System.out.println("Choisissez la tuile : ");
+				tuile = sc.nextInt();
+				j.jouerCarte('G', carte, tuile);
+				System.out.println(j.compterTuiles('G'));
 				System.out.println(j);
 				System.out.println("Joueur 2 : Jouez une carte");
 				System.out.println("Choisissez l'index de la carte : ");
-				j.jouerCarte('D',sc.nextInt());
+				carte = sc.nextInt();
+				System.out.println("Choisissez la tuile : ");
+				tuile = sc.nextInt();
+				j.jouerCarte('D',carte, tuile);
+				System.out.println(j.compterTuiles('D'));
 				System.out.println(j);
 			}
 			catch(Exception e) {
 				System.out.println(e);
 			}
-			
-
 		}
 	}
 }
