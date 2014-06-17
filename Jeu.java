@@ -28,7 +28,7 @@ public class Jeu {
 	public final static int    NB_CUBE_BLEU   =  7;
 	public final static int    NB_CUBE_GRIS   =  5;
 	
-	//Valeurs des cartes trophée
+	//Valeurs des cartes trophee
 	private final static int   TROPHEE_ROUGE  =  7;
 	private final static int   TROPHEE_JAUNE  =  6;
 	private final static int   TROPHEE_VERT   =  5;
@@ -145,11 +145,11 @@ public class Jeu {
 
 	// Initialisation des tuiles dans un etat donnee
 	// Format de etatTuile:
-	// Chaque ligne correspond à une tuile, la taille du tableau doit être == à NB_TUILE
-	// Cartes à gauche | paysage | cartes à droite | cubes
-	// Cartes : Premier caractère de la couleur suivi de 2 chiffres
+	// Chaque ligne correspond a une tuile, la taille du tableau doit etre == a NB_TUILE
+	// Cartes a gauche | paysage | cartes a droite | cubes
+	// Cartes : Premier caractere de la couleur suivi de 2 chiffres
 	// Paysage: PLAINE ou MONTAGNE
-	// Cubes:   Premier caractère de la couleur suivi du nombre de cube entre 1 et 4
+	// Cubes:   Premier caractere de la couleur suivi du nombre de cube entre 1 et 4
 	// Exemple: R10V04|PLAINE|G04J02|R1V2J1
 	private boolean initialiserTuiles( String[] etatTuiles ) {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
