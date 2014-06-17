@@ -14,16 +14,17 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.ArrayList;
 
 
 public class Jeu {
-	private final static int    NB_TUILE       = 4;
-	private final static String FICHIER_CARTES = "ressources/cartes";
-	private final static int    NB_CUBE_ROUGE  = 13;
-	private final static int    NB_CUBE_JAUNE  = 11;
-	private final static int    NB_CUBE_VERT   =  9;
-	private final static int    NB_CUBE_BLEU   =  7;
-	private final static int    NB_CUBE_GRIS   =  5;
+	public final static int    NB_TUILE       = 4;
+	public final static String FICHIER_CARTES = "ressources/cartes";
+	public final static int    NB_CUBE_ROUGE  = 13;
+	public final static int    NB_CUBE_JAUNE  = 11;
+	public final static int    NB_CUBE_VERT   =  9;
+	public final static int    NB_CUBE_BLEU   =  7;
+	public final static int    NB_CUBE_GRIS   =  5;
 
 	private Tuile[]       tuiles       ;
 	private Joueur[]      joueurs      ;
@@ -33,16 +34,6 @@ public class Jeu {
 	private int           dernierJoueur;
 	
 	public Jeu () {
-		tuiles = new Tuile[4];
-		joueurs = new Joueur[2];
-		joueurs[0] = new Joueur( "Joueur Gauche", 'G');
-		joueurs[1] = new Joueur( "Joueur Droite", 'D');
-		piocheCartes = new Pioche<Carte>();
-		piocheCubes  = new Pioche<Cube> ();
-		defausse = new Defausse();
-	
-		initialiserTuiles();
-		
 		//Pour l'initialisation de la pioche de cartes
 		String fichier = "";
 		try {			
@@ -52,11 +43,9 @@ public class Jeu {
 				fichier = sc.nextLine();
 			sc.close();
 		} catch ( FileNotFoundException e) { System.out.println("Le fichier n'existe pas."); System.exit(1); }
-		initialiserPiocheCartes( fichier);
-		piocheCartes.melanger();
-				
-		initialiserJoueurs();
-		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+		
+		this("Joueur Gauche", "Joueur Droite", new String[0], fichier, new String[0]);
+		piocheCartes.melanger();		
 		piocheCubes.melanger();
 		
 		//Placement des cubes sur les tuiles
@@ -64,9 +53,24 @@ public class Jeu {
 			placerCubes( i);
 	}
 	
-	//Méthode qui initialise les tuiles dans un état initial
+	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, 
+				 String etatPioche, String[] etatJoueur) {
+		tuiles = new Tuile[NB_TUILE];
+		joueurs = new Joueur[2];
+		joueurs[0] = new Joueur( nomJoueur1, 'G');
+		joueurs[1] = new Joueur( nomJoueur2, 'D');
+		piocheCartes = new Pioche<Carte>();
+		piocheCubes  = new Pioche<Cube> ();
+		defausse = new Defausse();
+		
+		initialiserTuiles( etatTuiles);
+		initialiserPiocheCartes( etatPioche);
+		initialiserJoueurs( etatJoueur);
+		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+	}
+	
+	//Méthode qui initialise les tuiles dans un état initial (Début de jeu normal)
 	private void initialiserTuiles() {
-		//Initialisation des tuiles
 		for ( int i = 0; i < NB_TUILE; i++)
 			if ( i%2 == 0)
 				tuiles[i] = new Tuile( i+1, Tuile.TYPES_PAYSAGE[0]);
@@ -74,16 +78,18 @@ public class Jeu {
 				tuiles[i] = new Tuile( i+1, Tuile.TYPES_PAYSAGE[1]);
 	}
 	
-	//Méthode qui initialise la pioche selon la chaine passée en paramètre
-	private void initialiserPiocheCartes ( String cartes) {
-		//initialisation de la pioche de cartes
+	//Renvoie une liste de cartes en fonction d'une chaine donnée
+	//étant de la forme : première lettre de la couleur suivi de 2 chiffres
+	//Exemple : R01V11B09 renverra une liste avec une carte Rouge 1, Verte 11, Bleu 9
+	private ArrayList<Carte> creerCartes( String chaine) {
 		int valeur = 0;
 		String carte = "", couleur = "";
 		Pattern p;
 		Matcher m;
+		ArrayList<Carte> cs = new ArrayList<Carte>();
 		
 		p = Pattern.compile("[RVBGJ](0[1-9]|1[0-3])");
-		m = p.matcher( cartes);
+		m = p.matcher( chaine);
 		
 		//Création des cartes
 		while ( m.find()) {
@@ -109,8 +115,15 @@ public class Jeu {
 			}
 			valeur = Integer.parseInt( carte.substring(1));
 			
-			piocheCartes.ajouter( new Carte( couleur, valeur));
+			cs.add( new Carte( couleur, valeur))
 		}
+	}
+	
+	//Méthode qui initialise la pioche selon la chaine passée en paramètre
+	private void initialiserPiocheCartes ( String cartes) {
+		ArrayList<Carte> cs = creerCartes ( cartes);
+		while ( !cs.isEmpty() )
+			piocheCartes.ajouter( cs.remove(0));
 	}
 	
 	//Les joueurs récupèrent chacun 8 cartes
