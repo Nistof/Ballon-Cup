@@ -31,6 +31,7 @@ public class Jeu {
 	private Pioche<Carte> piocheCartes ;
 	private Pioche<Cube>  piocheCubes  ;
 	private Defausse      defausse     ;
+	private ArrayList<Trophee> trophees;
 	private int           dernierJoueur;
 	
 	public Jeu () {		
@@ -322,7 +323,7 @@ public class Jeu {
 				 TexteUtil.centrer("         " + s2                         , 55) + "\n" +
 				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain  (), 55) + "\n" + 
 				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCube  (), 55) + "\n" +
-				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophe(), 55) + "\n\n";
+				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophee(), 55) + "\n\n";
 		}
 		
 		
@@ -363,6 +364,13 @@ public class Jeu {
 		dernierJoueur = 1 -dernierJoueur;
 	}
 
+	public void distribuerTrophee () {
+		for(int i = 0 ; i < trophees.size() ; i++) {
+			joueurs[dernierJoueur].ajouterTrophee(trophees.get(i));
+			trophees.remove(i);
+		}
+	}
+
 	public static void main (String[] a) {
 		Jeu j = new Jeu();
 		System.out.println(j);
@@ -390,11 +398,13 @@ public class Jeu {
 				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
 				System.out.println(j);
+				j.distribuerTrophee();
 				j.changerJoueur();	
 			}
 			catch(Exception e) {
 				System.out.println(e);
 			}
+
 		}
 	}
 }
