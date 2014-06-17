@@ -7,6 +7,7 @@
  */
 
 import metier.*;
+import util.TexteUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -171,9 +172,17 @@ public class Jeu {
 		String s="";
 		
 		for( int i=0; i<this.tuiles.length; i++ )
-			s += this.tuiles[i].toString() + "\n";
+			s += this.tuiles[i].toString() + "\n\n";
 			
-		s += "\nJOUEUR 1 : " + this.joueurG.afficherMain() + " || JOUEUR 2 : " + joueurD.afficherMain() + "\n";
+		s += "------------------------------------------------------\n" +
+			 TexteUtil.centrer("JOUEUR 1", 55) + "\n" +
+			 TexteUtil.centrer("Cartes : " + joueurG.afficherMain  (), 55) + "\n" + 
+			 TexteUtil.centrer("Cubes  : " + joueurG.afficherCube  (), 55) + "\n" +
+			 TexteUtil.centrer("Trophees:" + joueurG.afficherTrophe(), 55) + "\n\n" +
+			 TexteUtil.centrer("JOUEUR 2", 55) + "\n" +
+			 TexteUtil.centrer("Cartes : " + joueurD.afficherMain  (), 55) + "\n" + 
+			 TexteUtil.centrer("Cubes  : " + joueurD.afficherCube  (), 55) + "\n" +
+			 TexteUtil.centrer("Trophees:" + joueurD.afficherTrophe(), 55) + "\n\n";
 		
 		return s;
 	}
