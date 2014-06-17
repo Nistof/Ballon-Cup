@@ -20,11 +20,20 @@ import java.util.ArrayList;
 public class Jeu {
 	public final static int    NB_TUILE       = 4;
 	public final static String FICHIER_CARTES = "ressources/cartes";
+	
+	//Nombre de cubes de chaque couleur
 	public final static int    NB_CUBE_ROUGE  = 13;
 	public final static int    NB_CUBE_JAUNE  = 11;
 	public final static int    NB_CUBE_VERT   =  9;
 	public final static int    NB_CUBE_BLEU   =  7;
 	public final static int    NB_CUBE_GRIS   =  5;
+	
+	//Valeurs des cartes troph�e
+	private final static int   TROPHEE_ROUGE  =  7;
+	private final static int   TROPHEE_JAUNE  =  6;
+	private final static int   TROPHEE_VERT   =  5;
+	private final static int   TROPHEE_BLEU   =  4;
+	private final static int   TROPHEE_GRIS   =  3;
 
 	private Tuile[]       tuiles       ;
 	private Joueur[]      joueurs      ;
@@ -36,8 +45,6 @@ public class Jeu {
 	
 	public Jeu () {		
 		this("Joueur Gauche", "Joueur Droite", new String[0], Jeu.chargerFichierCartes(), new String[0]);
-		piocheCartes.melanger();		
-		piocheCubes.melanger();
 		
 		//Placement des cubes sur les tuiles
 		for ( int i = 0; i < NB_TUILE; i++)
@@ -54,10 +61,20 @@ public class Jeu {
 		piocheCubes  = new Pioche<Cube> ();
 		defausse = new Defausse();
 		
+		trophees = new ArrayList<Trophee>();
+		trophees.add( new Trophee("ROUGE", TROPHEE_ROUGE));
+		trophees.add( new Trophee("JAUNE", TROPHEE_JAUNE));
+		trophees.add( new Trophee("VERT" , TROPHEE_VERT ));
+		trophees.add( new Trophee("BLEU" , TROPHEE_BLEU ));
+		trophees.add( new Trophee("GRIS" , TROPHEE_GRIS ));
+		
 		initialiserPiocheCartes( etatPioche);
 		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+		piocheCartes.melanger();
+		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
 		initialiserJoueurs( etatJoueur);
+		System.out.println("1");
 	}
 	
 	private static String chargerFichierCartes() {
@@ -74,7 +91,7 @@ public class Jeu {
 		return fichier;
 	}
 	
-	//Méthode qui initialise les tuiles dans un état initial (Début de jeu normal)
+	//Methode qui initialise les tuiles dans un etat initial (Debut de jeu normal)
 	private void initialiserTuiles() {
 		for ( int i = 0; i < NB_TUILE; i++)
 			if ( i%2 == 0)
@@ -83,8 +100,8 @@ public class Jeu {
 				tuiles[i] = new Tuile( i+1, Tuile.TYPES_PAYSAGE[1]);
 	}
 	
-	//Renvoie une liste de cartes en fonction d'une chaine donnée
-	//étant de la forme : première lettre de la couleur suivi de 2 chiffres
+	//Renvoie une liste de cartes en fonction d'une chaine donnee
+	//etant de la forme : première lettre de la couleur suivi de 2 chiffres
 	//Exemple : R01V11B09 renverra une liste avec une carte Rouge 1, Verte 11, Bleu 9
 	private ArrayList<Carte> creerCartes( String chaine) {
 		int valeur = 0;
@@ -338,16 +355,22 @@ public class Jeu {
 					s += joueurs[0].getNom() + " gagne " + t.getNombre() + " cubes";
 					t.oterCubes(joueurs[0]);
 					t.oterCartes(defausse);
+					for ( int i = 0; i < NB_TUILE; i++)
+						placerCubes( i);
 					break;
 				case 'D':
 					s += joueurs[1].getNom() + " gagne " + t.getNombre() + " cubes";
 					t.oterCubes(joueurs[1]);
 					t.oterCartes(defausse);
+					for ( int i = 0; i < NB_TUILE; i++)
+						placerCubes( i);
 					break;
 				case 'N':
 					s += joueurs[dernierJoueur].getNom() + " gagne " + t.getNombre() + " cubes";
 					t.oterCubes(joueurs[dernierJoueur]);
 					t.oterCartes(defausse);
+					for ( int i = 0; i < NB_TUILE; i++)
+						placerCubes( i);
 					break;
 				default:
 					break;
@@ -402,7 +425,7 @@ public class Jeu {
 				j.changerJoueur();	
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 
 		}
