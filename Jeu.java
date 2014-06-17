@@ -25,17 +25,18 @@ public class Jeu {
 	private final static int    NB_CUBE_BLEU   =  7;
 	private final static int    NB_CUBE_GRIS   =  5;
 
-	private Tuile[]       tuiles      ;
-	private Joueur        joueurG     ;
-	private Joueur        joueurD     ;
-	private Pioche<Carte> piocheCartes;
-	private Pioche<Cube>  piocheCubes ;
-	private Defausse      defausse    ;
+	private Tuile[]       tuiles       ;
+	private Joueur[]      joueurs      ;
+	private Pioche<Carte> piocheCartes ;
+	private Pioche<Cube>  piocheCubes  ;
+	private Defausse      defausse     ;
+	private int           dernierJoueur;
 	
 	public Jeu () {
 		tuiles = new Tuile[4];
-		joueurG = new Joueur( "Joueur Gauche", 'G');
-		joueurD = new Joueur( "Joueur Droite", 'D');
+		joueurs = new Joueur[2];
+		joueurs[0] = new Joueur( "Joueur Gauche", 'G');
+		joueurs[1] = new Joueur( "Joueur Droite", 'D');
 		piocheCartes = new Pioche<Carte>();
 		piocheCubes  = new Pioche<Cube> ();
 		defausse = new Defausse();
@@ -115,8 +116,8 @@ public class Jeu {
 	//Les joueurs récupèrent chacun 8 cartes
 	private void initialiserJoueurs() {
 		for ( int i = 0; i < Joueur.NB_CARTE_MAX; i++){
-			joueurG.ajouterCarte( piocheCartes.piocher());
-			joueurD.ajouterCarte( piocheCartes.piocher());
+			joueurs[0].ajouterCarte( piocheCartes.piocher());
+			joueurs[1].ajouterCarte( piocheCartes.piocher());
 		}
 	}
 	
@@ -142,30 +143,25 @@ public class Jeu {
 			piocheCubes.ajouter( new Cube("GRIS"));
 	}
 	
+	//Place les cubes sur la tuile passée en indice
 	public void placerCubes ( int indTuile) {
 		for ( int i = 0; i < tuiles[indTuile].getNombre(); i++)
 			tuiles[indTuile].ajouterCube( piocheCubes.piocher());
 	}
 	
+	
 	public void jouerCarte( char coteJ, char cote, int indCarte, int indTuile ) {
 		if( coteJ == 'D' ) {
-			joueurD.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
-			joueurD.ajouterCarte( piocheCartes.piocher());
+			joueurs[1].jouerCarte( indCarte, cote, this.tuiles[indTuile] );
+			joueurs[1].ajouterCarte( piocheCartes.piocher());
 		} else {
-			joueurG.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
-			joueurG.ajouterCarte( piocheCartes.piocher());
+			joueurs[0].jouerCarte( indCarte, cote, this.tuiles[indTuile] );
+			joueurs[0].ajouterCarte( piocheCartes.piocher());
 		}
-	}
-
-	public String afficherMain( char cote ) {
-		if( cote == 'D' )
-			return this.joueurD.afficherMain();
-		else
-			return this.joueurG.afficherMain();
 	}
 	
 	public boolean continuer() {
-		if( !this.joueurD.aGagne() && !this.joueurG.aGagne() )
+		if( !this.joueurs[1].aGagne() && !this.joueurs[0].aGagne() )
 			return true;
 			
 		return false;
@@ -174,7 +170,6 @@ public class Jeu {
 	public String toString() {
 		String s="";
 		String s2 = "";
-		Joueur j;
 		
 		for( int i=0; i<this.tuiles.length; i++ )
 			s += this.tuiles[i].toString() + "\n\n";
@@ -184,14 +179,12 @@ public class Jeu {
 		
 		s += "------------------------------------------------------\n";
 		
-		j = joueurG;
-		for ( int i = 0; i < 2; i++) {
-			s += TexteUtil.centrer( j.getNom()                     , 55) + "\n" +
-				 TexteUtil.centrer("         " + s2                , 55) + "\n" +
-				 TexteUtil.centrer("Cartes : " + j.afficherMain  (), 55) + "\n" + 
-				 TexteUtil.centrer("Cubes  : " + j.afficherCube  (), 55) + "\n" +
-				 TexteUtil.centrer("Trophees:" + j.afficherTrophe(), 55) + "\n\n";
-			j = joueurD;
+		for ( int i = 0; i < joueurs.length; i++) {
+			s += TexteUtil.centrer( joueurs[i].getNom()                     , 55) + "\n" +
+				 TexteUtil.centrer("         " + s2                         , 55) + "\n" +
+				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain  (), 55) + "\n" + 
+				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCube  (), 55) + "\n" +
+				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophe(), 55) + "\n\n";
 		}
 		
 		
@@ -203,24 +196,24 @@ public class Jeu {
 		for(Tuile t : tuiles) {
 			switch(t.gagnant()) {
 				case 'G':
-					s += "JoueurG gagne " + t.getNombre() + " cubes";
-					t.oterCubes(joueurG);
+					s += joueurs[0].getNom() + " gagne " + t.getNombre() + " cubes";
+					t.oterCubes(joueurs[0]);
 					t.oterCartes(defausse);
 					break;
 				case 'D':
-					s += "JoueurD gagne " + t.getNombre() + " cubes";
-					t.oterCubes(joueurD);
+					s += joueurs[1].getNom() + " gagne " + t.getNombre() + " cubes";
+					t.oterCubes(joueurs[1]);
 					t.oterCartes(defausse);
 					break;
 				case 'N':
 					if(dernierCote == 'G') {
-						s += "JoueurG gagne " + t.getNombre() + " cubes";
-						t.oterCubes(joueurG);
+						s += joueurs[0].getNom() + " gagne " + t.getNombre() + " cubes";
+						t.oterCubes(joueurs[0]);
 						t.oterCartes(defausse);
 					}
 					else {
-						s += "JoueurD gagne " + t.getNombre() + " cubes";
-						t.oterCubes(joueurD);
+						s += joueurs[1].getNom() + " gagne " + t.getNombre() + " cubes";
+						t.oterCubes(joueurs[1]);
 						t.oterCartes(defausse);
 					}
 					break;
@@ -228,8 +221,6 @@ public class Jeu {
 					break;
 			}
 		}
-		if(s.equals(""))
-			s += "Aucun gagnant";
 		return s;
 	}
 
@@ -247,7 +238,7 @@ public class Jeu {
 				carte = sc.nextInt();
 				System.out.println("Choisissez la tuile : ");
 				tuile = sc.nextInt();
-				j.jouerCarte('G', 'D', carte, tuile);//2ème argument à demander au joueur
+				j.jouerCarte('G', 'D', carte-1, tuile-1);//2ème argument à demander au joueur
 				System.out.println(j.compterTuiles('G'));
 				System.out.println(j);
 				System.out.println("Joueur 2 : Jouez une carte");
@@ -255,7 +246,7 @@ public class Jeu {
 				carte = sc.nextInt();
 				System.out.println("Choisissez la tuile : ");
 				tuile = sc.nextInt();
-				j.jouerCarte('D', 'G',carte, tuile); //2ème argument à demander au joueur
+				j.jouerCarte('D', 'G',carte-1, tuile-1); //2ème argument à demander au joueur
 				System.out.println(j.compterTuiles('D'));
 				System.out.println(j);
 			}
