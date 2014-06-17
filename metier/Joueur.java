@@ -60,7 +60,7 @@ public class Joueur {
 	
 	// Si le joueur possede 3 trophe, il gagne la partie
 	public boolean aGagne() {
-		if( this.cubes.size() == Joueur.NB_TROPHE_VICTOIRE )
+		if( this.trophee.size() == Joueur.NB_TROPHE_VICTOIRE )
 			return true;
 			
 		return false;
