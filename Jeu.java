@@ -33,18 +33,8 @@ public class Jeu {
 	private Defausse      defausse     ;
 	private int           dernierJoueur;
 	
-	public Jeu () {
-		//Pour l'initialisation de la pioche de cartes
-		String fichier = "";
-		try {			
-			//Chargement du fichier
-			Scanner sc = new Scanner( new File( FICHIER_CARTES));
-			if ( sc.hasNext())
-				fichier = sc.nextLine();
-			sc.close();
-		} catch ( FileNotFoundException e) { System.out.println("Le fichier n'existe pas."); System.exit(1); }
-		
-		this("Joueur Gauche", "Joueur Droite", new String[0], fichier, new String[0]);
+	public Jeu () {		
+		this("Joueur Gauche", "Joueur Droite", new String[0], Jeu.chargerFichierCartes(), new String[0]);
 		piocheCartes.melanger();		
 		piocheCubes.melanger();
 		
@@ -63,10 +53,24 @@ public class Jeu {
 		piocheCubes  = new Pioche<Cube> ();
 		defausse = new Defausse();
 		
-		initialiserTuiles( etatTuiles);
 		initialiserPiocheCartes( etatPioche);
-		initialiserJoueurs( etatJoueur);
 		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+		initialiserTuiles( etatTuiles);
+		initialiserJoueurs( etatJoueur);
+	}
+	
+	private static String chargerFichierCartes() {
+		//Pour l'initialisation de la pioche de cartes
+		String fichier = "";
+		try {			
+			//Chargement du fichier
+			Scanner sc = new Scanner( new File( FICHIER_CARTES));
+			if ( sc.hasNext())
+				fichier = sc.nextLine();
+			sc.close();
+		} catch ( FileNotFoundException e) { System.out.println("Le fichier n'existe pas."); System.exit(1); }
+	
+		return fichier;
 	}
 	
 	//Méthode qui initialise les tuiles dans un état initial (Début de jeu normal)
@@ -91,7 +95,7 @@ public class Jeu {
 		p = Pattern.compile("[RVBGJ](0[1-9]|1[0-3])");
 		m = p.matcher( chaine);
 		
-		//Création des cartes
+		//Creation des cartes
 		while ( m.find()) {
 			carte = m.group();
 			switch ( carte.charAt(0)){
@@ -115,8 +119,10 @@ public class Jeu {
 			}
 			valeur = Integer.parseInt( carte.substring(1));
 			
-			cs.add( new Carte( couleur, valeur))
+			cs.add( new Carte( couleur, valeur));
 		}
+		
+		return cs;
 	}
 
 	// Initialisation des tuiles dans un etat donnee
@@ -205,7 +211,7 @@ public class Jeu {
 			piocheCartes.ajouter( cs.remove(0));
 	}
 	
-	//Les joueurs récupèrent chacun 8 cartes
+	//Les joueurs recuperent chacun 8 cartes
 	private void initialiserJoueurs() {
 		for ( int i = 0; i < Joueur.NB_CARTE_MAX; i++){
 			joueurs[0].ajouterCarte( piocheCartes.piocher());
@@ -346,7 +352,7 @@ public class Jeu {
 						System.out.println("Choisissez le cote ou vous voulez jouer : ");
 						cote = sc.nextLine().charAt(0);
 					}while(cote != 'D' && cote != 'G');
-				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));//2eme argument \E0 demander au joueur
+				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
 				System.out.println(j);
 				j.changerJoueur();	
