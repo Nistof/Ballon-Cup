@@ -137,9 +137,9 @@ public class Jeu {
 	
 	public void jouerCarte( char cote, int indCarte, int indTuile ) {
 		if( cote == 'D' )
-			joueurD.jouerCarte( cote, indCarte, this.tuiles[indTuile] );
+			joueurD.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
 		else
-			joueurG.jouerCarte( cote, indCarte, this.tuiles[indTuile] );
+			joueurG.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
 	}
 
 	public String afficherMain( char cote ) {
@@ -159,10 +159,13 @@ public class Jeu {
 	public String toString() {
 		String s="";
 		
-		for( int i=0; i<this.tuile.length; i++ )
-			s += this.tuile[i].toString() + "\n";
+		for( int i=0; i<this.tuiles.length; i++ )
+			s += this.tuiles[i].toString() + "\n";
 			
 		s += "\nJOUEUR 1 : " + this.joueurG.afficherMain() + " || JOUEUR 2 : " + joueurD.afficherMain() + "\n";
+		
+		return s;
+	}
 		
 	public String compterTuiles (char dernierCote) {
 		String s = "";
