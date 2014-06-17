@@ -173,16 +173,22 @@ public class Jeu {
 	
 	public String toString() {
 		String s="";
+		String s2 = "";
 		
 		for( int i=0; i<this.tuiles.length; i++ )
 			s += this.tuiles[i].toString() + "\n\n";
-			
+		
+		for ( int i = 0; i < Joueur.NB_CARTE_MAX; i++)
+			s2 += TexteUtil.centrer( ""+(i+1), 6); 
+		
 		s += "------------------------------------------------------\n" +
 			 TexteUtil.centrer("JOUEUR 1", 55) + "\n" +
+			 TexteUtil.centrer("         " + s2                      , 55) + "\n" +
 			 TexteUtil.centrer("Cartes : " + joueurG.afficherMain  (), 55) + "\n" + 
 			 TexteUtil.centrer("Cubes  : " + joueurG.afficherCube  (), 55) + "\n" +
 			 TexteUtil.centrer("Trophees:" + joueurG.afficherTrophe(), 55) + "\n\n" +
 			 TexteUtil.centrer("JOUEUR 2", 55) + "\n" +
+			 TexteUtil.centrer("         " + s2                      , 55) + "\n" +
 			 TexteUtil.centrer("Cartes : " + joueurD.afficherMain  (), 55) + "\n" + 
 			 TexteUtil.centrer("Cubes  : " + joueurD.afficherCube  (), 55) + "\n" +
 			 TexteUtil.centrer("Trophees:" + joueurD.afficherTrophe(), 55) + "\n\n";
