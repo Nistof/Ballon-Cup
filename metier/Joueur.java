@@ -9,20 +9,49 @@
 package metier;
 
 import java.util.ArrayList;
+import util.Couleur;
 
 public class Joueur {
-	private final static int NB_CARTE_MAX=8; 
+	public final static int NB_CARTE_MAX       = 8;
+	private final static int NB_TROPHE_VICTOIRE = 3;
 	
-	private ArrayList<Carte> jeu  ;
-	private ArrayList<Cube>  cubes;	
-	private String			 nom  ;
-	private char			 cote ;
+	private ArrayList<Carte>  jeu  ;
+	private ArrayList<Cube>   cubes;	
+	private ArrayList<Trophe> trophe;
+	private String			  nom  ;
+	private char			  cote ;
 	
 	public Joueur( String nom, char cote ) {
-		this.nom = nom;
-		this.cote = cote;
-		this.jeu = new ArrayList<Carte>();
-		this.cubes = new ArrayList<Cube>();
+		this.nom    = nom;
+		this.cote   = cote;
+		this.jeu    = new ArrayList<Carte>();
+		this.cubes  = new ArrayList<Cube>();
+		this.trophe = new ArrayList<Trophe>();
+	}
+	
+	// On ajoute un trophe si et seulement si il y a le bon nombre de cubes de meme couleur
+	public boolean ajouterTrophe( Trophe t ) {
+		Couleur coulTroph = t.getCouleur();
+		int nbCube        = 0;
+		
+		for( int i=0; i<this.cubes.size(); i++ )
+			if( coulTroph.equals( this.cubes.get(i).getCouleur() ) )
+				nbCube++;
+				
+		if( nbCube == t.getValeur() ) {
+			this.trophe.add( t );
+			return true;
+		}
+		
+		return false;
+	}
+	
+	// Si le joueur possede 3 trophe, il gagne la partie
+	public boolean aGagne() {
+		if( this.cubes.size() == Joueur.NB_TROPHE_VICTOIRE )
+			return true;
+			
+		return false;
 	}
 	
 	//Ajoute une carte dans la main du joueur seulement si sa
