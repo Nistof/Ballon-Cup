@@ -37,6 +37,10 @@ public class Joueur {
 		return this.cubes.toString();
 	}
 	
+	public String afficherTrophe() {
+		return this.trophe.toString();
+	}
+	
 	// On ajoute un trophe si et seulement si il y a le bon nombre de cubes de meme couleur
 	public boolean ajouterTrophe( Trophe t ) {
 		Couleur coulTroph = t.getCouleur();
