@@ -7,6 +7,7 @@
 
 package metier;
 import java.util.*;
+import util.TexteUtil;
 
 public class Tuile {
 	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
