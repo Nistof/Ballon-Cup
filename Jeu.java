@@ -134,9 +134,13 @@ public class Jeu {
 		for ( int i = 0; i < gris; i++ )
 			piocheCubes.ajouter( new Cube("GRIS"));
 	} 
-
-
-
+	
+	public void jouerCarte( char cote, int indCarte, int indTuile ) {
+		if( cote == 'D' )
+			joueurD.jouerCarte( cote, indCarte, this.tuiles[indTuile] );
+		else
+			joueurG.jouerCarte( cote, indCarte, this.tuiles[indTuile] );
+	}
 
 	public String afficherMain( char cote ) {
 		if( cote == 'D' )
