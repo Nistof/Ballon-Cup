@@ -17,7 +17,7 @@ public class Joueur {
 	
 	private ArrayList<Carte>  jeu  ;
 	private ArrayList<Cube>   cubes;	
-	private ArrayList<Trophe> trophe;
+	private ArrayList<Trophee> trophee;
 	private String			  nom  ;
 	private char			  cote ;
 	
@@ -26,7 +26,7 @@ public class Joueur {
 		this.cote   = cote;
 		this.jeu    = new ArrayList<Carte>();
 		this.cubes  = new ArrayList<Cube>();
-		this.trophe = new ArrayList<Trophe>();
+		this.trophee = new ArrayList<Trophee>();
 	}
 	
 	public String afficherMain() {
@@ -37,12 +37,12 @@ public class Joueur {
 		return this.cubes.toString();
 	}
 	
-	public String afficherTrophe() {
-		return this.trophe.toString();
+	public String afficherTrophee() {
+		return this.trophee.toString();
 	}
 	
 	// On ajoute un trophe si et seulement si il y a le bon nombre de cubes de meme couleur
-	public boolean ajouterTrophe( Trophe t ) {
+	public boolean ajouterTrophee( Trophee t ) {
 		Couleur coulTroph = t.getCouleur();
 		int nbCube        = 0;
 		
@@ -51,7 +51,7 @@ public class Joueur {
 				nbCube++;
 				
 		if( nbCube == t.getValeur() ) {
-			this.trophe.add( t );
+			this.trophee.add( t );
 			return true;
 		}
 		

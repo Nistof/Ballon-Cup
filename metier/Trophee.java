@@ -8,13 +8,13 @@
  
 package metier;
  
-public class Trophe extends Carte {
+public class Trophee extends Carte {
 
-	public Trophe( String couleur, int valeur ) {
+	public Trophee( String couleur, int valeur ) {
 		super( couleur, valeur );
 	}
 	
 	public String toString() {
-		return "Trophe " + super.getCouleur() + " : " + super.getValeur(); 
+		return "Trophee " + super.getCouleur() + " : " + super.getValeur(); 
 	}
 }
