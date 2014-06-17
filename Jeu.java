@@ -150,14 +150,19 @@ public class Jeu {
 	}
 	
 	
-	public void jouerCarte( char coteJ, char cote, int indCarte, int indTuile ) {
+	public boolean jouerCarte( char coteJ, char cote, int indCarte, int indTuile ) {
 		if( coteJ == 'D' ) {
-			joueurs[1].jouerCarte( indCarte, cote, this.tuiles[indTuile] );
-			joueurs[1].ajouterCarte( piocheCartes.piocher());
+			if(joueurs[1].jouerCarte( indCarte, cote, this.tuiles[indTuile] )) {
+				joueurs[1].ajouterCarte( piocheCartes.piocher());
+				return true;
+			}
 		} else {
-			joueurs[0].jouerCarte( indCarte, cote, this.tuiles[indTuile] );
-			joueurs[0].ajouterCarte( piocheCartes.piocher());
+			if(joueurs[0].jouerCarte( indCarte, cote, this.tuiles[indTuile] )) {
+				joueurs[0].ajouterCarte( piocheCartes.piocher());
+				return true;
+			}
 		}
+		return false;
 	}
 	
 	public boolean continuer() {
@@ -191,7 +196,7 @@ public class Jeu {
 		return s;
 	}
 		
-	public String compterTuiles (char dernierCote) {
+	public String compterTuiles () {
 		String s = "";
 		for(Tuile t : tuiles) {
 			switch(t.gagnant()) {
@@ -206,16 +211,9 @@ public class Jeu {
 					t.oterCartes(defausse);
 					break;
 				case 'N':
-					if(dernierCote == 'G') {
-						s += joueurs[0].getNom() + " gagne " + t.getNombre() + " cubes";
-						t.oterCubes(joueurs[0]);
-						t.oterCartes(defausse);
-					}
-					else {
-						s += joueurs[1].getNom() + " gagne " + t.getNombre() + " cubes";
-						t.oterCubes(joueurs[1]);
-						t.oterCartes(defausse);
-					}
+					s += joueurs[dernierJoueur].getNom() + " gagne " + t.getNombre() + " cubes";
+					t.oterCubes(joueurs[dernierJoueur]);
+					t.oterCartes(defausse);
 					break;
 				default:
 					break;
@@ -224,6 +222,13 @@ public class Jeu {
 		return s;
 	}
 
+	public Joueur getJoueur () {
+		return joueurs[dernierJoueur];
+	}
+
+	public void changerJoueur () {
+		dernierJoueur = 1 -dernierJoueur;
+	}
 
 	public static void main (String[] a) {
 		Jeu j = new Jeu();
@@ -231,24 +236,28 @@ public class Jeu {
 		
 		while(j.continuer()) {
 			try {
+				char cote;
 				int carte , tuile;
 				Scanner sc = new Scanner(System.in);
-				System.out.println("Joueur 1 : Jouez une carte");
-				System.out.println("Choisissez l'index de la carte : ");
-				carte = sc.nextInt();
-				System.out.println("Choisissez la tuile : ");
-				tuile = sc.nextInt();
-				j.jouerCarte('G', 'D', carte-1, tuile-1);//2ème argument à demander au joueur
-				System.out.println(j.compterTuiles('G'));
+				do {
+					System.out.println(j.getJoueur().getNom() + " : Jouez une carte");
+					do {
+						System.out.println("Choisissez l'index de la carte : ");
+						carte = sc.nextInt();
+					}while(carte < 1 || carte > Joueur.NB_CARTE_MAX);
+					do {
+						System.out.println("Choisissez la tuile : ");
+						tuile = sc.nextInt();
+					}while(tuile < 1 || tuile > NB_TUILE);
+					sc.nextLine();
+					do {
+						System.out.println("Choisissez le cote ou vous voulez jouer : ");
+						cote = sc.nextLine().charAt(0);
+					}while(cote != 'D' && cote != 'G');
+				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));//2eme argument � demander au joueur
+				System.out.println(j.compterTuiles());
 				System.out.println(j);
-				System.out.println("Joueur 2 : Jouez une carte");
-				System.out.println("Choisissez l'index de la carte : ");
-				carte = sc.nextInt();
-				System.out.println("Choisissez la tuile : ");
-				tuile = sc.nextInt();
-				j.jouerCarte('D', 'G',carte-1, tuile-1); //2ème argument à demander au joueur
-				System.out.println(j.compterTuiles('D'));
-				System.out.println(j);
+				j.changerJoueur();	
 			}
 			catch(Exception e) {
 				System.out.println(e);

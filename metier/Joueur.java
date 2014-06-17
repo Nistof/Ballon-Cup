@@ -108,6 +108,7 @@ public class Joueur {
 	}
 	
 	public String getNom() { return this.nom; }
+	public char getCote() { return this.cote; }
 	
 	public String toString () {
 		int i=0;
