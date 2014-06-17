@@ -126,12 +126,18 @@ public class Jeu {
 	}
 
 	// Initialisation des tuiles dans un etat donnee
-	private void initialiserTuiles( String[] etatTuiles ) {
-		if( etatTuiles.length<NB_TUILE ) initialiserTuiles();
+	// Format de etatTuile:
+	// Chaque ligne correspond à une tuile, la taille du tableau doit être == à NB_TUILE
+	// Cartes à gauche | paysage | cartes à droite | cubes
+	// Cartes : Premier caractère de la couleur suivi de 2 chiffres
+	// Paysage: PLAINE ou MONTAGNE
+	// Cubes:   Premier caractère de la couleur suivi du nombre de cube entre 1 et 4
+	// Exemple: R10V04|PLAINE|G04J02|R1V2J1
+	private boolean initialiserTuiles( String[] etatTuiles ) {
+		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
 		
-		int deb, fin;
+		int deb, fin, trouve;
 		ArrayList<Carte> gauche, droite;
-		ArrayList<Cube> cubes;
 		Pattern p;
 		Matcher m;
 		
@@ -139,18 +145,18 @@ public class Jeu {
 			// Decoupe de la chaine en 4 sous chaines
 			// Cote gauche
 			deb = 0;
-			fin = etatTuiles[i].indexOf( deb, "|" );
-			String carteGauche = etatTuiles[i].substring( deb, fin );
+			fin = etatTuiles[i].indexOf( "|", deb );
+			String cartesGauche = etatTuiles[i].substring( deb, fin );
 			
 			// Paysage
 			deb = fin;
-			fin = etatTuiles[i].indexOf( deb, "|" );
+			fin = etatTuiles[i].indexOf( "|", deb );
 			String paysage = etatTuiles[i].substring( deb, fin );
 			
 			// Cote droit
 			deb = fin;
-			fin = etatTuiles[i].indexOf( deb, "|" );
-			String carteDroite = etatTuiles[i].substring( deb, fin );
+			fin = etatTuiles[i].indexOf( "|", deb );
+			String cartesDroite = etatTuiles[i].substring( deb, fin );
 			
 			// Cubes
 			deb = fin;
@@ -186,27 +192,32 @@ public class Jeu {
 						couleur = "DEFAUT";
 				}
 				
-				nbCube = Integer.parseInt( cubes.charAt(1) );
+				nbCube = Integer.parseInt( ""+cubes.charAt(1) );
 				
 				for( int j=0; j<nbCube; j++ )
 					this.tuiles[i].ajouterCube( new Cube( couleur ) );
 			}
 			
 			// Ajout des cartes cote gauche
+			trouve = 0;
 			gauche = this.creerCartes( cartesGauche );
-			while ( !gauche.isEmpty()) {
+			while ( !gauche.isEmpty() && trouve != 2) {
 				Carte tmp = piocheCartes.piocher();
 				if ( gauche.get(0).equals( tmp)) {
 					tuiles[i].ajouterCarte('G', tmp);
 					gauche.remove(0);
+					trouve = 0;
 				} else {
 					defausse.ajouter( tmp);
 				}
-				if ( pioche.estVide())
-					pioche.ajouter( defausse.transferer());
+				if ( piocheCartes.estVide()) {
+					piocheCartes.ajouter( defausse.transferer());
+					trouve++;
+				}
 			}
 				
 			// Ajout des cartes cote droit
+			trouve = 0;
 			droite = this.creerCartes( cartesDroite );
 			while ( !droite.isEmpty()) {
 				Carte tmp = piocheCartes.piocher();
@@ -216,10 +227,12 @@ public class Jeu {
 				} else {
 					defausse.ajouter( tmp);
 				}
-				if ( pioche.estVide())
-					pioche.ajouter( defausse.transferer());
+				if ( piocheCartes.estVide())
+					piocheCartes.ajouter( defausse.transferer());
 			}
 		}
+		
+		return true;
 	}
 	
 	public void initialiserJoueurs( String[] etatJoueurs ) {
