@@ -51,9 +51,15 @@ public class Jeu {
 			sc.close();
 		} catch ( FileNotFoundException e) { System.out.println("Le fichier n'existe pas."); System.exit(1); }
 		initialiserPiocheCartes( fichier);
+		piocheCartes.melanger();
 				
 		initialiserJoueurs();
 		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+		piocheCubes.melanger();
+		
+		//Placement des cubes sur les tuiles
+		for ( int i = 0; i < NB_TUILE; i++)
+			placerCubes( i);
 	}
 	
 	//Méthode qui initialise les tuiles dans un état initial
@@ -133,7 +139,12 @@ public class Jeu {
 		//Cubes gris
 		for ( int i = 0; i < gris; i++ )
 			piocheCubes.ajouter( new Cube("GRIS"));
-	} 
+	}
+	
+	public void placerCubes ( int indTuile) {
+		for ( int i = 0; i < tuiles[indTuile].getNombre(); i++)
+			tuiles[indTuile].ajouterCube( piocheCubes.piocher());
+	}
 	
 	public void jouerCarte( char cote, int indCarte, int indTuile ) {
 		if( cote == 'D' )
