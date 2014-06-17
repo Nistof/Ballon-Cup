@@ -147,11 +147,14 @@ public class Jeu {
 			tuiles[indTuile].ajouterCube( piocheCubes.piocher());
 	}
 	
-	public void jouerCarte( char cote, int indCarte, int indTuile ) {
-		if( cote == 'D' )
+	public void jouerCarte( char coteJ, char cote, int indCarte, int indTuile ) {
+		if( coteJ == 'D' ) {
 			joueurD.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
-		else
+			joueurD.ajouterCarte( piocheCartes.piocher());
+		} else {
 			joueurG.jouerCarte( indCarte, cote, this.tuiles[indTuile] );
+			joueurG.ajouterCarte( piocheCartes.piocher());
+		}
 	}
 
 	public String afficherMain( char cote ) {
@@ -225,17 +228,18 @@ public class Jeu {
 
 	public static void main (String[] a) {
 		Jeu j = new Jeu();
+		System.out.println(j);
+		
 		while(j.continuer()) {
 			try {
 				int carte , tuile;
-				System.out.println(j);
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Joueur 1 : Jouez une carte");
 				System.out.println("Choisissez l'index de la carte : ");
 				carte = sc.nextInt();
 				System.out.println("Choisissez la tuile : ");
 				tuile = sc.nextInt();
-				j.jouerCarte('G', carte, tuile);
+				j.jouerCarte('G', 'D', carte, tuile);//2ème argument à demander au joueur
 				System.out.println(j.compterTuiles('G'));
 				System.out.println(j);
 				System.out.println("Joueur 2 : Jouez une carte");
@@ -243,7 +247,7 @@ public class Jeu {
 				carte = sc.nextInt();
 				System.out.println("Choisissez la tuile : ");
 				tuile = sc.nextInt();
-				j.jouerCarte('D',carte, tuile);
+				j.jouerCarte('D', 'G',carte, tuile); //2ème argument à demander au joueur
 				System.out.println(j.compterTuiles('D'));
 				System.out.println(j);
 			}
