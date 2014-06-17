@@ -139,7 +139,7 @@ public class Tuile {
 	public int    getNombre () { return this.nombre ; }
 	
 	public String toString () {
-		String cubes   = TexteUtil.centrer( this.cubes.toString()            , 50 );
+		String cubes   = TexteUtil.centrer( this.cubes.toString()            , 55 );
 		String gauche  = TexteUtil.centrer( this.gauche.toString()           , 20 );
 		String paysage = TexteUtil.centrer( this.paysage + " " + this.nombre , 15 );
 		String droite  = TexteUtil.centrer( this.droite.toString()           , 20 );
