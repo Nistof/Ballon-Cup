@@ -194,14 +194,36 @@ public class Jeu {
 			
 			// Ajout des cartes cote gauche
 			gauche = this.creerCartes( cartesGauche );
-			for( Carte c : gauche )
-				this.tuiles[i].ajouterCarte( 'G', c );
+			while ( !gauche.isEmpty()) {
+				Carte tmp = piocheCartes.piocher();
+				if ( gauche.get(0).equals( tmp)) {
+					tuiles[i].ajouterCarte('G', tmp);
+					gauche.remove(0);
+				} else {
+					defausse.ajouter( tmp);
+				}
+				if ( pioche.estVide())
+					pioche.ajouter( defausse.transferer());
+			}
 				
 			// Ajout des cartes cote droit
 			droite = this.creerCartes( cartesDroite );
-			for( Carte c : droite )
-				this.tuiles[i].ajouterCarte( 'D', c );
+			while ( !droite.isEmpty()) {
+				Carte tmp = piocheCartes.piocher();
+				if ( droite.get(0).equals( tmp)) {
+					tuiles[i].ajouterCarte('D', tmp);
+					droite.remove(0);
+				} else {
+					defausse.ajouter( tmp);
+				}
+				if ( pioche.estVide())
+					pioche.ajouter( defausse.transferer());
+			}
 		}
+	}
+	
+	public void initialiserJoueurs( String[] etatJoueurs ) {
+		if( etatJoueurs.length<2 ) initialiserJoueurs();	
 	}
 	
 	//Méthode qui initialise la pioche selon la chaine passée en paramètre

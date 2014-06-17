@@ -22,6 +22,10 @@ public class Carte {
 	public Couleur getCouleur () { return this.couleur; }
 	public int     getValeur  () { return this.valeur;  }
 	
+	public boolean equals( Carte c ) {
+		return (this.couleur.equals(c.couleur) && this.valeur==c.valeur);
+	}
+	
 	public String toString() {
 		return this.couleur.name().charAt(0) + ":" + String.format( "%02d", this.valeur ); 
 	}
