@@ -2,8 +2,8 @@
  * @author MARECAL Thomas
  * @author MARTIN Florian
  * @author QUENTIN Thibaut 
+ * Groupe I2
  * @version 1 du 17/06/2014
- * 
  */
 
 import metier.*;
@@ -135,6 +135,33 @@ public class Jeu {
 			piocheCubes.ajouter( new Cube("GRIS"));
 	} 
 
+
+
+
+	public String afficherMain( char cote ) {
+		if( cote == 'D' )
+			return this.joueurD.afficherMain();
+		else
+			return this.joueurG.afficherMain();
+	}
+	
+	public boolean continuer() {
+		if( !this.joueurD.aGagne() && !this.joueurG.aGagne() )
+			return true;
+			
+		return false;
+	}
+	
+	public String toString() {
+		String s="";
+		
+		for( int i=0; i<this.tuile.length; i++ )
+			s += this.tuile[i].toString() + "\n";
+			
+		s += "\nJOUEUR 1 : " + this.joueurG.afficherMain() + " || JOUEUR 2 : " + joueurD.afficherMain() + "\n";
+		
+		return s;
+	}
 
 
 	public static void main (String[] a) {

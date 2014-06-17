@@ -23,6 +23,6 @@ public class Carte {
 	public int     getValeur  () { return this.valeur;  }
 	
 	public String toString() {
-		return "Carte " + this.couleur + " : " + this.valeur; 
+		return this.couleur.name().charAt(0) + ":" + this.valeur; 
 	}
 }

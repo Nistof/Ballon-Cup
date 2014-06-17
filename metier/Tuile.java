@@ -138,12 +138,10 @@ public class Tuile {
 	public int    getNombre () { return this.nombre ; }
 	
 	public String toString () {
-		String cartes = "",tuile = "";
-		tuile += this.paysage + " : " + cubes.size() + " cubes -> ";
-		for(Cube c : cubes)
-			tuile += c.getCouleur() + " ";
-		cartes += "Gauche : " + gauche + "\n";
-		cartes += "Droite : " + droite + "\n";
-		return tuile+"\n"+cartes;
+		String gauche  = TexteUtil.centrer( this.gauche.toString(), 20 );
+		String paysage = TexteUtil.centrer( this.paysage          , 10 );
+		String droite  = TexteUtil.centrer( this.droite.toString(), 20 );
+		
+		return  (gauche + paysage + droite);
 	}	
 }
