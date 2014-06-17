@@ -107,6 +107,8 @@ public class Joueur {
 			cubes.add(c);
 	}
 	
+	public String getNom() { return this.nom; }
+	
 	public String toString () {
 		int i=0;
 	
