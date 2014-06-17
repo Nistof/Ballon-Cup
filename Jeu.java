@@ -118,6 +118,85 @@ public class Jeu {
 			cs.add( new Carte( couleur, valeur))
 		}
 	}
+
+	// Initialisation des tuiles dans un etat donnee
+	private void initialiserTuiles( String[] etatTuiles ) {
+		if( etatTuiles.length<NB_TUILE ) initialiserTuiles();
+		
+		int deb, fin;
+		ArrayList<Carte> gauche, droite;
+		ArrayList<Cube> cubes;
+		Pattern p;
+		Matcher m;
+		
+		for( int i=0; i<etatTuiles.length; i++ ) {
+			// Decoupe de la chaine en 4 sous chaines
+			// Cote gauche
+			deb = 0;
+			fin = etatTuiles[i].indexOf( deb, "|" );
+			String carteGauche = etatTuiles[i].substring( deb, fin );
+			
+			// Paysage
+			deb = fin;
+			fin = etatTuiles[i].indexOf( deb, "|" );
+			String paysage = etatTuiles[i].substring( deb, fin );
+			
+			// Cote droit
+			deb = fin;
+			fin = etatTuiles[i].indexOf( deb, "|" );
+			String carteDroite = etatTuiles[i].substring( deb, fin );
+			
+			// Cubes
+			deb = fin;
+			String cubes = etatTuiles[i].substring( deb );
+			
+			
+			this.tuiles[i] = new Tuile( i+1, paysage );
+			
+			// Ajout des cubes
+			p = Pattern.compile( "[RVBGJ][0-" + NB_TUILE + "]" );
+			m = p.matcher( cubes );
+			
+			int nbCube=0;
+			String couleur="";
+			while( m.find() ) {
+				switch ( cubes.charAt(0)){
+					case 'R':
+						couleur = "ROUGE";
+						break;
+					case 'G':
+						couleur = "GRIS";
+						break;
+					case 'B':
+						couleur = "BLEU";
+						break;
+					case 'V':
+						couleur = "VERT";
+						break;
+					case 'J':
+						couleur = "JAUNE";
+						break;
+					default:
+						couleur = "DEFAUT";
+				}
+				
+				nbCube = Integer.parseInt( cubes.charAt(1) );
+				
+				for( int j=0; j<nbCube; j++ )
+					this.tuiles[i].ajouterCube( new Cube( couleur ) );
+			}
+			
+			// Ajout des cartes cote gauche
+			gauche = this.creerCartes( cartesGauche );
+			for( Carte c : gauche )
+				this.tuiles[i].ajouterCarte( 'G', c );
+				
+			// Ajout des cartes cote droit
+			droite = this.creerCartes( cartesDroite );
+			for( Carte c : droite )
+				this.tuiles[i].ajouterCarte( 'D', c );
+		}
+	}
 	
 	//Méthode qui initialise la pioche selon la chaine passée en paramètre
 	private void initialiserPiocheCartes ( String cartes) {
@@ -267,7 +346,7 @@ public class Jeu {
 						System.out.println("Choisissez le cote ou vous voulez jouer : ");
 						cote = sc.nextLine().charAt(0);
 					}while(cote != 'D' && cote != 'G');
-				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));//2eme argument � demander au joueur
+				}while(!j.jouerCarte(j.getJoueur().getCote(), cote, carte-1, tuile-1));//2eme argument \E0 demander au joueur
 				System.out.println(j.compterTuiles());
 				System.out.println(j);
 				j.changerJoueur();	
