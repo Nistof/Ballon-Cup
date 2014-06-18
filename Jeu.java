@@ -7,7 +7,7 @@
  */
 
 import metier.*;
-import util.TexteUtil;
+import util.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,7 +70,7 @@ public class Jeu {
 		trophees.add( new Trophee("GRIS" , TROPHEE_GRIS ));
 		
 		initialiserPiocheCartes( etatPioche);
-		initialiserPiocheCubes( NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS);
+		initialiserPiocheCubes( new int[]{NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS});
 		piocheCartes.melanger();
 		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
@@ -273,26 +273,10 @@ public class Jeu {
 		}
 	}
 	
-	private void initialiserPiocheCubes ( int rouge, int jaune, int vert, int bleu, int gris) {
-		//Cubes rouges
-		for ( int i = 0; i < rouge; i++ )
-			piocheCubes.ajouter( new Cube("ROUGE"));
-		
-		//Cubes jaunes
-		for ( int i = 0; i < jaune; i++ )
-			piocheCubes.ajouter( new Cube("JAUNE"));
-		
-		//Cubes verts
-		for ( int i = 0; i < vert; i++ )
-			piocheCubes.ajouter( new Cube("VERT"));
-		
-		//Cubes bleu
-		for ( int i = 0; i < bleu; i++ )
-			piocheCubes.ajouter( new Cube("BLEU"));
-		
-		//Cubes gris
-		for ( int i = 0; i < gris; i++ )
-			piocheCubes.ajouter( new Cube("GRIS"));
+	private void initialiserPiocheCubes ( int[] couleurs) {
+		for(int i = 0 ; i < couleurs.length ; i++)
+			for ( int j = 0; j < couleurs[i]; j++ )
+				piocheCubes.ajouter( new Cube(Couleur.getCouleur(i)));	
 	}
 	
 	//Place les cubes sur la tuile passée en indice
