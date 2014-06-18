@@ -7,7 +7,7 @@
 
 package metier;
 import java.util.*;
-import util.TexteUtil;
+import util.*;
 
 public class Tuile {
 	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
@@ -105,14 +105,14 @@ public class Tuile {
 
 	public boolean couleurDispo (Couleur c) {
 		int cubeCouleur = 0, carteCouleur = 0;
-		for(Cube c : cubes)
-			if(c.getCouleur().equals(c))
+		for(Cube cu : cubes)
+			if(cu.getCouleur().equals(c))
 				cubeCouleur++;
-		for(Carte c : gauche)
-			if(c.getCouleur().equals(c))
+		for(Carte g : gauche)
+			if(g.getCouleur().equals(c))
 				carteCouleur++;
-		for(Carte c : gauche)
-			if(c.getCouleur().equals(c))
+		for(Carte d : droite)
+			if(d.getCouleur().equals(c))
 				carteCouleur++;
 		return (cubeCouleur==carteCouleur)?false:true;
 	}

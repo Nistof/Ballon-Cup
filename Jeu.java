@@ -374,7 +374,7 @@ public class Jeu {
 	}
 
 	public boolean peutJoueur () {
-		for(Tuile t : tuiles) {
+		for(Tuile t : tuiles) 
 			for(Couleur c : joueurs[dernierJoueur].getCouleurs())
 				if(t.couleurDispo(c))
 					return true;
