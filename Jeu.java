@@ -408,6 +408,14 @@ public class Jeu {
 		return false;
 	}
 
+	public void echanger (Couleur c, Couleur c2) {
+		if(joueurs[dernierJoueur].getCubesCouleurs().contains(c)) {
+			if(joueurs[dernierJoueur].getNbCubes(c) > 3) {
+				joueurs[dernierJoueur].retirerCubes(c, 3);	
+			}
+		}
+	}
+
 	public static void main (String[] a) {
 		Jeu j;
 		String choix;
