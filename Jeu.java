@@ -337,7 +337,8 @@ public class Jeu {
 				
 			else {
 				String joueur1, joueur2;
-				String[] etatTuile = new String[4];		
+				String[] etatTuile  = new String[4];		
+				String[] etatJoueur = new String[2];
 				
 				System.out.print( "Nom du joueur 1 : " );
 				joueur1 = sc.nextLine();
@@ -345,13 +346,19 @@ public class Jeu {
 				System.out.print( "Nom du joueur 2 : " );
 				joueur2 = sc.nextLine();
 				
-				System.out.println( "Exemple pour initialiser une Tuile => R10V04:PLAINE:V04V02:R1V2J1" );
+				System.out.println( "\nExemple pour initialiser une Tuile => R10V04:PLAINE:V04V02:R1V2J1" );
 				for( int i=0; i<NB_TUILE; i++ ) {
 					System.out.print( "Initialiser la tuile " + (i+1) + " : " );
 					etatTuile[i] = sc.nextLine();
 				}
 				
-				j = new Jeu( joueur1, joueur2, etatTuile, new String[0] );
+				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03" );
+				for( int i=0; i<2; i++ ) {
+					System.out.print( "Initialiser le joueur " + (i+1) + " : " );
+					etatJoueur[i] = sc.nextLine();
+				}
+				
+				j = new Jeu( joueur1, joueur2, etatTuile, /*etatJoueur*/ new String[0] );
 			}
 			
 			
@@ -381,6 +388,8 @@ public class Jeu {
 				j.distribuerTrophee();
 				j.changerJoueur();	
 			}
+			
+			sc.close();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
