@@ -349,34 +349,32 @@ public class Jeu {
 				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophee(), 55) + "\n\n";
 		}
 		
-		
 		return s;
 	}
 		
 	public String compterTuiles () {
 		String s = "";
 		for(Tuile t : tuiles) {
+			int coteGagnant = 0;
 			switch(t.gagnant()) {
 				case 'G':
-					s += joueurs[0].getNom() + " gagne " + t.getNombre() + " cubes";
-					t.oterCubes(joueurs[0]);
-					t.oterCartes(defausse);
-					placerCubes(t.getNombre()-1);
+					coteGagnant = 0;
 					break;
 				case 'D':
-					s += joueurs[1].getNom() + " gagne " + t.getNombre() + " cubes";
-					t.oterCubes(joueurs[1]);
-					t.oterCartes(defausse);
-					placerCubes(t.getNombre()-1);
+					coteGagnant = 1;
 					break;
 				case 'N':
-					s += joueurs[dernierJoueur].getNom() + " gagne " + t.getNombre() + " cubes";
-					t.oterCubes(joueurs[dernierJoueur]);
-					t.oterCartes(defausse);
-					placerCubes(t.getNombre()-1);
+					coteGagnant = dernierJoueur;
 					break;
 				default:
+					coteGagnant = -1;
 					break;
+			}
+			if(coteGagnant != -1) {
+				s += joueurs[coteGagnant].getNom() + " gagne " + t.getNombre() + " cubes";
+				t.oterCubes(joueurs[coteGagnant]);
+				t.oterCartes(defausse);
+				placerCubes(t.getNombre()-1);
 			}
 		}
 		return s;
