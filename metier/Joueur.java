@@ -41,14 +41,22 @@ public class Joueur {
 		return this.trophee.toString();
 	}
 	
-	public ArrayList<Couleur> getCouleurs () {
+	public ArrayList<Couleur> getCartesCouleurs () {
 		ArrayList<Couleur> alTemp = new ArrayList<Couleur>();
-		for(Carte c : jeu) {
+		for(Carte c : jeu)
 			if(!alTemp.contains(c.getCouleur()))
 				alTemp.add(c.getCouleur());
-		}
 		return alTemp;
 	}
+
+	public ArrayList<Couleur> getCubesCouleurs () {
+		ArrayList<Couleur> alTemp = new ArrayList<Couleur>();
+		for(Cube c : cubes)
+			if(!alTemp.contains(c.getCouleur()))
+				alTemp.add(c.getCouleur());
+		return alTemp;		
+	}
+
 
 	// On ajoute un trophee si et seulement si il y a le bon nombre de cubes de meme couleur
 	public void ajouterTrophee( Trophee t ) {

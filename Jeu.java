@@ -351,6 +351,7 @@ public class Jeu {
 				t.oterCubes(joueurs[coteGagnant]);
 				t.oterCartes(defausse);
 				placerCubes(t.getNombre()-1);
+				dernierJoueur = coteGagnant;
 			}
 		}
 		return s;
@@ -375,9 +376,18 @@ public class Jeu {
 
 	public boolean peutJoueur () {
 		for(Tuile t : tuiles) 
-			for(Couleur c : joueurs[dernierJoueur].getCouleurs())
+			for(Couleur c : joueurs[dernierJoueur].getCartesCouleurs())
 				if(t.couleurDispo(c))
 					return true;
+		return false;
+	}
+
+	public boolean echangePossible () {
+		if(trophees.size() < TROPHEES.length)
+			return false;
+		for(Couleur c : joueurs[dernierJoueur].getCubesCouleurs()) 
+			if(!trophees.contains(c))
+				return true;
 		return false;
 	}
 
@@ -419,7 +429,7 @@ public class Jeu {
 					etatJoueur[i] = sc.nextLine();
 				}
 				
-				j = new Jeu( joueur1, joueur2, etatTuile, /*etatJoueur*/ new String[0] );
+				j = new Jeu( joueur1, joueur2, etatTuile, etatJoueur);
 			}
 			
 			
