@@ -22,11 +22,11 @@ public class Jeu {
 	public final static String FICHIER_CARTES = "ressources/cartes";
 	
 	//Nombre de cubes de chaque couleur
-	public final static int    NB_CUBE_ROUGE  = 1;//13
-	public final static int    NB_CUBE_JAUNE  = 1;
-	public final static int    NB_CUBE_VERT   =  1;
-	public final static int    NB_CUBE_BLEU   =  1;
-	public final static int    NB_CUBE_GRIS   =  1;
+	public final static int    NB_CUBE_ROUGE  = 13;
+	public final static int    NB_CUBE_JAUNE  = 11;
+	public final static int    NB_CUBE_VERT   =  9;
+	public final static int    NB_CUBE_BLEU   =  7;
+	public final static int    NB_CUBE_GRIS   =  5;
 	
 	//Valeurs des cartes trophee
 	private final static int   TROPHEE_ROUGE  =  7;
@@ -184,7 +184,7 @@ public class Jeu {
 			this.tuiles.add(new Tuile( i+1, paysage ));
 			
 			// Ajout des cubes
-			p = Pattern.compile( "[RVBGJ][0-" + NB_TUILE + "]" );
+			p = Pattern.compile( "[RVBGJ][0-" + (NB_TUILE>0 && NB_TUILE<=9?NB_TUILE:4) + "]" );
 			m = p.matcher( cubes );
 			
 			int nbCube=0;
@@ -311,29 +311,21 @@ public class Jeu {
 	public int getNbTuile () { return this.tuiles.size(); }	
 	
 	public boolean jouerCarte(char cote, int indCarte, int indTuile ) {
-		if( joueurs[dernierJoueur].getCote() == 'D' ) {
-			if(joueurs[1].jouerCarte( indCarte, cote, this.tuiles.get(indTuile) )) {
-				joueurs[1].ajouterCarte( piocheCartes.piocher());
-				return true;
-			}
-		} else {
-			if(joueurs[0].jouerCarte( indCarte, cote, this.tuiles.get(indTuile))) {
-				joueurs[0].ajouterCarte( piocheCartes.piocher());
-				return true;
-			}
+		Joueur j = ( joueurs[dernierJoueur].getCote() == 'G')?joueurs[0]:joueurs[1];
+		if(j.jouerCarte( indCarte, cote, this.tuiles.get(indTuile) )) {
+			j.ajouterCarte( piocheCartes.piocher());
+			return true;
 		}
 		return false;
 	}
 	
 	public void enleverTuiles (int index) {
-		System.out.println("Par la");
 		this.tuiles.remove(index);
 	}
 
 	public boolean continuer() {
 		if( !this.joueurs[1].aGagne() && !this.joueurs[0].aGagne() )
-			return true;
-			
+			return true;	
 		return false;
 	}
 	
