@@ -228,7 +228,7 @@ public class Jeu {
 	private void initialiserPiocheCubes ( int[] couleurs) {
 		for(int i = 0 ; i < couleurs.length ; i++)
 			for ( int j = 0; j < couleurs[i]; j++ )
-				piocheCubes.ajouter( new Cube(Couleur.getCouleur(i)));	
+				piocheCubes.ajouter( new Cube(Couleur.getCouleur(i).name()));	
 	}
 	
 	//Place les cubes sur la tuile passée en indice
