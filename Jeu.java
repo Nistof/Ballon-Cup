@@ -116,25 +116,7 @@ public class Jeu {
 		//Creation des cartes
 		while ( m.find()) {
 			carte = m.group();
-			switch ( carte.charAt(0)){
-				case 'R':
-					couleur = "ROUGE";
-					break;
-				case 'G':
-					couleur = "GRIS";
-					break;
-				case 'B':
-					couleur = "BLEU";
-					break;
-				case 'V':
-					couleur = "VERT";
-					break;
-				case 'J':
-					couleur = "JAUNE";
-					break;
-				default:
-					couleur = "DEFAUT";
-			}
+			couleur = Couleur.getCouleur( carte.charAt(0)).name();
 			valeur = Integer.parseInt( carte.substring(1));
 			
 			cs.add( new Carte( couleur, valeur));
@@ -155,7 +137,7 @@ public class Jeu {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
 		
 		int deb, fin, trouve;
-		ArrayList<Carte> gauche, droite;
+		ArrayList<Carte> cote;
 		Pattern p;
 		Matcher m;
 		
@@ -188,65 +170,35 @@ public class Jeu {
 			m = p.matcher( cubes );
 			
 			int nbCube=0;
-			String couleur="";
+			String couleur = "", cube = "";
 			while( m.find() ) {
-				switch ( cubes.charAt(0)){
-					case 'R':
-						couleur = "ROUGE";
-						break;
-					case 'G':
-						couleur = "GRIS";
-						break;
-					case 'B':
-						couleur = "BLEU";
-						break;
-					case 'V':
-						couleur = "VERT";
-						break;
-					case 'J':
-						couleur = "JAUNE";
-						break;
-					default:
-						couleur = "DEFAUT";
-				}
+				cube = m.group();
+				couleur = Couleur.getCouleur( cube.charAt(0)).name();
 				
-				nbCube = Integer.parseInt( ""+cubes.charAt(1) );
+				nbCube = Integer.parseInt( "" + cube.charAt(1) );
 				
 				for( int j=0; j<nbCube; j++ )
 					this.tuiles.get(i).ajouterCube( new Cube( couleur ) );
 			}
 			
-			// Ajout des cartes cote gauche
-			trouve = 0;
-			gauche = this.creerCartes( cartesGauche );
-			while ( !gauche.isEmpty() && trouve != 2) {
-				Carte tmp = piocheCartes.piocher();
-				if ( gauche.get(0).equals( tmp)) {
-					tuiles.get(i).ajouterCarte('G', tmp);
-					gauche.remove(0);
-					trouve = 0;
-				} else {
-					defausse.ajouter( tmp);
+			// Ajout des cartes cote gauche et cote droit
+			for ( int j = 0; j < 2; i++) {
+				cote = (j == 0?creerCartes( cartesGauche): creerCartes( cartesDroite));
+				trouve = 0;
+				while ( !cote.isEmpty() && trouve != 2) {
+					Carte tmp = piocheCartes.piocher();
+					if ( cote.get(0).equals( tmp)) {
+						tuiles.get(i).ajouterCarte('G', tmp);
+						cote.remove(0);
+						trouve = 0;
+					} else {
+						defausse.ajouter( tmp);
+					}
+					if ( piocheCartes.estVide()) {
+						piocheCartes.ajouter( defausse.transferer());
+						trouve++;
+					}
 				}
-				if ( piocheCartes.estVide()) {
-					piocheCartes.ajouter( defausse.transferer());
-					trouve++;
-				}
-			}
-				
-			// Ajout des cartes cote droit
-			trouve = 0;
-			droite = this.creerCartes( cartesDroite );
-			while ( !droite.isEmpty()) {
-				Carte tmp = piocheCartes.piocher();
-				if ( droite.get(0).equals( tmp)) {
-					tuiles.get(i).ajouterCarte('D', tmp);
-					droite.remove(0);
-				} else {
-					defausse.ajouter( tmp);
-				}
-				if ( piocheCartes.estVide())
-					piocheCartes.ajouter( defausse.transferer());
 			}
 		}
 		
