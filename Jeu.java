@@ -128,7 +128,7 @@ public class Jeu {
 	// Exemple: R10V04:PLAINE:G04J02:R1V2J1
 	private boolean initialiserTuiles( String[] etatTuiles ) {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
-		int deb, fin, trouve;
+		int trouve;
 		ArrayList<Carte> listeC;
 		char cote;
 		Pattern p;
@@ -184,8 +184,69 @@ public class Jeu {
 		return true;
 	}
 	
+	//Format de etat joueur :
+	// Indice 0 = joueur 1
+	//   "  " 1 = joueur 2
+	// Chaine: Cubes:Cartes:Trophée
+	// Exemple: R6J5:J06R13G05:RG
 	public void initialiserJoueurs( String[] etatJoueurs ) {
-		if( etatJoueurs.length<2 ) initialiserJoueurs();	
+		if( etatJoueurs.length != 2 ) initialiserJoueurs();
+		
+		Pattern p;
+		Matcher m;
+		ArrayList<Carte> listeC;
+		int trouve;
+		
+		for( int i=0; i<etatJoueurs.length; i++ ) {		
+			// 0 : Cubes
+			// 1 : Cartes
+			// 2 : Trophées
+			String[] chJoueur = etatJoueurs[i].split(":");
+			
+			// Ajout des cubes
+			p = Pattern.compile( "[RVBGJ][1-9]" );
+			m = p.matcher( chJoueur[0] );
+			
+			int nbCube=0;
+			String cube = "";
+			Couleur couleur;
+			while( m.find() ) {
+				cube = m.group();
+				couleur = Couleur.getCouleur( cube.charAt(0));
+				
+				nbCube = Integer.parseInt( "" + cube.charAt(1) );
+				
+				for( int j=0; j<nbCube; j++ )
+					this.joueurs[i].ajouterCube( new Cube( couleur ) );
+			}
+			
+			//Ajout des cartes
+			listeC = creerCartes( chJoueur[1]);
+			trouve = 0;
+			while ( !listeC.isEmpty() && trouve != 2) {
+				Carte tmp = piocheCartes.piocher();
+				if ( listeC.get(0).equals( tmp)) {
+					joueurs[i].ajouterCarte( tmp);
+					listeC.remove(0);
+					trouve = 0;
+				} else {
+					defausse.ajouter( tmp);
+				}
+				if ( piocheCartes.estVide()) {
+					piocheCartes.ajouter( defausse.transferer());
+					trouve++;
+				}
+			}
+			
+			//Ajout des Trophées
+			while( chJoueur[2].length() != 0)
+				for ( Trophee t : trophees)
+					if (t.getCouleur().equals( Couleur.getCouleur( chJoueur[2].charAt(0)))) {
+						joueurs[i].ajouterTrophee( t);
+						trophees.remove(t);
+						chJoueur[2] = chJoueur[2].substring(1);
+					}
+		}
 	}
 
 	
