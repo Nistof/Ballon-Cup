@@ -102,6 +102,21 @@ public class Tuile {
 		
 		return false;
 	}
+
+	public boolean couleurDispo (Couleur c) {
+		int cubeCouleur = 0, carteCouleur = 0;
+		for(Cube c : cubes)
+			if(c.getCouleur().equals(c))
+				cubeCouleur++;
+		for(Carte c : gauche)
+			if(c.getCouleur().equals(c))
+				carteCouleur++;
+		for(Carte c : gauche)
+			if(c.getCouleur().equals(c))
+				carteCouleur++;
+		return (cubeCouleur==carteCouleur)?false:true;
+	}
+
 	
 	//Renvoie le côté du joueur gagnant.
 	public char gagnant() {
