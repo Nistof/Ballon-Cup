@@ -120,6 +120,7 @@ public class Joueur {
 	
 	public String getNom() { return this.nom; }
 	public char getCote() { return this.cote; }
+	public int  getNbCarte() { return this.jeu.size(); }
 	public int getNbCubes (Couleur c) {
 		int nb = 0;
 		for(int i = 0 ; i < cubes.size(); i++) 
