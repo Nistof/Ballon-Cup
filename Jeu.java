@@ -410,17 +410,17 @@ public class Jeu {
 
 	public static void main (String[] a) {
 		Jeu j;
-		char choix;
+		String choix;
 		Scanner sc = new Scanner(System.in);
 		
 		// MENU
 		try {
 			do {
 				System.out.print( "Jeu avec etats [N]ormal ou avec etats [I]nitialiser : " );
-				choix = Character.toUpperCase( sc.nextLine().charAt(0) );
-			} while( choix!='N' && choix!='I' );
+				choix = sc.nextLine().toUpperCase();
+			} while( choix.charAt(0)!='N' && choix.charAt(0)!='I' );
 			
-			if( choix == 'N' )
+			if( choix.charAt(0) == 'N' )
 				j = new Jeu();
 				
 			else {
@@ -462,7 +462,7 @@ public class Jeu {
 						choix = sc.nextLine();
 					} while( !choix.matches("[1-4]*") );
 					
-					nbCarteDefaussse = Integer.parseInt(choix);
+					nbCarteDefausse = Integer.parseInt(choix);
 						
 					// Defausse des cartes	
 					for( int i=0; i<nbCarteDefausse; i++ ) {
