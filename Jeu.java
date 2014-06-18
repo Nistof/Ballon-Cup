@@ -510,6 +510,14 @@ public class Jeu {
 				}while(!j.jouerCarte( cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
 				j.distribuerTrophee();
+			
+				if( j.echangePossible() ) {
+					// A gerer
+					
+					
+					
+				}
+		
 				j.changerJoueur();	
 			}
 			
