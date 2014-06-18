@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class Jeu {
 	public final static int    NB_TUILE       = 4;
-	public final static String FICHIER_CARTES = "ressources/cartes";
+	public final static String FICHIER_CARTES = "ressources/init1";
 	
 	//Nombre de cubes de chaque couleur { ROUGE, JAUNE, VERT, BLEU, GRIS}
-	public final static int[]    NB_CUBES       = { 13, 11, 9, 7, 5};
+	public final static int[]    NB_CUBES       = { 0, 0, 0, 0, 500};
 	
 	//Valeurs des cartes trophee
 	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
@@ -35,10 +35,10 @@ public class Jeu {
 	private ArrayList<Trophee> trophees     ;
 	private int                dernierJoueur;
 	
-	private static String[] tab = { "R05:MONTAGNE::R1", "R02:PLAINE:J07:R1J1", "R01:MONTAGNE:J03:R1V1J1", "R10V04:PLAINE:R04J02:R1V2J1"};
+	//private static String[] tab = { "R05:MONTAGNE::R1", "R02:PLAINE:J07:R1J1", "R01:MONTAGNE:J03:R1V1J1", "R10V04:PLAINE:R04J02:R1V2J1"};
 	
 	public Jeu () {		
-		this("Joueur Gauche", "Joueur Droite", tab, Jeu.chargerFichierCartes(), new String[0]);
+		this("Joueur Gauche", "Joueur Droite", new String[0], Jeu.chargerFichierCartes(), new String[0]);
 		
 		//Placement des cubes sur les tuiles
 		for ( int i = 0; i < tuiles.size(); i++) 
@@ -59,7 +59,7 @@ public class Jeu {
 		trophees = new ArrayList<Trophee>();
 		for(Integer i : TROPHEES)
 			trophees.add( new Trophee(Couleur.getCouleur(TROPHEES[0]-i), i)); // Maximum - celui en cours
-		
+		System.out.println(trophees);	
 		initialiserPiocheCartes( etatPioche);
 		initialiserPiocheCubes( NB_CUBES);
 		piocheCartes.melanger();
@@ -311,9 +311,9 @@ public class Jeu {
 
 	public static void main (String[] a) {
 		Jeu j = new Jeu();
-		System.out.println(j);
 		
 		while(j.continuer()) {
+			System.out.println(j);
 			try {
 				char cote;
 				int carte , tuile;
@@ -335,7 +335,6 @@ public class Jeu {
 					}while(cote != 'D' && cote != 'G');
 				}while(!j.jouerCarte( cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
-				System.out.println(j);
 				j.distribuerTrophee();
 				j.changerJoueur();	
 			}
