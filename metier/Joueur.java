@@ -44,6 +44,12 @@ public class Joueur {
 	// On ajoute un trophee si et seulement si il y a le bon nombre de cubes de meme couleur
 	public void ajouterTrophee( Trophee t ) {
 		trophee.add(t);
+		for(int i = 0,j = 0 ; i < cubes.size() && j < t.getValeur(); i++) {
+			if(cubes.get(i).getCouleur().equals(t.getCouleur())) {
+				cubes.remove(i--);
+				j++;
+			}
+		}
 	}
 	
 	// Si le joueur possede 3 trophee, il gagne la partie
