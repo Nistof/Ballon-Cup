@@ -14,11 +14,10 @@ public enum Couleur {
 	JAUNE ,
 	VERT  ,
 	BLEU  ,
-	GRIS  ,
-	DEFAUT;
+	GRIS  ;
 	
 	public static Couleur getCouleur ( String c) {
-		Couleur couleur = Couleur.DEFAUT;
+		Couleur couleur = null;
 		
 		for ( Couleur coul : Couleur.values())
 			if ( coul.name().equals(c))
@@ -28,7 +27,7 @@ public enum Couleur {
 	}
 	
 	public static Couleur getCouleur ( char c) {
-		Couleur couleur = Couleur.DEFAUT;
+		Couleur couleur = null;
 		
 		for ( Couleur coul : Couleur.values())
 			if ( coul.name().charAt(0) == c)
@@ -38,7 +37,7 @@ public enum Couleur {
 	}
 	
 	public static Couleur getCouleur ( int i) {
-		Couleur couleur = Couleur.DEFAUT;
+		Couleur couleur = null;
 		
 		for ( Couleur coul : Couleur.values())
 			if ( coul.ordinal() == i)
