@@ -21,12 +21,8 @@ public class Jeu {
 	public final static int    NB_TUILE       = 4;
 	public final static String FICHIER_CARTES = "ressources/cartes";
 	
-	//Nombre de cubes de chaque couleur
-	public final static int    NB_CUBE_ROUGE  = 13;
-	public final static int    NB_CUBE_JAUNE  = 11;
-	public final static int    NB_CUBE_VERT   =  9;
-	public final static int    NB_CUBE_BLEU   =  7;
-	public final static int    NB_CUBE_GRIS   =  5;
+	//Nombre de cubes de chaque couleur { ROUGE, JAUNE, VERT, BLEU, GRIS}
+	public final static int    NB_CUBES       = { 13, 11, 9, 7, 5};
 	
 	//Valeurs des cartes trophee
 	private final static int   TROPHEE_ROUGE  =  7;
@@ -35,16 +31,18 @@ public class Jeu {
 	private final static int   TROPHEE_BLEU   =  4;
 	private final static int   TROPHEE_GRIS   =  3;
 
-	private ArrayList<Tuile> tuiles    ;
-	private Joueur[]      joueurs      ;
-	private Pioche<Carte> piocheCartes ;
-	private Pioche<Cube>  piocheCubes  ;
-	private Defausse      defausse     ;
-	private ArrayList<Trophee> trophees;
-	private int           dernierJoueur;
+	private ArrayList<Tuile>   tuiles       ;
+	private Joueur[]           joueurs      ;
+	private Pioche<Carte>      piocheCartes ;
+	private Pioche<Cube>       piocheCubes  ;
+	private Defausse           defausse     ;
+	private ArrayList<Trophee> trophees     ;
+	private int                dernierJoueur;
+	
+	private static String[] tab = { "R05:MONTAGNE::R1", "R02:PLAINE:J07:R1J1", "R01:MONTAGNE:J03:R1V1J1", "R10V04:PLAINE:R04J02:R1V2J1"};
 	
 	public Jeu () {		
-		this("Joueur Gauche", "Joueur Droite", new String[0], Jeu.chargerFichierCartes(), new String[0]);
+		this("Joueur Gauche", "Joueur Droite", tab, Jeu.chargerFichierCartes(), new String[0]);
 		
 		//Placement des cubes sur les tuiles
 		for ( int i = 0; i < tuiles.size(); i++) 
@@ -70,7 +68,7 @@ public class Jeu {
 		trophees.add( new Trophee("GRIS" , TROPHEE_GRIS ));
 		
 		initialiserPiocheCartes( etatPioche);
-		initialiserPiocheCubes( new int[]{NB_CUBE_ROUGE, NB_CUBE_JAUNE, NB_CUBE_VERT, NB_CUBE_BLEU, NB_CUBE_GRIS});
+		initialiserPiocheCubes( NB_CUBES);
 		piocheCartes.melanger();
 		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
@@ -128,49 +126,34 @@ public class Jeu {
 	// Initialisation des tuiles dans un etat donnee
 	// Format de etatTuile:
 	// Chaque ligne correspond a une tuile, la taille du tableau doit etre == a NB_TUILE
-	// Cartes a gauche | paysage | cartes a droite | cubes
+	// Cartes a gauche : paysage : cartes a droite : cubes
 	// Cartes : Premier caractere de la couleur suivi de 2 chiffres
 	// Paysage: PLAINE ou MONTAGNE
 	// Cubes:   Premier caractere de la couleur suivi du nombre de cube entre 1 et 4
-	// Exemple: R10V04|PLAINE|G04J02|R1V2J1
+	// Exemple: R10V04:PLAINE:G04J02:R1V2J1
 	private boolean initialiserTuiles( String[] etatTuiles ) {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
-		
 		int deb, fin, trouve;
-		ArrayList<Carte> cote;
+		ArrayList<Carte> listeC;
+		char cote;
 		Pattern p;
 		Matcher m;
 		
-		for( int i=0; i<etatTuiles.length; i++ ) {
-			// Decoupe de la chaine en 4 sous chaines
-			// Cote gauche
-			deb = 0;
-			fin = etatTuiles[i].indexOf( "|", deb );
-			String cartesGauche = etatTuiles[i].substring( deb, fin );
-			
-			// Paysage
-			deb = fin;
-			fin = etatTuiles[i].indexOf( "|", deb );
-			String paysage = etatTuiles[i].substring( deb, fin );
-			
-			// Cote droit
-			deb = fin;
-			fin = etatTuiles[i].indexOf( "|", deb );
-			String cartesDroite = etatTuiles[i].substring( deb, fin );
-			
-			// Cubes
-			deb = fin;
-			String cubes = etatTuiles[i].substring( deb );
-			
-			
-			this.tuiles.add(new Tuile( i+1, paysage ));
+		for( int i=0; i<etatTuiles.length; i++ ) {		
+			// 0 : Cote gauche
+			// 1 : Paysage
+			// 2 : Cote droit
+			// 3 : Cubes
+			String[] chTuiles = etatTuiles[i].split(":");			
+			this.tuiles.add(new Tuile( i+1, chTuiles[1] ));
 			
 			// Ajout des cubes
 			p = Pattern.compile( "[RVBGJ][0-" + (NB_TUILE>0 && NB_TUILE<=9?NB_TUILE:4) + "]" );
-			m = p.matcher( cubes );
+			m = p.matcher( chTuiles[3] );
 			
 			int nbCube=0;
 			String couleur = "", cube = "";
+			
 			while( m.find() ) {
 				cube = m.group();
 				couleur = Couleur.getCouleur( cube.charAt(0)).name();
@@ -182,14 +165,15 @@ public class Jeu {
 			}
 			
 			// Ajout des cartes cote gauche et cote droit
-			for ( int j = 0; j < 2; i++) {
-				cote = (j == 0?creerCartes( cartesGauche): creerCartes( cartesDroite));
+			for ( int j = 0; j < 2; j++) {
+				cote = (j == 0?'G': 'D');
+				listeC = (j == 0?creerCartes( chTuiles[0]): creerCartes( chTuiles[2]));
 				trouve = 0;
-				while ( !cote.isEmpty() && trouve != 2) {
+				while ( !listeC.isEmpty() && trouve != 2) {
 					Carte tmp = piocheCartes.piocher();
-					if ( cote.get(0).equals( tmp)) {
-						tuiles.get(i).ajouterCarte('G', tmp);
-						cote.remove(0);
+					if ( listeC.get(0).equals( tmp)) {
+						tuiles.get(i).ajouterCarte(cote, tmp);
+						listeC.remove(0);
 						trouve = 0;
 					} else {
 						defausse.ajouter( tmp);
@@ -201,7 +185,6 @@ public class Jeu {
 				}
 			}
 		}
-		
 		return true;
 	}
 	
