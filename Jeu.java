@@ -36,10 +36,9 @@ public class Jeu {
 	private ArrayList<Trophee> trophees     ;
 	private int                dernierJoueur;
 	
-	//private static String[] tab = { "R05:MONTAGNE::R1", "R02:PLAINE:J07:R1J1", "R01:MONTAGNE:J03:R1V1J1", "R10V04:PLAINE:R04J02:R1V2J1"};
-	
+
 	public Jeu () {		
-		this("Joueur Gauche", "Joueur Droite", new String[0], Jeu.chargerFichierCartes(), new String[0]);
+		this("Joueur Gauche", "Joueur Droite", new String[0], new String[0]);
 		
 		//Placement des cubes sur les tuiles
 		for ( int i = 0; i < tuiles.size(); i++) 
@@ -47,8 +46,7 @@ public class Jeu {
 				i--;
 	}
 	
-	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, 
-				 String etatPioche, String[] etatJoueur) {
+	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
 		tuiles = new ArrayList<Tuile>();
 		joueurs = new Joueur[2];
 		joueurs[0] = new Joueur( nomJoueur1, 'G');
@@ -62,7 +60,7 @@ public class Jeu {
 		for(Integer i : TROPHEES)
 			trophees.add( new Trophee(Couleur.getCouleur(TROPHEES[0]-i), i)); // Maximum - celui en cours
 
-		initialiserPiocheCartes( etatPioche);
+		initialiserPiocheCartes( Jeu.chargerFichierCartes());
 		initialiserPiocheCubes( NB_CUBES);
 
 		piocheCartes.melanger();
@@ -315,20 +313,52 @@ public class Jeu {
 	}
 
 	public static void main (String[] a) {
-		Jeu j = new Jeu();
+		Jeu j;
+		char choix;
+		Scanner sc = new Scanner(System.in);
 		
-		while(j.continuer()) {
-			System.out.println(j);
-			try {
+		// MENU
+		try {
+			do {
+				System.out.print( "Jeu avec etats [N]ormal ou avec etats [I]nitialiser : " );
+				choix = Character.toUpperCase( sc.nextLine().charAt(0) );
+			} while( choix!='N' && choix!='I' );
+			
+			if( choix == 'N' )
+				j = new Jeu();
+				
+			else {
+				String joueur1, joueur2;
+				String[] etatTuile = new String[4];		
+				
+				System.out.print( "Nom du joueur 1 : " );
+				joueur1 = sc.nextLine();
+				
+				System.out.print( "Nom du joueur 2 : " );
+				joueur2 = sc.nextLine();
+				
+				System.out.println( "Exemple pour initialiser une Tuile => R10V04:PLAINE:V04V02:R1V2J1" );
+				for( int i=0; i<NB_TUILE; i++ ) {
+					System.out.print( "Initialiser la tuile " + (i+1) + " : " );
+					etatTuile[i] = sc.nextLine();
+				}
+				
+				j = new Jeu( joueur1, joueur2, etatTuile, new String[0] );
+			}
+			
+			
+			// JEU
+			while(j.continuer()) {
+				System.out.println(j);
 				char cote;
 				int carte , tuile;
-				Scanner sc = new Scanner(System.in);
 				do {
 					System.out.println(j.getNomJoueur() + " : Jouez une carte");
 					do {
 						System.out.println("Choisissez l'index de la carte : ");
 						carte = sc.nextInt();
 					}while(carte < 1 || carte > Joueur.NB_CARTE_MAX);
+		
 					do {
 						System.out.println("Choisissez la tuile : ");
 						tuile = sc.nextInt();
@@ -343,10 +373,9 @@ public class Jeu {
 				j.distribuerTrophee();
 				j.changerJoueur();	
 			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-
+			
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
