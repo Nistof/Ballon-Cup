@@ -7,6 +7,7 @@
 **/
 
 package util;
+import java.util.*;
 
 public enum Couleur {
 	ROUGE ,
@@ -21,6 +22,26 @@ public enum Couleur {
 		
 		for ( Couleur coul : Couleur.values())
 			if ( coul.name().equals(c))
+				couleur = coul;
+		
+		return couleur;
+	}
+	
+	public static Couleur getCouleur ( char c) {
+		Couleur couleur = Couleur.DEFAUT;
+		
+		for ( Couleur coul : Couleur.values())
+			if ( coul.name().charAt(0) == c)
+				couleur = coul;
+		
+		return couleur;
+	}
+	
+	public static Couleur getCouleur ( int i) {
+		Couleur couleur = Couleur.DEFAUT;
+		
+		for ( Couleur coul : Couleur.values())
+			if ( coul.ordinal() == i)
 				couleur = coul;
 		
 		return couleur;
