@@ -33,8 +33,18 @@ public class Joueur {
 		return this.jeu.toString();
 	}
 	
-	public String afficherCube() {
-		return this.cubes.toString();
+	public String afficherCubes() {
+		int r = 0, j = 0, v = 0, b = 0, g = 0;
+		for ( Cube c : cubes)
+			if (      c.getCouleur().equals( Couleur.ROUGE )) r++;
+			else if ( c.getCouleur().equals( Couleur.JAUNE )) j++;
+			else if ( c.getCouleur().equals( Couleur.VERT  )) v++;
+			else if ( c.getCouleur().equals( Couleur.BLEU  )) b++;
+			else if ( c.getCouleur().equals( Couleur.GRIS  )) g++;
+		
+		return "[" +  ((r!=0)?r + " ROUGE ":"") + ((j!=0)?j + " JAUNE ":"") +
+					  ((v!=0)?v + " VERT " :"") + ((b!=0)?b + " BLEU " :"") +
+					  ((g!=0)?g + " GRIS" :"") + "]";
 	}
 	
 	public String afficherTrophee() {
