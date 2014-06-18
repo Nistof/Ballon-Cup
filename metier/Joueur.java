@@ -41,24 +41,12 @@ public class Joueur {
 		return this.trophee.toString();
 	}
 	
-	// On ajoute un trophe si et seulement si il y a le bon nombre de cubes de meme couleur
-	public boolean ajouterTrophee( Trophee t ) {
-		Couleur coulTroph = t.getCouleur();
-		int nbCube        = 0;
-		
-		for( int i=0; i<this.cubes.size(); i++ )
-			if( coulTroph.equals( this.cubes.get(i).getCouleur() ) )
-				nbCube++;
-				
-		if( nbCube == t.getValeur() ) {
-			this.trophee.add( t );
-			return true;
-		}
-		
-		return false;
+	// On ajoute un trophee si et seulement si il y a le bon nombre de cubes de meme couleur
+	public void ajouterTrophee( Trophee t ) {
+		trophee.add(t);
 	}
 	
-	// Si le joueur possede 3 trophe, il gagne la partie
+	// Si le joueur possede 3 trophee, il gagne la partie
 	public boolean aGagne() {
 		if( this.trophee.size() == Joueur.NB_TROPHE_VICTOIRE )
 			return true;
@@ -109,6 +97,13 @@ public class Joueur {
 	
 	public String getNom() { return this.nom; }
 	public char getCote() { return this.cote; }
+	public int getNbCubes (Couleur c) {
+		int nb = 0;
+		for(int i = 0 ; i < cubes.size(); i++) 
+			if(cubes.get(i).getCouleur().equals(c))
+				nb++;
+		return nb;
+	}
 	
 	public String toString () {
 		int i=0;

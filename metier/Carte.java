@@ -14,8 +14,8 @@ public class Carte {
 	private Couleur couleur;
 	private int valeur;
 	
-	public Carte ( String couleur, int valeur) {
-		this.couleur = Couleur.getCouleur( couleur);				
+	public Carte ( Couleur couleur, int valeur) {
+		this.couleur = couleur;				
 		this.valeur = valeur;
 	}
 	
