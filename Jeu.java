@@ -67,7 +67,6 @@ public class Jeu {
 		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
 		initialiserJoueurs( etatJoueur);
-		System.out.println("1");
 	}
 	
 	private static String chargerFichierCartes() {
@@ -489,6 +488,9 @@ public class Jeu {
 						j.ajouterCarteMain();
 				}
 				
+				if( !j.peutJouer() )
+					j.changerJoueur();	
+				
 				do {
 					System.out.println(j.getNomJoueur() + " : Jouez une carte");
 					do {
@@ -503,7 +505,7 @@ public class Jeu {
 					sc.nextLine();
 					do {
 						System.out.println("Choisissez le cote ou vous voulez jouer : ");
-						cote = sc.nextLine().charAt(0);
+						cote = Character.toUpperCase( sc.nextLine().charAt(0) );
 					}while(cote != 'D' && cote != 'G');
 				}while(!j.jouerCarte( cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
