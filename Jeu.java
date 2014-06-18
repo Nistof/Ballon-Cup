@@ -19,10 +19,11 @@ import java.util.ArrayList;
 
 public class Jeu {
 	public final static int    NB_TUILE       = 4;
-	public final static String FICHIER_CARTES = "ressources/init1";
+
+	public final static String FICHIER_CARTES = "ressources/cartes";
 	
 	//Nombre de cubes de chaque couleur { ROUGE, JAUNE, VERT, BLEU, GRIS}
-	public final static int[]    NB_CUBES       = { 0, 0, 0, 0, 500};
+	public final static int[]    NB_CUBES       = { 13, 11, 9, 7, 5 };
 	
 	//Valeurs des cartes trophee
 	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
@@ -57,15 +58,18 @@ public class Jeu {
 		defausse = new Defausse();
 		
 		trophees = new ArrayList<Trophee>();
+
 		for(Integer i : TROPHEES)
 			trophees.add( new Trophee(Couleur.getCouleur(TROPHEES[0]-i), i)); // Maximum - celui en cours
-		System.out.println(trophees);	
+
 		initialiserPiocheCartes( etatPioche);
 		initialiserPiocheCubes( NB_CUBES);
+
 		piocheCartes.melanger();
 		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
 		initialiserJoueurs( etatJoueur);
+		System.out.println("1");
 	}
 	
 	private static String chargerFichierCartes() {
@@ -156,7 +160,7 @@ public class Jeu {
 				for( int j=0; j<nbCube; j++ )
 					this.tuiles.get(i).ajouterCube( new Cube( couleur ) );
 			}
-			
+
 			// Ajout des cartes cote gauche et cote droit
 			for ( int j = 0; j < 2; j++) {
 				cote = (j == 0?'G': 'D');
@@ -178,6 +182,7 @@ public class Jeu {
 				}
 			}
 		}
+
 		return true;
 	}
 	
