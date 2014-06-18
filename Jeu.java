@@ -358,6 +358,21 @@ public class Jeu {
 		}
 		return s;
 	}
+	
+	public boolean enleverCarteMain( int i ) {
+		if( i<=8 && i>=1 ) {
+			this.defausse.ajouter( joueurs[dernierJoueur].retirerCarte(i-1) );
+			return true;			
+		}
+		return false;
+	}
+	
+	public boolean ajouterCarteMain() {
+		if( this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() ) )
+			return true;
+			
+		return false;
+	} 
 
 	public String  getNomJoueur () {
 		return joueurs[dernierJoueur].getNom();
@@ -376,7 +391,7 @@ public class Jeu {
 		}
 	}
 
-	public boolean peutJoueur () {
+	public boolean peutJouer () {
 		for(Tuile t : tuiles) 
 			for(Couleur c : joueurs[dernierJoueur].getCartesCouleurs())
 				if(t.couleurDispo(c))
@@ -439,7 +454,33 @@ public class Jeu {
 			while(j.continuer()) {
 				System.out.println(j);
 				char cote;
-				int carte , tuile;
+				int carte , tuile, nbCarteDefausse;
+
+				if( !j.peutJouer() ) {
+					do {
+						System.out.print( "Combien de carte voulez vous defaussez : " );
+						choix = sc.nextLine();
+					} while( !choix.matches("[1-4]*") );
+					
+					nbCarteDefaussse = Integer.parseInt(choix);
+						
+					// Defausse des cartes	
+					for( int i=0; i<nbCarteDefausse; i++ ) {
+						do {
+							System.out.print( "Choisissez la carte " + (i+1) + " a defausser : " );
+							choix = sc.nextLine();
+						} while( !choix.matches("[1-8]*") );
+						
+						carte = Integer.parseInt( choix );
+						
+						j.enleverCarteMain(	carte );
+					}
+					
+					// Pioche des cartes
+					for( int i=0; i<nbCarteDefausse; i++ )
+						j.ajouterCarteMain();
+				}
+				
 				do {
 					System.out.println(j.getNomJoueur() + " : Jouez une carte");
 					do {
