@@ -312,16 +312,18 @@ public class Jeu {
 		for( int i=0; i< this.tuiles.size(); i++ )
 			s += this.tuiles.get(i).toString() + "\n\n";
 		
-		for ( int i = 0; i < Joueur.NB_CARTE_MAX; i++)
-			s2 += TexteUtil.centrer( ""+(i+1), 6); 
+		
 		
 		s += "------------------------------------------------------\n";
 		
 		for ( int i = 0; i < joueurs.length; i++) {
-			s += TexteUtil.centrer( joueurs[i].getNom()                     , 55) + "\n" +
-				 TexteUtil.centrer("         " + s2                         , 55) + "\n" +
-				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain  (), 55) + "\n" + 
-				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCube  (), 55) + "\n" +
+			s2 = "";
+			for ( int j = 0; j < joueurs[i].getNbCarte(); j++)
+				s2 += TexteUtil.centrer( ""+(j+1), 6); 
+			s += TexteUtil.centrer( joueurs[i].getNom()                      , 55) + "\n" +
+				 TexteUtil.centrer("         " + s2                          , 55) + "\n" +
+				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain   (), 55) + "\n" + 
+				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCube   (), 55) + "\n" +
 				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophee(), 55) + "\n\n";
 		}
 		
