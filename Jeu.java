@@ -318,11 +318,11 @@ public class Jeu {
 		for ( int i = 0; i < joueurs.length; i++) {
 			s2 = "";
 			for ( int j = 0; j < joueurs[i].getNbCarte(); j++)
-				s2 += TexteUtil.centrer( ""+(j+1), 6); 
+				s2 += TexteUtil.centrer( ""+(j+1), 6);
 			s += TexteUtil.centrer( joueurs[i].getNom()                      , 55) + "\n" +
 				 TexteUtil.centrer("         " + s2                          , 55) + "\n" +
 				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain   (), 55) + "\n" + 
-				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCube   (), 55) + "\n" +
+				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCubes  (), 55) + "\n" +
 				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophee(), 55) + "\n\n";
 		}
 		
