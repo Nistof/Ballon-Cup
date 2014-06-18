@@ -13,8 +13,8 @@ public class Cube {
 
 	private Couleur couleur;
 	
-	public Cube ( String couleur) {
-		this.couleur = Couleur.getCouleur(couleur);
+	public Cube ( Couleur couleur) {
+		this.couleur = couleur;
 	}
 
 	public Couleur getCouleur() { return couleur; }

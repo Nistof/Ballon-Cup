@@ -22,14 +22,10 @@ public class Jeu {
 	public final static String FICHIER_CARTES = "ressources/cartes";
 	
 	//Nombre de cubes de chaque couleur { ROUGE, JAUNE, VERT, BLEU, GRIS}
-	public final static int    NB_CUBES       = { 13, 11, 9, 7, 5};
+	public final static int[]    NB_CUBES       = { 13, 11, 9, 7, 5};
 	
 	//Valeurs des cartes trophee
-	private final static int   TROPHEE_ROUGE  =  7;
-	private final static int   TROPHEE_JAUNE  =  6;
-	private final static int   TROPHEE_VERT   =  5;
-	private final static int   TROPHEE_BLEU   =  4;
-	private final static int   TROPHEE_GRIS   =  3;
+	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
 
 	private ArrayList<Tuile>   tuiles       ;
 	private Joueur[]           joueurs      ;
@@ -52,7 +48,7 @@ public class Jeu {
 	
 	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, 
 				 String etatPioche, String[] etatJoueur) {
-		tuiles = new ArrayList<Tuile>();;
+		tuiles = new ArrayList<Tuile>();
 		joueurs = new Joueur[2];
 		joueurs[0] = new Joueur( nomJoueur1, 'G');
 		joueurs[1] = new Joueur( nomJoueur2, 'D');
@@ -61,11 +57,8 @@ public class Jeu {
 		defausse = new Defausse();
 		
 		trophees = new ArrayList<Trophee>();
-		trophees.add( new Trophee("ROUGE", TROPHEE_ROUGE));
-		trophees.add( new Trophee("JAUNE", TROPHEE_JAUNE));
-		trophees.add( new Trophee("VERT" , TROPHEE_VERT ));
-		trophees.add( new Trophee("BLEU" , TROPHEE_BLEU ));
-		trophees.add( new Trophee("GRIS" , TROPHEE_GRIS ));
+		for(Integer i : TROPHEES)
+			trophees.add( new Trophee(Couleur.getCouleur(TROPHEES[0]-i), i)); // Maximum - celui en cours
 		
 		initialiserPiocheCartes( etatPioche);
 		initialiserPiocheCubes( NB_CUBES);
@@ -103,7 +96,8 @@ public class Jeu {
 	//Exemple : R01V11B09 renverra une liste avec une carte Rouge 1, Verte 11, Bleu 9
 	private ArrayList<Carte> creerCartes( String chaine) {
 		int valeur = 0;
-		String carte = "", couleur = "";
+		String carte = "";
+		Couleur couleur;
 		Pattern p;
 		Matcher m;
 		ArrayList<Carte> cs = new ArrayList<Carte>();
@@ -114,9 +108,8 @@ public class Jeu {
 		//Creation des cartes
 		while ( m.find()) {
 			carte = m.group();
-			couleur = Couleur.getCouleur( carte.charAt(0)).name();
-			valeur = Integer.parseInt( carte.substring(1));
-			
+			couleur = Couleur.getCouleur( carte.charAt(0));
+			valeur = Integer.parseInt( carte.substring(1));	
 			cs.add( new Carte( couleur, valeur));
 		}
 		
@@ -152,11 +145,11 @@ public class Jeu {
 			m = p.matcher( chTuiles[3] );
 			
 			int nbCube=0;
-			String couleur = "", cube = "";
-			
+			String cube = "";
+			Couleur couleur;
 			while( m.find() ) {
 				cube = m.group();
-				couleur = Couleur.getCouleur( cube.charAt(0)).name();
+				couleur = Couleur.getCouleur( cube.charAt(0));
 				
 				nbCube = Integer.parseInt( "" + cube.charAt(1) );
 				
@@ -211,7 +204,7 @@ public class Jeu {
 	private void initialiserPiocheCubes ( int[] couleurs) {
 		for(int i = 0 ; i < couleurs.length ; i++)
 			for ( int j = 0; j < couleurs[i]; j++ )
-				piocheCubes.ajouter( new Cube(Couleur.getCouleur(i).name()));	
+				piocheCubes.ajouter( new Cube(Couleur.getCouleur(i)));	
 	}
 	
 	//Place les cubes sur la tuile passée en indice
@@ -309,8 +302,10 @@ public class Jeu {
 
 	public void distribuerTrophee () {
 		for(int i = 0 ; i < trophees.size() ; i++) {
-			joueurs[dernierJoueur].ajouterTrophee(trophees.get(i));
-			trophees.remove(i);
+			if(joueurs[dernierJoueur].getNbCubes(Couleur.getCouleur(i)) == trophees.get(i).getValeur()) {
+				joueurs[dernierJoueur].ajouterTrophee(trophees.get(i));
+				trophees.remove(i--);
+			}
 		}
 	}
 

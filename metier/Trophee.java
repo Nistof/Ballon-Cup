@@ -7,10 +7,11 @@
  */
  
 package metier;
- 
+import util.*;
+
 public class Trophee extends Carte {
 
-	public Trophee( String couleur, int valeur ) {
+	public Trophee( Couleur couleur, int valeur ) {
 		super( couleur, valeur );
 	}
 	
