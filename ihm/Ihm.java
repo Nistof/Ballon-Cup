@@ -7,6 +7,10 @@
  */
  
 public interface Ihm {
-	public void afficherTuiles( );
-	public void afficherJoueur( int i );
+	public void afficherTuiles  ( );
+	public void afficherJoueur  ( int i );
+	public void demandeDefausse ( );
+	public void demanderCarte   ( );
+	public void demanderTuile   ( );
+	public void demanderEchange ( );
 }

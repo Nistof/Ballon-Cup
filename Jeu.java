@@ -31,7 +31,7 @@ public class Jeu {
 	//Valeurs des cartes trophee
 	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
 
-	private IHMCui ihm;
+	private Ihm ihm;
 
 	private ArrayList<Tuile>   tuiles       ;
 	private Joueur[]           joueurs      ;

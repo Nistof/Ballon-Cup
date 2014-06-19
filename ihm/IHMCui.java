@@ -9,7 +9,7 @@ package BallonCup.ihm;
 import BallonCup.Jeu;
 import BallonCup.util.*;
 
-public class IHMCui {
+public class IHMCui implements Ihm {
 	private Jeu jeu;
 
 	public IHMCui (Jeu jeu) {
