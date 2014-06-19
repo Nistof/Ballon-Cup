@@ -444,7 +444,20 @@ public class Jeu {
 
 	public void lancerJeu () {
 		while(continuer()) {
-				
+			ihm.afficherTuile();
+			
+			//Defausse
+			if( !j.peutJouer() ) ihm.demanderDefausse();
+			if( !j.peutJouer() ) changerJoueur();
+			
+			//Jouer une carte
+			ihm.afficherJoueur( dernierJoueur);
+			compterTuiles();
+			distribuerTrophee();
+			
+			//Echange
+			if( j.echangePossible() ) ihm.demanderEchange();
+			changerJoueur();
 		}
 	}
 	
