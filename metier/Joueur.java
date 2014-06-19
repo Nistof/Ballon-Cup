@@ -99,8 +99,13 @@ public class Joueur {
 	public Carte retirerCarte( int i ) {
 		if( this.jeu.size() > i && i >= 0 )
 			return this.jeu.remove(i);
-
 		return null;
+	}
+
+	public String getNomCarte (int i ) {
+		if( this.jeu.size() > i && i >= 0 )
+			return this.jeu.get(i).getValeur()+this.jeu.get(i).getCouleur().name();
+		return null;	
 	}
 	
 	//Joue une carte sur une tuile en fonction de l'indice dans la main,
