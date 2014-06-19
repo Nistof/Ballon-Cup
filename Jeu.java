@@ -128,9 +128,10 @@ public class Jeu {
 	private boolean initialiserTuiles( String[] etatTuiles ) {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
 		for ( int i = 0; i < NB_TUILE; i++)
-			if ( etatTuiles[i].matches("([RJVBG](0[1-9])|(0[1-3]))*:" + Tuile.TYPES_PAYSAGE[0] + "|" + Tuile.TYPES_PAYSAGE[1] +
-									   ":([RJVBG](0[1-9])|(0[1-3]))*:([RJVBG][0-9])*") ) {
+			if ( etatTuiles[i].matches("([RJVBG](0[1-9]|0[1-3]))*:" + Tuile.TYPES_PAYSAGE[0] + "|" + Tuile.TYPES_PAYSAGE[1] +
+									   ":([RJVBG](0[1-9]|0[1-3]))*:([RJVBG][0-9])*") ) {
 				initialiserTuiles();
+				System.out.println("Hoy!1");
 				return false;
 			}
 		
@@ -149,7 +150,7 @@ public class Jeu {
 			this.tuiles.add(new Tuile( i+1, chTuiles[1] ));
 			
 			// Ajout des cubes
-			p = Pattern.compile( "[RVBGJ][0-" + (NB_TUILE>0 && NB_TUILE<=9?NB_TUILE:4) + "]" );
+			p = Pattern.compile( "[RVBGJ][1-9]" );
 			m = p.matcher( chTuiles[3] );
 			
 			int nbCube=0;
@@ -197,8 +198,9 @@ public class Jeu {
 	// Exemple: R6J5:J06R13G05:RG
 	public boolean initialiserJoueurs( String[] etatJoueurs ) {	
 		if( etatJoueurs.length != 2 ) { initialiserJoueurs(); return (etatJoueurs.length==0); }
+		
 		for ( int i = 0; i < 2; i++)
-			if ( !etatJoueurs[i].matches("([RJVBG][0-9])*:([RJVBG](0[1-9])|(0[1-3]))*:[RJVBG]*")) {
+			if ( !etatJoueurs[i].matches("([RJVBG][0-9])*:([RJVBG](0[1-9]|0[1-3]))*:[RJVBG]*")) {
 				initialiserJoueurs();
 				return false;
 			}
@@ -250,13 +252,14 @@ public class Jeu {
 			}
 			
 			//Ajout des Trophées
-			while( chJoueur[2].length() != 0)
-				for ( Trophee t : trophees)
-					if (t.getCouleur().equals( Couleur.getCouleur( chJoueur[2].charAt(0)))) {
-						joueurs[i].ajouterTrophee( t);
-						trophees.remove(t);
-						chJoueur[2] = chJoueur[2].substring(1);
+			while( chJoueur[2].length() != 0) {
+				for ( int j = 0; j < trophees.size(); j++)
+					if ( trophees.get(j).getCouleur().equals( Couleur.getCouleur( chJoueur[2].charAt(0))) ) {
+						joueurs[i].ajouterTrophee( trophees.get(j));
+						trophees.remove(j);						
 					}
+				chJoueur[2] = chJoueur[2].substring(1);
+			}
 		}
 		return true;
 	}
