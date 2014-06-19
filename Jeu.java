@@ -50,6 +50,7 @@ public class Jeu {
 			if(!placerCubes(i))
 				i--;
 		ihm = new IHMCui(this);
+		lancerJeu();
 	}
 	
 	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
@@ -356,30 +357,26 @@ public class Jeu {
 					coteGagnant = -1;
 					break;
 			}
-			t.oterCubes(joueurs[coteGagnant]);
-			t.oterCartes(defausse);
-			placerCubes(t.getNombre()-1);
-			dernierJoueur = coteGagnant;
-			t.changerPaysage();
-			return t.getNombre();
+			if(coteGagnant != -1) {
+				t.oterCubes(joueurs[coteGagnant]);
+				t.oterCartes(defausse);
+				placerCubes(t.getNombre()-1);
+				dernierJoueur = coteGagnant;
+				t.changerPaysage();
+				return t.getNombre();
+			}
 		}
 		return 0;
 	}
 	
-	public boolean enleverCarteMain( int i ) {
-		if( i<=8 && i>=1 ) {
-			this.defausse.ajouter( joueurs[dernierJoueur].retirerCarte(i-1) );
-			return true;			
-		}
-		return false;
+	public void enleverCarteMain( int i ) {
+		if( i<=8 && i>=1 )
+			this.defausse.ajouter( joueurs[dernierJoueur].retirerCarte(i-1) );			
 	}
 	
-	public boolean ajouterCarteMain() {
+	public void ajouterCarteMain() {
 		transfertCartes();
-		if( this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() ) )	
-			return true;
-			
-		return false;
+		this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() );
 	} 
 
 	public String  getNomJoueur () {
@@ -444,20 +441,32 @@ public class Jeu {
 
 	public void lancerJeu () {
 		while(continuer()) {
-			ihm.afficherTuile();
+			ihm.afficherTuiles();
 			
 			//Defausse
-			if( !j.peutJouer() ) ihm.demanderDefausse();
-			if( !j.peutJouer() ) changerJoueur();
+			if( !peutJouer() ) ihm.demanderDefausse();
+			if( !peutJouer() ) changerJoueur();
 			
 			//Jouer une carte
-			ihm.afficherJoueur( dernierJoueur);
+			ihm.afficherJoueurs( );
 			compterTuiles();
 			distribuerTrophee();
 			
 			//Echange
-			if( j.echangePossible() ) ihm.demanderEchange();
+			if( echangePossible() ) ihm.demanderEchange();
 			changerJoueur();
+		}
+	}
+
+	public void action (char c, int n) {
+		switch(c) {
+			case 'P':
+				for(int i = 0 ; i < n ; i++)
+						ajouterCarteMain();
+				break;
+			case 'D':
+				enleverCarteMain(n);
+				break;
 		}
 	}
 	

@@ -5,11 +5,12 @@
  * Groupe I2
  * @version 1 du 17/06/2014
  */
+package BallonCup.ihm;
  
 public interface Ihm {
 	public void afficherTuiles  ( );
-	public void afficherJoueur  ( int i );
-	public void demandeDefausse ( );
+	public void afficherJoueurs  ();
+	public void demanderDefausse ( );
 	public void demanderCarte   ( );
 	public void demanderTuile   ( );
 	public void demanderEchange ( );

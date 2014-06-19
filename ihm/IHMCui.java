@@ -8,13 +8,13 @@
 package BallonCup.ihm;
 import BallonCup.Jeu;
 import BallonCup.util.*;
+import java.util.*;
 
 public class IHMCui implements Ihm {
 	private Jeu jeu;
 
 	public IHMCui (Jeu jeu) {
 		this.jeu = jeu;
-		this.lancerIHM();
 	}
 
 	public void afficherTuiles () {
@@ -25,8 +25,8 @@ public class IHMCui implements Ihm {
 		System.out.println(s);
 	}	
 
-	public void afficherJoueur () {
-		String s = ""i,s2 ="";
+	public void afficherJoueurs () {
+		String s = "",s2 ="";
 		for ( int i = 0; i < jeu.getNbJoueurs(); i++) {
 			s2 = "";
 			for ( int j = 0; j < jeu.getNbCartesJoueur(i); j++)
@@ -40,10 +40,33 @@ public class IHMCui implements Ihm {
 		System.out.println(s);	
 	}
 
-	public String toString() 	
-		
-		return s;
+
+	public void demanderCarte   ( ){}
+	public void demanderTuile   ( ){}
+	public void demanderEchange ( ){}
+
+	public void demanderDefausse () {
+		try {
+			Scanner sc = new Scanner (System.in);
+			int nb, indice;
+			do {
+				System.out.print("Combien de cartes voulez vous defaussez : ");
+				nb = sc.nextInt();
+			}while(nb < 1 && nb > 4);
+			for(int i = 0 ; i < nb ; i++) {
+				do {
+					System.out.println("Donnez l'indice de la carte n°" + (i+1) + " : ");
+					indice = sc.nextInt();
+				}while(indice < 1 && indice > 8);
+				jeu.action('D', indice);
+			}
+			jeu.action('P', nb);
+		}
+		catch(Exception e) {
+
+		}
 	}
+
 	
 	public static void main (String[] a) {
 		IHMCui ihm = new IHMCui(new Jeu());
