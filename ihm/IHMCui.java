@@ -47,7 +47,7 @@ public class IHMCui implements Ihm {
 			Scanner sc = new Scanner(System.in);
 			int indiceCarte;
 			do {
-				System.out.print("Entrez l'index de la carte : ");
+				System.out.print(jeu.getNomJoueurCourant() + " : Entrez l'index de la carte : ");
 				indiceCarte = sc.nextInt();
 				sc.nextLine();
 			} while (indiceCarte < 1 || indiceCarte > 8);
