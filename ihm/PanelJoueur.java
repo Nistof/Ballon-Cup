@@ -15,10 +15,6 @@ import metier.Joueur;
 import metier.Carte;
 
 public class PanelJoueur extends JPanel {
-	
-	private final static String cheminCubes = "ressources/images/cubes/cube_";
-	private final static String cheminCartes = "ressources/images/cartes/carte_";
-
 	private Joueur joueur;
 	private JLabel[] cubes;
 	private JLabel[] nbCubes;
@@ -36,7 +32,8 @@ public class PanelJoueur extends JPanel {
 		JPanel p = new JPanel( new GridLayout( 1, 10 ) );		
 
 		for(Couleur c : Couleur.values()) {
-			this.cubes[c.ordinal()] = new JLabel( new ImageIcon(cheminCubes +  c.name() + ".jpg") );
+			this.cubes[c.ordinal()] = new JLabel( new ImageIcon(Constantes.CH_CUBES_IMG +  c.name() + 
+																Constantes.FORMAT_IMG) );
 			this.nbCubes[c.ordinal()] = new JLabel( "0" );
 		}	
 		for( int i=0; i<this.nbCubes.length; i++ ) {
@@ -50,7 +47,8 @@ public class PanelJoueur extends JPanel {
 		this.cartes = new JLabel[Joueur.NB_CARTE_MAX];
 		for(int i = 0; i < cartes.length; i++) {
 			if(joueur.getNomCarte(i) != null) {
-				cartes[i] = new JLabel( new ImageIcon(cheminCartes + joueur.getNomCarte(i) + ".jpg"));
+				cartes[i] = new JLabel( new ImageIcon(Constantes.CH_CARTES_IMG + joueur.getNomCarte(i) + 
+													  Constantes.FORMAT_IMG));
 				p2.add( cartes[i] );
 			}
 		}
