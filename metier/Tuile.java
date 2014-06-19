@@ -152,6 +152,9 @@ public class Tuile {
 	
 	public String getPaysage() { return this.paysage; }
 	public int    getNombre () { return this.nombre ; }
+	public ArrayList<Carte> getGauche () { return this.gauche ; }
+	public ArrayList<Carte> getDroite () { return this.droite ; }
+	public ArrayList<Cube>  getCubes  () { return this.cubes  ; }
 	
 	public String toString () {
 		String cubes   = TexteUtil.centrer( this.cubes.toString()            , 55 );
