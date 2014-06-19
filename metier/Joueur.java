@@ -108,6 +108,12 @@ public class Joueur {
 		return null;	
 	}
 	
+	public String getNomTrophee (int i ) {
+		if( this.trophee.size() > i && i >= 0 )
+			return this.trophee.get(i).getCouleur().name();
+		return null;	
+	}
+	
 	//Joue une carte sur une tuile en fonction de l'indice dans la main,
 	//le cote sur lequel le joueur veut jouer.
 	//Si le joueur ne peut pas jouer cette carte alors, la méthode renvoie false
@@ -141,6 +147,7 @@ public class Joueur {
 	public String getNom() { return this.nom; }
 	public char getCote() { return this.cote; }
 	public int  getNbCarte() { return this.jeu.size(); }
+	public int  getNbTrophee() { return this.trophee.size(); }
 	public int getNbCubes (Couleur c) {
 		int nb = 0;
 		for(int i = 0 ; i < cubes.size(); i++) 
