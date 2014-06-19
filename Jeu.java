@@ -287,6 +287,7 @@ public class Jeu {
 	
 	public boolean jouerCarte(char cote, int indCarte, int indTuile ) {
 		Joueur j = ( joueurs[dernierJoueur].getCote() == 'G')?joueurs[0]:joueurs[1];
+		transfertCartes();
 		if(j.jouerCarte( indCarte, cote, this.tuiles.get(indTuile) )) {
 			j.ajouterCarte( piocheCartes.piocher());
 			return true;
@@ -375,7 +376,8 @@ public class Jeu {
 	}
 	
 	public boolean ajouterCarteMain() {
-		if( this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() ) )
+		transfertCartes();
+		if( this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() ) )	
 			return true;
 			
 		return false;
@@ -492,7 +494,7 @@ public class Jeu {
 				//Défausse
 				if( !j.peutJouer() ) {
 					do {
-						System.out.print( "Combien de carte voulez vous defaussez : " );
+						System.out.print( j.getNomJoueur() + " combien de carte voulez vous defaussez : " );
 						choix = sc.nextLine();
 					} while( !choix.matches("[1-4]*") );
 					
@@ -501,7 +503,7 @@ public class Jeu {
 					// Defausse des cartes	
 					for( int i=0; i<nbCarteDefausse; i++ ) {
 						do {
-							System.out.print( "Choisissez la carte " + (i+1) + " a defausser : " );
+							System.out.print( "choisissez la carte " + (i+1) + " a defausser : " );
 							choix = sc.nextLine();
 						} while( !choix.matches("[1-8]*") );
 						
@@ -561,7 +563,7 @@ public class Jeu {
 					}
 				}
 				j.changerJoueur();
-				j.transfertCartes();
+
 			}
 			
 			sc.close();
