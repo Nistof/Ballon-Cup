@@ -47,8 +47,9 @@ public class IHMCui implements Ihm {
 			Scanner sc = new Scanner(System.in);
 			int indiceCarte;
 			do {
-				System.out.println("Entrez l'index de la carte : ");
+				System.out.print("Entrez l'index de la carte : ");
 				indiceCarte = sc.nextInt();
+				sc.nextLine();
 			} while (indiceCarte < 0 && indiceCarte > 8);
 			jeu.action('C', indiceCarte);
 		}
@@ -62,8 +63,9 @@ public class IHMCui implements Ihm {
 			Scanner sc = new Scanner(System.in);
 			int indiceTuile;
 			do {
-				System.out.println("Entrez l'index de la tuile : ");
+				System.out.print("Entrez l'index de la tuile : ");
 				indiceTuile = sc.nextInt();
+				System.out.println(indiceTuile);
 				sc.nextLine();
 			} while (indiceTuile < 0 && indiceTuile > 4);
 			jeu.action('T', indiceTuile);
@@ -78,7 +80,7 @@ public class IHMCui implements Ihm {
 			Scanner sc = new Scanner(System.in);
 			char cote;
 			do {
-				System.out.println("Entrez l'index de la tuile : ");
+				System.out.print("Entrez l'index de la tuile : ");
 				cote = sc.nextLine().toUpperCase().charAt(0);
 			} while ( cote != 'G' && cote != 'D');
 			jeu.action('S', (int)cote);
@@ -107,15 +109,10 @@ public class IHMCui implements Ihm {
 			}
 			jeu.action('P', nb);
 		}
-		catch(Exception e {
+		catch(Exception e ){
 
 		}
 	}
-
-	public String toString() 	
-		return s;
-	}
-
 	
 	public static void main (String[] a) {
 		IHMCui ihm = new IHMCui(new Jeu());

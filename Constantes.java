@@ -7,7 +7,7 @@
  
 package BallonCup;
  
-public class Constante {
+public class Constantes {
 	//Infos relatives au Joueur
 	public final static int NB_CARTE_MAX       = 8;
 	public final static int NB_TROPHE_VICTOIRE = 3;

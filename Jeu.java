@@ -57,11 +57,11 @@ public class Jeu {
 		
 		trophees = new ArrayList<Trophee>();
 
-		for(Integer i : TROPHEES)
+		for(Integer i : Constantes.TROPHEES)
 			trophees.add( new Trophee(Couleur.getCouleur(Constantes.TROPHEES[0]-i), i)); // Maximum - celui en cours
 
 		initialiserPiocheCartes( Jeu.chargerFichierCartes());
-		initialiserPiocheCubes( NB_CUBES);
+		initialiserPiocheCubes( Constantes.NB_CUBES);
 
 		piocheCartes.melanger();
 		piocheCubes.melanger();
