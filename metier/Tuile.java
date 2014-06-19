@@ -5,9 +5,9 @@
  * Group : I2
  */
 
-package metier;
+package BallonCup.metier;
 import java.util.*;
-import util.*;
+import BallonCup.util.*;
 
 public class Tuile {
 	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};

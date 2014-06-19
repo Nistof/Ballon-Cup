@@ -6,9 +6,9 @@
  * @version 1 du 04/06/2014
 **/
 
-package metier;
+package BallonCup.metier;
 
-import util.Couleur;
+import BallonCup.util.Couleur;
 
 public class Carte {
 	private Couleur couleur;

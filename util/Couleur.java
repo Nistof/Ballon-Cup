@@ -6,7 +6,7 @@
  * @version 1 du 06/06/2014
 **/
 
-package util;
+package BallonCup.util;
 import java.util.*;
 
 public enum Couleur {

@@ -6,8 +6,11 @@
  * @version 1 du 17/06/2014
  */
 
-import metier.*;
-import util.*;
+package BallonCup;
+
+import BallonCup.metier.*;
+import BallonCup.util.*;
+import BallonCup.ihm.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +31,8 @@ public class Jeu {
 	//Valeurs des cartes trophee
 	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
 
+	private IHMCui ihm;
+
 	private ArrayList<Tuile>   tuiles       ;
 	private Joueur[]           joueurs      ;
 	private Pioche<Carte>      piocheCartes ;
@@ -44,6 +49,7 @@ public class Jeu {
 		for ( int i = 0; i < tuiles.size(); i++) 
 			if(!placerCubes(i))
 				i--;
+		ihm = new IHMCui(this);
 	}
 	
 	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
@@ -307,7 +313,6 @@ public class Jeu {
 		}
 	}
 
-	public int getNbTuile () { return this.tuiles.size(); }	
 	
 	public boolean jouerCarte(char cote, int indCarte, int indTuile ) {
 		Joueur j = ( joueurs[dernierJoueur].getCote() == 'G')?joueurs[0]:joueurs[1];
@@ -326,9 +331,6 @@ public class Jeu {
 		}
 	}
 	
-	public void enleverTuiles (int index) {
-		this.tuiles.remove(index);
-	}
 
 	public boolean continuer() {
 		if( !this.joueurs[1].aGagne() && !this.joueurs[0].aGagne() )
@@ -336,33 +338,8 @@ public class Jeu {
 		return false;
 	}
 	
-	public String toString() {
-		String s="";
-		String s2 = "";
 		
-		for( int i=0; i< this.tuiles.size(); i++ )
-			s += this.tuiles.get(i).toString() + "\n\n";
-		
-		
-		
-		s += "------------------------------------------------------\n";
-		
-		for ( int i = 0; i < joueurs.length; i++) {
-			s2 = "";
-			for ( int j = 0; j < joueurs[i].getNbCarte(); j++)
-				s2 += TexteUtil.centrer( ""+(j+1), 6);
-			s += TexteUtil.centrer( joueurs[i].getNom()                      , 55) + "\n" +
-				 TexteUtil.centrer("         " + s2                          , 55) + "\n" +
-				 TexteUtil.centrer("Cartes : " + joueurs[i].afficherMain   (), 55) + "\n" + 
-				 TexteUtil.centrer("Cubes  : " + joueurs[i].afficherCubes  (), 55) + "\n" +
-				 TexteUtil.centrer("Trophees:" + joueurs[i].afficherTrophee(), 55) + "\n\n";
-		}
-		
-		return s;
-	}
-		
-	public String compterTuiles () {
-		String s = "";
+	public int compterTuiles () { // Renvoie le nombre de cubes gagnés et 0 sinon
 		for(Tuile t : tuiles) {
 			int coteGagnant = 0;
 			switch(t.gagnant()) {
@@ -379,16 +356,14 @@ public class Jeu {
 					coteGagnant = -1;
 					break;
 			}
-			if(coteGagnant != -1) {
-				s += joueurs[coteGagnant].getNom() + " gagne " + t.getNombre() + " cubes";
-				t.oterCubes(joueurs[coteGagnant]);
-				t.oterCartes(defausse);
-				placerCubes(t.getNombre()-1);
-				dernierJoueur = coteGagnant;
-				t.changerPaysage();
-			}
+			t.oterCubes(joueurs[coteGagnant]);
+			t.oterCartes(defausse);
+			placerCubes(t.getNombre()-1);
+			dernierJoueur = coteGagnant;
+			t.changerPaysage();
+			return t.getNombre();
 		}
-		return s;
+		return 0;
 	}
 	
 	public boolean enleverCarteMain( int i ) {
@@ -466,134 +441,21 @@ public class Jeu {
 		}
 		return false;
 	}
+	
+	public String getNomJoueur (int i) { return joueurs[i].getNom();}
+	public String getMainJoueur (int i) { return joueurs[i].afficherMain (); }
+	public String getCubesJoueur (int i) { return joueurs[i].afficherCubes (); }
+	public String getTropheesJoueur (int i) { return joueurs[i].afficherTrophees (); }
+	
+	public String afficheTuile (int i) { return tuiles.get(i).toString(); }
+
+
+	public int getNbTuiles () { return this.tuiles.size(); }
+	public int getNbJoueurs () { return this.joueurs.length;}
+	public int getNbCartesJoueur (int i ) { return this.joueurs[i].getNbCarte(); }
+	public void enleverTuiles (int index) { this.tuiles.remove(index); }
 
 	public static void main (String[] a) {
-		Jeu j;
-		String choix;
-		Scanner sc = new Scanner(System.in);
-		
-		// MENU
-		try {
-			do {
-				System.out.print( "Jeu avec etats [N]ormal ou avec etats [I]nitialiser : " );
-				choix = sc.nextLine().toUpperCase();
-			} while( choix.charAt(0)!='N' && choix.charAt(0)!='I' );
-			
-			if( choix.charAt(0) == 'N' )
-				j = new Jeu();
-				
-			else {
-				String joueur1, joueur2;
-				String[] etatTuile  = new String[4];		
-				String[] etatJoueur = new String[2];
-				
-				System.out.print( "Nom du joueur 1 : " );
-				joueur1 = sc.nextLine();
-				
-				System.out.print( "Nom du joueur 2 : " );
-				joueur2 = sc.nextLine();
-				
-				System.out.println( "\nExemple pour initialiser une Tuile => R10V04:PLAINE:V04V02:R1V2J1" );
-				for( int i=0; i<NB_TUILE; i++ ) {
-					System.out.print( "Initialiser la tuile " + (i+1) + " : " );
-					etatTuile[i] = sc.nextLine();
-				}
-				
-				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03:RG" );
-				for( int i=0; i<2; i++ ) {
-					System.out.print( "Initialiser le joueur " + (i+1) + " : " );
-					etatJoueur[i] = sc.nextLine();
-				}
-				
-				j = new Jeu( joueur1, joueur2, etatTuile, etatJoueur);
-			}
-			
-			
-			// JEU
-			while(j.continuer()) {
-				System.out.println(j);
-				char cote;
-				int carte , tuile, nbCarteDefausse;
-
-				//Défausse
-				if( !j.peutJouer() ) {
-					do {
-						System.out.print( j.getNomJoueur() + " combien de carte voulez vous defaussez : " );
-						choix = sc.nextLine();
-					} while( !choix.matches("[1-4]*") );
-					
-					nbCarteDefausse = Integer.parseInt(choix);
-						
-					// Defausse des cartes	
-					for( int i=0; i<nbCarteDefausse; i++ ) {
-						do {
-							System.out.print( "choisissez la carte " + (i+1) + " a defausser : " );
-							choix = sc.nextLine();
-						} while( !choix.matches("[1-8]*") );
-						
-						carte = Integer.parseInt( choix );
-						
-						j.enleverCarteMain(	carte );
-						System.out.println(j);
-					}
-					
-					// Pioche des cartes
-					for( int i=0; i<nbCarteDefausse; i++ )
-						j.ajouterCarteMain();
-						
-					System.out.println(j);
-				}
-				
-				if( !j.peutJouer() )
-					j.changerJoueur();	
-				
-				//Jouer une carte
-				do {
-					System.out.println(j.getNomJoueur() + " : Jouez une carte");
-					do {
-						System.out.println("Choisissez l'index de la carte : ");
-						carte = sc.nextInt();
-					}while(carte < 1 || carte > Joueur.NB_CARTE_MAX);
-		
-					do {
-						System.out.println("Choisissez la tuile : ");
-						tuile = sc.nextInt();
-					}while(tuile < 1 || tuile > j.getNbTuile());
-					sc.nextLine();
-					do {
-						System.out.println("Choisissez le cote ou vous voulez jouer : ()");
-						cote = Character.toUpperCase( sc.nextLine().charAt(0) );
-					}while(cote != 'D' && cote != 'G');
-				}while(!j.jouerCarte( cote, carte-1, tuile-1));
-				System.out.println(j.compterTuiles());
-				j.distribuerTrophee();
-			
-				//Echange
-				if( j.echangePossible() ) {
-					do {
-						System.out.println("Echanger des cubes? (O/N) ");
-						choix = sc.nextLine().toUpperCase();
-					} while( choix.charAt(0) != 'O' && choix.charAt(0) != 'N' );
-					if ( choix.charAt(0) == 'O' ) {
-						Couleur c1, c2;
-						do {
-							System.out.println("Couleur à échanger (R J V B G) : ");
-							choix = sc.nextLine().toUpperCase();
-							c1 = Couleur.getCouleur( choix.charAt( 0));
-							System.out.println("Couleur voulue (R J V B G) : ");
-							choix = sc.nextLine().toUpperCase();
-							c2 = Couleur.getCouleur( choix.charAt( 0));
-						} while( !j.echanger( c1, c2) );
-					}
-				}
-				j.changerJoueur();
-
-			}
-			
-			sc.close();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		new Jeu();
 	}
 }

@@ -6,7 +6,7 @@
  * @version 1 du 04/06/2014
 **/
 
-package metier;
+package BallonCup.metier;
 import java.util.*;
 
 public class Tas<E> {

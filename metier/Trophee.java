@@ -6,8 +6,8 @@
  *
  */
  
-package metier;
-import util.*;
+package BallonCup.metier;
+import BallonCup.util.*;
 
 public class Trophee extends Carte {
 

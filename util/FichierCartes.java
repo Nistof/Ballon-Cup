@@ -6,7 +6,7 @@
  * @version 2 du 11/06/2014
 **/
 
-package util;
+package BallonCup.util;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;

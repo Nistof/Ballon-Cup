@@ -6,7 +6,7 @@
  * @version 2 du 17/06/2014
 **/
 
-package util;
+package BallonCup.util;
 
 import java.lang.StringBuilder;
 

@@ -6,8 +6,8 @@
  * @version 2 du 15/06/2014
  */
 
-package metier;
-import util.Couleur;
+package BallonCup.metier;
+import BallonCup.util.Couleur;
 
 public class Cube {
 

@@ -6,10 +6,10 @@
  * @version 2 du 15/06/2014
 **/
 
-package metier;
+package BallonCup.metier;
 
 import java.util.ArrayList;
-import util.Couleur;
+import BallonCup.util.Couleur;
 
 public class Joueur {
 	public final static int NB_CARTE_MAX       = 8;
@@ -17,7 +17,7 @@ public class Joueur {
 	
 	private ArrayList<Carte>  jeu  ;
 	private ArrayList<Cube>   cubes;	
-	private ArrayList<Trophee> trophee;
+	private ArrayList<Trophee> trophees;
 	private String			  nom  ;
 	private char			  cote ;
 	
@@ -26,7 +26,7 @@ public class Joueur {
 		this.cote   = cote;
 		this.jeu    = new ArrayList<Carte>();
 		this.cubes  = new ArrayList<Cube>();
-		this.trophee = new ArrayList<Trophee>();
+		this.trophees = new ArrayList<Trophee>();
 	}
 	
 	public String afficherMain() {
@@ -47,8 +47,8 @@ public class Joueur {
 					  ((g!=0)?g + " GRIS" :"") + "]";
 	}
 	
-	public String afficherTrophee() {
-		return this.trophee.toString();
+	public String afficherTrophees() {
+		return this.trophees.toString();
 	}
 	
 	public ArrayList<Couleur> getCartesCouleurs () {
@@ -68,15 +68,15 @@ public class Joueur {
 	}
 
 
-	// On ajoute un trophee si et seulement si il y a le bon nombre de cubes de meme couleur
+	// On ajoute un trophees si et seulement si il y a le bon nombre de cubes de meme couleur
 	public void ajouterTrophee( Trophee t ) {
-		trophee.add(t);
+		trophees.add(t);
 		retirerCubes(t.getCouleur(), t.getValeur());
 	}
 	
-	// Si le joueur possede 3 trophee, il gagne la partie
+	// Si le joueur possede 3 trophees, il gagne la partie
 	public boolean aGagne() {
-		if( this.trophee.size() == Joueur.NB_TROPHE_VICTOIRE )
+		if( this.trophees.size() == Joueur.NB_TROPHE_VICTOIRE )
 			return true;
 			
 		return false;
