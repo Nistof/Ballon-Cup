@@ -139,7 +139,7 @@ public class PanelTuile extends JPanel implements MouseListener {
 	public void mousePressed (MouseEvent e) {}
 	
 	public char getCote() { return this.cote; }
-	public void deselectionner() { cote = null; }
+	public void deselectionner() { cote = ' '; }
 	
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();
