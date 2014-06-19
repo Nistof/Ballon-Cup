@@ -311,7 +311,7 @@ public class Jeu {
 	public boolean jouerCarte(char cote, int indCarte, int indTuile ) {
 		Joueur j = ( joueurs[dernierJoueur].getCote() == 'G')?joueurs[0]:joueurs[1];
 		transfertCartes();
-		if(j.jouerCarte( indCarte, cote, this.tuiles.get(indTuile) )) {
+		if(j.jouerCarte( indCarte-1, cote, this.tuiles.get(indTuile-1) )) {
 			j.ajouterCarte( piocheCartes.piocher());
 			return true;
 		}
@@ -446,7 +446,10 @@ public class Jeu {
 				ihm.demanderCarte();
 				ihm.demanderTuile();
 				ihm.demanderCote();
-			}while(jouerCarte(cote, carte, tuile));
+			}while(!jouerCarte(cote, carte, tuile));
+			carte = 0;
+			tuile = 0;
+			cote = 0;
 			compterTuiles();
 			distribuerTrophee();
 			

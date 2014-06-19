@@ -49,6 +49,7 @@ public class IHMCui implements Ihm {
 			do {
 				System.out.print("Entrez l'index de la carte : ");
 				indiceCarte = sc.nextInt();
+				sc.nextLine();
 			} while (indiceCarte < 1 || indiceCarte > 8);
 			jeu.action('C', indiceCarte);
 		}
@@ -64,6 +65,7 @@ public class IHMCui implements Ihm {
 			do {
 				System.out.print("Entrez l'index de la tuile : ");
 				indiceTuile = sc.nextInt();
+				sc.nextLine();
 			} while (indiceTuile < 1 || indiceTuile > jeu.getNbTuiles());
 			jeu.action('T', indiceTuile);
 		}
@@ -81,7 +83,6 @@ public class IHMCui implements Ihm {
 				cote = sc.nextLine().toUpperCase().charAt(0);
 			} while ( cote != 'G' && cote != 'D');
 			jeu.action('S', (int)cote);
-			sc.close();
 		}
 		catch(Exception e) {
 
