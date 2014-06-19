@@ -13,7 +13,7 @@ import util.Couleur;
 
 public class Joueur {
 	public final static int NB_CARTE_MAX       = 8;
-	private final static int NB_TROPHE_VICTOIRE = 3;
+	public final static int NB_TROPHE_VICTOIRE = 3;
 	
 	private ArrayList<Carte>  jeu  ;
 	private ArrayList<Cube>   cubes;	
