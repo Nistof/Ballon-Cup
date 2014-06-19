@@ -7,6 +7,7 @@
 
 package BallonCup.ihm;
 import BallonCup.Jeu;
+import BallonCup.Constantes;
 import BallonCup.util.*;
 import java.util.*;
 
@@ -52,7 +53,7 @@ public class IHMCui implements Ihm {
 				do {
 					System.out.println("Donnez l'indice de la carte n°" + (i+1) + " : ");
 					indice = sc.nextInt();
-				}while(indice < 1 && indice > Jeu.NB_CARTE_MAX);
+				}while(indice < 1 && indice > Constantes.NB_CARTE_MAX);
 				jeu.action('D', indice);
 			}
 			jeu.action('P', nb);

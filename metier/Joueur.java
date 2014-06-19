@@ -10,6 +10,7 @@ package BallonCup.metier;
 
 import java.util.ArrayList;
 import BallonCup.util.Couleur;
+import BallonCup.Constantes;
 
 public class Joueur {	
 	private ArrayList<Carte>  jeu  ;
@@ -73,7 +74,7 @@ public class Joueur {
 	
 	// Si le joueur possede 3 trophees, il gagne la partie
 	public boolean aGagne() {
-		if( this.trophees.size() == Joueur.NB_TROPHE_VICTOIRE )
+		if( this.trophees.size() == Constantes.NB_TROPHE_VICTOIRE )
 			return true;
 			
 		return false;
@@ -82,7 +83,7 @@ public class Joueur {
 	//Ajoute une carte dans la main du joueur seulement si sa
 	//main n'est pas pleine
 	public boolean ajouterCarte( Carte c ) {
-		if( this.jeu.size()<Joueur.NB_CARTE_MAX && c != null) {
+		if( this.jeu.size()<Constantes.NB_CARTE_MAX && c != null) {
 			this.jeu.add( c );
 			return true;
 		}

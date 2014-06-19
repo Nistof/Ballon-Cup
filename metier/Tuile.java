@@ -8,6 +8,7 @@
 package BallonCup.metier;
 import java.util.*;
 import BallonCup.util.*;
+import BallonCup.Constantes;
 
 public class Tuile {
 	private ArrayList<Carte> gauche;
@@ -85,10 +86,10 @@ public class Tuile {
 	//Permet de changer le paysage de la tuile à la fin d'une
 	//manche sur celle-ci
 	public void changerPaysage() {
-		if ( paysage.equals( TYPES_PAYSAGE[0]))
-			paysage = TYPES_PAYSAGE[1];
+		if ( paysage.equals( Constantes.TYPES_PAYSAGE[0]))
+			paysage = Constantes.TYPES_PAYSAGE[1];
 		else
-			paysage = TYPES_PAYSAGE[0];
+			paysage = Constantes.TYPES_PAYSAGE[0];
 	}
 	
 	//Ajoute un Cube sur la Tuile seulement si
@@ -133,7 +134,7 @@ public class Tuile {
 				scoreJ2 += c.getValeur();
 			
 			//Si le paysage est une plaine
-			if ( paysage.equals( TYPES_PAYSAGE[0])) {
+			if ( paysage.equals( Constantes.TYPES_PAYSAGE[0])) {
 				if ( scoreJ1 < scoreJ2 )
 					coteG = 'G';
 				else if ( scoreJ1 > scoreJ2 )

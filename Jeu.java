@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
 
-
 public class Jeu {
 	private Ihm ihm;
 
@@ -55,7 +54,7 @@ public class Jeu {
 		trophees = new ArrayList<Trophee>();
 
 		for(Integer i : TROPHEES)
-			trophees.add( new Trophee(Couleur.getCouleur(TROPHEES[0]-i), i)); // Maximum - celui en cours
+			trophees.add( new Trophee(Couleur.getCouleur(Constantes.TROPHEES[0]-i), i)); // Maximum - celui en cours
 
 		initialiserPiocheCartes( Jeu.chargerFichierCartes());
 		initialiserPiocheCubes( NB_CUBES);
@@ -71,7 +70,7 @@ public class Jeu {
 		String fichier = "";
 		try {			
 			//Chargement du fichier
-			Scanner sc = new Scanner( new File( FICHIER_CARTES));
+			Scanner sc = new Scanner( new File( Constantes.FICHIER_CARTES));
 			if ( sc.hasNext())
 				fichier = sc.nextLine();
 			sc.close();
@@ -82,11 +81,11 @@ public class Jeu {
 	
 	//Methode qui initialise les tuiles dans un etat initial (Debut de jeu normal)
 	private void initialiserTuiles() {
-		for ( int i = 0; i < NB_TUILE; i++)
+		for ( int i = 0; i < Constantes.NB_TUILE; i++)
 			if ( i%2 == 0)
-				tuiles.add(new Tuile( i+1, Tuile.TYPES_PAYSAGE[0]));
+				tuiles.add(new Tuile( i+1, Constantes.TYPES_PAYSAGE[0]));
 			else
-				tuiles.add(new Tuile( i+1, Tuile.TYPES_PAYSAGE[1]));
+				tuiles.add(new Tuile( i+1, Constantes.TYPES_PAYSAGE[1]));
 	}
 	
 	//Renvoie une liste de cartes en fonction d'une chaine donnee
@@ -123,9 +122,9 @@ public class Jeu {
 	// Cubes:   Premier caractere de la couleur suivi du nombre de cube entre 1 et 4
 	// Exemple: R10V04:PLAINE:G04J02:R1V2J1
 	private boolean initialiserTuiles( String[] etatTuiles ) {
-		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
-		for ( int i = 0; i < NB_TUILE; i++)
-			if ( etatTuiles[i].matches("([RJVBG](0[1-9]|0[1-3]))*:" + Tuile.TYPES_PAYSAGE[0] + "|" + Tuile.TYPES_PAYSAGE[1] +
+		if( etatTuiles.length != Constantes.NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
+		for ( int i = 0; i < Constantes.NB_TUILE; i++)
+			if ( etatTuiles[i].matches("([RJVBG](0[1-9]|0[1-3]))*:" + Constantes.TYPES_PAYSAGE[0] + "|" + Constantes.TYPES_PAYSAGE[1] +
 									   ":([RJVBG](0[1-9]|0[1-3]))*:([RJVBG][0-9])*") ) {
 				initialiserTuiles();
 				System.out.println("Hoy!1");
@@ -279,7 +278,7 @@ public class Jeu {
 	
 	//Les joueurs recuperent chacun 8 cartes
 	private void initialiserJoueurs() {
-		for ( int i = 0; i < Joueur.NB_CARTE_MAX; i++){
+		for ( int i = 0; i < Constantes.NB_CARTE_MAX; i++){
 			joueurs[0].ajouterCarte( piocheCartes.piocher());
 			joueurs[1].ajouterCarte( piocheCartes.piocher());
 		}
@@ -395,7 +394,7 @@ public class Jeu {
 	}
 
 	public boolean echangePossible () {
-		if(!(trophees.size() < TROPHEES.length))
+		if(!(trophees.size() < Constantes.TROPHEES.length))
 			return false;
 		for(Couleur c : joueurs[dernierJoueur].getCubesCouleurs()) 
 			if(!(trophees.contains(c)))
