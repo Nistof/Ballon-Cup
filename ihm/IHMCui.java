@@ -17,31 +17,16 @@ public class IHMCui implements Ihm {
 		this.lancerIHM();
 	}
 
-	public void afficher(String msg) {
-		System.out.println(msg);
-	}
-
-	public String recuperer () {
+	public void afficherTuiles () {
 		String s = "";
-		try {
-			Scanner sc = new Scanner(System.in);
-			s = sc.nextLine();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return s;
-	}
-
-	public String toString() {
-		String s="";
-		String s2 = "";
-		
 		for( int i=0; i< jeu.getNbTuiles() ; i++ )
-			s += jeu.afficheTuile(i) + "\n\n";
-		
+			s += jeu.afficheTuile(i) + "\n\n";	
 		s += "------------------------------------------------------\n";
-		
+		System.out.println(s);
+	}	
+
+	public void afficherJoueur () {
+		String s = ""i,s2 ="";
 		for ( int i = 0; i < jeu.getNbJoueurs(); i++) {
 			s2 = "";
 			for ( int j = 0; j < jeu.getNbCartesJoueur(i); j++)
@@ -52,6 +37,10 @@ public class IHMCui implements Ihm {
 				 TexteUtil.centrer("Cubes  : " + jeu.getCubesJoueur (i)   , 55) + "\n" +
 				 TexteUtil.centrer("Trophees:" + jeu.getTropheesJoueur (i) , 55) + "\n\n";
 		}
+		System.out.println(s);	
+	}
+
+	public String toString() 	
 		
 		return s;
 	}
