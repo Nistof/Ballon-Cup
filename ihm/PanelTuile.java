@@ -35,24 +35,32 @@ public class PanelTuile extends JPanel {
 			this.gauche[i] = new JLabel();
 			p1.add( this.gauche[i] );
 		}
-		gauche.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		this.add( gauche, BorderLayout.WEST );
+		p1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		this.add( p1, BorderLayout.WEST );
 		
 
 
 		// Paysage avec les cubes
 		JPanel p2 = new JPanel();
-		JPanel p3 = new JPanel(new GrodLayout(1,4));
+		JPanel p3 = new JPanel(new GridLayout(1,4));
 		this.paysage = new JLabel();
 		this.cubes = new JLabel[nb];
 		for( int i=0; i<this.cubes.length; i++ ) {
-			this.cubes[i] = new 
+			this.cubes[i] = new JLabel();
+			p3.add( this.cubes[i] );
 		}
+		p2.add( this.paysage );
+		p2.add( p3, BorderLayout.SOUTH );
 		
 
-		// Cartes de droite	
-		JPanel droite = new JPanel(new GridLayout(1,4));
-		this.add( droite, BorderLayout.EAST );	
+		// Cartes de droite
+		JPanel p4 = new JPanel(new GridLayout(1,4));
+		this.droite = new JLabel(nb);
+		for( int i=0; i<droite.length; i++ ) {
+			this.droite[i] = new JLabel();
+			p4.add( this.droite[i] );
+		}
+		this.add( p4, BorderLayout.EAST );	
 	}
 
 	public void ajouterImage(char objet, Image i) {
