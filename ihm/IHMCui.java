@@ -8,13 +8,13 @@
 package BallonCup.ihm;
 import BallonCup.Jeu;
 import BallonCup.util.*;
+import java.util.*;
 
 public class IHMCui implements Ihm {
 	private Jeu jeu;
 
 	public IHMCui (Jeu jeu) {
 		this.jeu = jeu;
-		this.lancerIHM();
 	}
 
 	public void afficherTuiles () {
@@ -25,8 +25,8 @@ public class IHMCui implements Ihm {
 		System.out.println(s);
 	}	
 
-	public void afficherJoueur () {
-		String s = ""i,s2 ="";
+	public void afficherJoueurs () {
+		String s = "",s2 ="";
 		for ( int i = 0; i < jeu.getNbJoueurs(); i++) {
 			s2 = "";
 			for ( int j = 0; j < jeu.getNbCartesJoueur(i); j++)
@@ -63,9 +63,9 @@ public class IHMCui implements Ihm {
 	}
 
 	public String toString() 	
-		
 		return s;
 	}
+
 	
 	public static void main (String[] a) {
 		IHMCui ihm = new IHMCui(new Jeu());

@@ -40,6 +40,7 @@ public class Jeu {
 			if(!placerCubes(i))
 				i--;
 		ihm = new IHMCui(this);
+		lancerJeu();
 	}
 	
 	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
@@ -346,12 +347,14 @@ public class Jeu {
 					coteGagnant = -1;
 					break;
 			}
-			t.oterCubes(joueurs[coteGagnant]);
-			t.oterCartes(defausse);
-			placerCubes(t.getNombre()-1);
-			dernierJoueur = coteGagnant;
-			t.changerPaysage();
-			return t.getNombre();
+			if(coteGagnant != -1) {
+				t.oterCubes(joueurs[coteGagnant]);
+				t.oterCartes(defausse);
+				placerCubes(t.getNombre()-1);
+				dernierJoueur = coteGagnant;
+				t.changerPaysage();
+				return t.getNombre();
+			}
 		}
 		return 0;
 	}
@@ -428,19 +431,19 @@ public class Jeu {
 
 	public void lancerJeu () {
 		while(continuer()) {
-			ihm.afficherTuile();
+			ihm.afficherTuiles();
 			
 			//Defausse
-			if( !j.peutJouer() ) ihm.demanderDefausse();
-			if( !j.peutJouer() ) changerJoueur();
+			if( !peutJouer() ) ihm.demanderDefausse();
+			if( !peutJouer() ) changerJoueur();
 			
 			//Jouer une carte
-			ihm.afficherJoueur( dernierJoueur);
+			ihm.afficherJoueurs( );
 			compterTuiles();
 			distribuerTrophee();
 			
 			//Echange
-			if( j.echangePossible() ) ihm.demanderEchange();
+			if( echangePossible() ) ihm.demanderEchange();
 			changerJoueur();
 		}
 	}
