@@ -43,5 +43,4 @@ public class IHMCui {
 		IHMCui ihm = new IHMCui(new Jeu());
 		System.out.println(ihm);
 	}
-
 }
