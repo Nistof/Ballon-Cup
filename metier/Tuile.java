@@ -114,7 +114,7 @@ public class Tuile {
 		for(Carte d : droite)
 			if(d.getCouleur().equals(c))
 				carteCouleur++;
-		return (cubeCouleur==carteCouleur)?false:true;
+		return (cubeCouleur*2==carteCouleur)?false:true;
 	}
 
 	
@@ -140,9 +140,9 @@ public class Tuile {
 				else if ( scoreJ1 > scoreJ2 )
 					coteG = 'D';
 			} else { //Si c'est une montagne
-				if ( scoreJ1 < scoreJ2 )
+				if ( scoreJ1 > scoreJ2 )
 					coteG = 'G';
-				else if ( scoreJ1 > scoreJ2 )
+				else if ( scoreJ1 < scoreJ2 )
 					coteG = 'D';
 			}
 		}

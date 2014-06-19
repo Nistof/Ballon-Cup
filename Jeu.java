@@ -353,6 +353,7 @@ public class Jeu {
 				t.oterCartes(defausse);
 				placerCubes(t.getNombre()-1);
 				dernierJoueur = coteGagnant;
+				t.changerPaysage();
 			}
 		}
 		return s;
@@ -399,20 +400,38 @@ public class Jeu {
 	}
 
 	public boolean echangePossible () {
-		if(trophees.size() < TROPHEES.length)
+		if(!(trophees.size() < TROPHEES.length))
 			return false;
 		for(Couleur c : joueurs[dernierJoueur].getCubesCouleurs()) 
-			if(!trophees.contains(c))
+			if(!(trophees.contains(c)))
 				return true;
 		return false;
 	}
 
-	public void echanger (Couleur c, Couleur c2) {
+	public boolean echanger (Couleur c, Couleur c2) {
+		if ( c.equals(c2))
+			return false;
+			
 		if(joueurs[dernierJoueur].getCubesCouleurs().contains(c)) {
 			if(joueurs[dernierJoueur].getNbCubes(c) > 3) {
-				joueurs[dernierJoueur].retirerCubes(c, 3);	
+				ArrayList<Cube> alTemp = new ArrayList<Cube>();
+				boolean trouve = false;
+				for(int i = 0 ; !piocheCubes.estVide() && !trouve ; i++) {
+					alTemp.add(piocheCubes.piocher());
+					if(alTemp.get(i).getCouleur().equals(c2))
+						trouve = !trouve;
+				}
+				if(trouve) {
+					joueurs[dernierJoueur].ajouterCube(alTemp.remove(alTemp.size()-1));
+					joueurs[dernierJoueur].retirerCubes(c, 3);
+				}
+				piocheCubes.ajouter(alTemp);
+				if(!trouve)
+					return false;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public static void main (String[] a) {
@@ -463,6 +482,7 @@ public class Jeu {
 				char cote;
 				int carte , tuile, nbCarteDefausse;
 
+				//Défausse
 				if( !j.peutJouer() ) {
 					do {
 						System.out.print( "Combien de carte voulez vous defaussez : " );
@@ -491,6 +511,7 @@ public class Jeu {
 				if( !j.peutJouer() )
 					j.changerJoueur();	
 				
+				//Jouer une carte
 				do {
 					System.out.println(j.getNomJoueur() + " : Jouez une carte");
 					do {
@@ -504,20 +525,31 @@ public class Jeu {
 					}while(tuile < 1 || tuile > j.getNbTuile());
 					sc.nextLine();
 					do {
-						System.out.println("Choisissez le cote ou vous voulez jouer : ");
+						System.out.println("Choisissez le cote ou vous voulez jouer : ()");
 						cote = Character.toUpperCase( sc.nextLine().charAt(0) );
 					}while(cote != 'D' && cote != 'G');
 				}while(!j.jouerCarte( cote, carte-1, tuile-1));
 				System.out.println(j.compterTuiles());
 				j.distribuerTrophee();
 			
+				//Echange
 				if( j.echangePossible() ) {
-					// A gerer
-					
-					
-					
+					do {
+						System.out.println("Echanger des cubes? (O/N) ");
+						choix = sc.nextLine().toUpperCase();
+					} while( choix.charAt(0) != 'O' && choix.charAt(0) != 'N' );
+					if ( choix.charAt(0) == 'O' ) {
+						Couleur c1, c2;
+						do {
+							System.out.println("Couleur à échanger (R J V B G) : ");
+							choix = sc.nextLine().toUpperCase();
+							c1 = Couleur.getCouleur( choix.charAt( 0));
+							System.out.println("Couleur voulue (R J V B G) : ");
+							choix = sc.nextLine().toUpperCase();
+							c2 = Couleur.getCouleur( choix.charAt( 0));
+						} while( !j.echanger( c1, c2) );
+					}
 				}
-		
 				j.changerJoueur();	
 			}
 			
