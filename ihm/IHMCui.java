@@ -89,7 +89,31 @@ public class IHMCui implements Ihm {
 		}
 	}
 
-	public void demanderEchange ( ){}
+	public void demanderEchange ( ) {
+		try {
+			Scanner sc = new Scanner(System.in);
+			String choix;
+			do {
+				System.out.println("Echanger des cubes? (O/N) ");
+				choix = sc.nextLine().toUpperCase();
+			} while( choix.charAt(0) != 'O' && choix.charAt(0) != 'N' );
+			if ( choix.charAt(0) == 'O' ) {
+				Couleur c1, c2;
+				do {
+					System.out.println("Couleur à échanger (R J V B G) : ");
+					choix = sc.nextLine().toUpperCase();
+					c1 = Couleur.getCouleur( choix.charAt( 0));
+					System.out.println("Couleur voulue (R J V B G) : ");
+					choix = sc.nextLine().toUpperCase();
+					c2 = Couleur.getCouleur( choix.charAt( 0));
+				} while( !jeu.echanger( c1, c2) );
+			}
+		}
+		catch(Exception e) {
+
+		}
+		
+	}
 
 	public void demanderDefausse () {
 		try {
