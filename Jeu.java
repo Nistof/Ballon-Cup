@@ -441,6 +441,12 @@ public class Jeu {
 		}
 		return false;
 	}
+
+	public void lancerJeu () {
+		while(continuer()) {
+				
+		}
+	}
 	
 	public String getNomJoueur (int i) { return joueurs[i].getNom();}
 	public String getMainJoueur (int i) { return joueurs[i].afficherMain (); }

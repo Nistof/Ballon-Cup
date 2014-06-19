@@ -14,6 +14,11 @@ public class IHMCui {
 
 	public IHMCui (Jeu jeu) {
 		this.jeu = jeu;
+		this.lancerIHM();
+	}
+
+	public void afficher(String msg) {
+		System.out.println(msg);
 	}
 
 	public String toString() {
