@@ -28,6 +28,10 @@ public class Jeu {
 	private Pioche<Cube>       piocheCubes  ;
 	private Defausse           defausse     ;
 	private ArrayList<Trophee> trophees     ;
+
+	private int				   carte;
+	private int				   tuile;
+	private char			   cote;
 	private int                dernierJoueur;
 
 
@@ -438,6 +442,11 @@ public class Jeu {
 			
 			//Jouer une carte
 			ihm.afficherJoueurs( );
+			do {
+				ihm.demanderCarte();
+				ihm.demanderTuile();
+				ihm.demanderCote();
+			}while(jouerCarte(cote, carte, tuile));
 			compterTuiles();
 			distribuerTrophee();
 			
@@ -455,6 +464,15 @@ public class Jeu {
 				break;
 			case 'D':
 				enleverCarteMain(n);
+				break;
+			case 'C':
+				carte = n;
+				break;
+			case 'T':
+				tuile = n;
+				break;
+			case 'S':
+				cote = (char)n;
 				break;
 		}
 	}

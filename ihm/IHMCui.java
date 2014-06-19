@@ -41,7 +41,56 @@ public class IHMCui implements Ihm {
 		System.out.println(s);	
 	}
 
-	public void demandeDefausse () {
+
+	public void demanderCarte   ( ){
+		try {
+			Scanner sc = new Scanner(System.in);
+			int indiceCarte;
+			do {
+				System.out.println("Entrez l'index de la carte : ");
+				indiceCarte = sc.nextInt();
+			} while (indiceCarte < 0 && indiceCarte > 8);
+			jeu.action('C', indiceCarte);
+		}
+		catch(Exception e) {
+
+		}
+	}
+
+	public void demanderTuile ( ){
+		try {
+			Scanner sc = new Scanner(System.in);
+			int indiceTuile;
+			do {
+				System.out.println("Entrez l'index de la tuile : ");
+				indiceTuile = sc.nextInt();
+				sc.nextLine();
+			} while (indiceTuile < 0 && indiceTuile > 4);
+			jeu.action('T', indiceTuile);
+		}
+		catch(Exception e) {
+
+		}
+	}
+
+	public void demanderCote ( ){
+		try {
+			Scanner sc = new Scanner(System.in);
+			char cote;
+			do {
+				System.out.println("Entrez l'index de la tuile : ");
+				cote = sc.nextLine().toUpperCase().charAt(0);
+			} while ( cote != 'G' && cote != 'D');
+			jeu.action('S', (int)cote);
+		}
+		catch(Exception e) {
+
+		}
+	}
+
+	public void demanderEchange ( ){}
+
+	public void demanderDefausse () {
 		try {
 			Scanner sc = new Scanner (System.in);
 			int nb, indice;

@@ -13,5 +13,6 @@ public interface Ihm {
 	public void demanderDefausse ( );
 	public void demanderCarte   ( );
 	public void demanderTuile   ( );
+	public void demanderCote   ( );
 	public void demanderEchange ( );
 }
