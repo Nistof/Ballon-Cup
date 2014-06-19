@@ -10,7 +10,6 @@ import java.util.*;
 import BallonCup.util.*;
 
 public class Tuile {
-	public  final static String[] TYPES_PAYSAGE = {"PLAINE","MONTAGNE"};
 	private ArrayList<Carte> gauche;
 	private ArrayList<Carte> droite;
 	private ArrayList<Cube>  cubes ;

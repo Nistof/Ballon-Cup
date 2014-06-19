@@ -21,16 +21,6 @@ import java.util.ArrayList;
 
 
 public class Jeu {
-	public final static int    NB_TUILE       = 4;
-
-	public final static String FICHIER_CARTES = "ressources/cartes";
-	
-	//Nombre de cubes de chaque couleur { ROUGE, JAUNE, VERT, BLEU, GRIS}
-	public final static int[]    NB_CUBES       = { 13, 11, 9, 7, 5 };
-	
-	//Valeurs des cartes trophee
-	private final static int[] TROPHEES  =  {7, 6, 5, 4, 3};
-
 	private Ihm ihm;
 
 	private ArrayList<Tuile>   tuiles       ;
@@ -40,7 +30,7 @@ public class Jeu {
 	private Defausse           defausse     ;
 	private ArrayList<Trophee> trophees     ;
 	private int                dernierJoueur;
-	
+
 
 	public Jeu () {		
 		this("Joueur Gauche", "Joueur Droite", new String[0], new String[0]);

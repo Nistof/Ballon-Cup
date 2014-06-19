@@ -11,10 +11,7 @@ package BallonCup.metier;
 import java.util.ArrayList;
 import BallonCup.util.Couleur;
 
-public class Joueur {
-	public final static int NB_CARTE_MAX       = 8;
-	public final static int NB_TROPHE_VICTOIRE = 3;
-	
+public class Joueur {	
 	private ArrayList<Carte>  jeu  ;
 	private ArrayList<Cube>   cubes;	
 	private ArrayList<Trophee> trophees;
