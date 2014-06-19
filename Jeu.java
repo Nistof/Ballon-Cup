@@ -171,7 +171,7 @@ public class Jeu {
 				cote = (j == 0?'G': 'D');
 				listeC = (j == 0?creerCartes( chTuiles[0]): creerCartes( chTuiles[2]));
 				trouve = 0;
-				while ( !listeC.isEmpty() && trouve != 2) {
+				while ( !listeC.isEmpty()) {
 					Carte tmp = piocheCartes.piocher();
 					if ( listeC.get(0).equals( tmp)) {
 						tuiles.get(i).ajouterCarte(cote, tmp);
@@ -183,6 +183,10 @@ public class Jeu {
 					if ( piocheCartes.estVide()) {
 						piocheCartes.ajouter( defausse.transferer());
 						trouve++;
+					}
+					if ( trouve == 2) {
+						listeC.remove(0);
+						trouve = 0;
 					}
 				}
 			}
@@ -200,7 +204,7 @@ public class Jeu {
 		if( etatJoueurs.length != 2 ) { initialiserJoueurs(); return (etatJoueurs.length==0); }
 		
 		for ( int i = 0; i < 2; i++)
-			if ( !etatJoueurs[i].matches("([RJVBG][0-9])*:([RJVBG](0[1-9]|0[1-3]))*:[RJVBG]*")) {
+			if ( !etatJoueurs[i].matches("([RJVBG][0-9])*:([RJVBG](0[1-9]|1[0-3]))*:[RJVBG]*")) {
 				initialiserJoueurs();
 				return false;
 			}
@@ -215,10 +219,20 @@ public class Jeu {
 			// 1 : Cartes
 			// 2 : Trophées
 			String[] chJoueur = etatJoueurs[i].split(":");
+
+			//Ajout des Trophées
+			while( chJoueur[2].length() != 0) {
+				for ( int j = 0; j < trophees.size(); j++)
+					if ( trophees.get(j).getCouleur().equals( Couleur.getCouleur( chJoueur[2].charAt(0))) ) {
+						joueurs[i].ajouterTrophee( trophees.get(j));
+						trophees.remove(j);						
+					}
+				chJoueur[2] = chJoueur[2].substring(1);
+			}
 			
 			// Ajout des cubes
 			p = Pattern.compile( "[RVBGJ][1-9]" );
-			m = p.matcher( chJoueur[0] );
+			m = p.matcher( chJoueur[0] );	
 			
 			int nbCube=0;
 			String cube = "";
@@ -236,7 +250,7 @@ public class Jeu {
 			//Ajout des cartes
 			listeC = creerCartes( chJoueur[1]);
 			trouve = 0;
-			while ( !listeC.isEmpty() && trouve != 2) {
+			while ( !listeC.isEmpty()) {
 				Carte tmp = piocheCartes.piocher();
 				if ( listeC.get(0).equals( tmp)) {
 					joueurs[i].ajouterCarte( tmp);
@@ -249,17 +263,11 @@ public class Jeu {
 					piocheCartes.ajouter( defausse.transferer());
 					trouve++;
 				}
-			}
-			
-			//Ajout des Trophées
-			while( chJoueur[2].length() != 0) {
-				for ( int j = 0; j < trophees.size(); j++)
-					if ( trophees.get(j).getCouleur().equals( Couleur.getCouleur( chJoueur[2].charAt(0))) ) {
-						joueurs[i].ajouterTrophee( trophees.get(j));
-						trophees.remove(j);						
-					}
-				chJoueur[2] = chJoueur[2].substring(1);
-			}
+				if ( trouve == 2) {
+					listeC.remove(0);
+					trouve = 0;
+				}
+			}		
 		}
 		return true;
 	}
