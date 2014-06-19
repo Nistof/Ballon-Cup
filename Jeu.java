@@ -127,6 +127,13 @@ public class Jeu {
 	// Exemple: R10V04:PLAINE:G04J02:R1V2J1
 	private boolean initialiserTuiles( String[] etatTuiles ) {
 		if( etatTuiles.length != NB_TUILE ) { initialiserTuiles(); return (etatTuiles.length==0); }
+		for ( int i = 0; i < NB_TUILE; i++)
+			if ( etatTuiles[i].matches("([RJVBG](0[1-9])|(0[1-3]))*:" + Tuile.TYPES_PAYSAGE[0] + "|" + Tuile.TYPES_PAYSAGE[1] +
+									   ":([RJVBG](0[1-9])|(0[1-3]))*:([RJVBG][0-9])*") ) {
+				initialiserTuiles();
+				return false;
+			}
+		
 		int trouve;
 		ArrayList<Carte> listeC;
 		char cote;
@@ -188,8 +195,13 @@ public class Jeu {
 	//   "  " 1 = joueur 2
 	// Chaine: Cubes:Cartes:Trophée
 	// Exemple: R6J5:J06R13G05:RG
-	public void initialiserJoueurs( String[] etatJoueurs ) {
-		if( etatJoueurs.length != 2 ) initialiserJoueurs();
+	public boolean initialiserJoueurs( String[] etatJoueurs ) {	
+		if( etatJoueurs.length != 2 ) { initialiserJoueurs(); return (etatJoueurs.length==0); }
+		for ( int i = 0; i < 2; i++)
+			if ( !etatJoueurs[i].matches("([RJVBG][0-9])*:([RJVBG](0[1-9])|(0[1-3]))*:[RJVBG]*")) {
+				initialiserJoueurs();
+				return false;
+			}
 		
 		Pattern p;
 		Matcher m;
@@ -246,6 +258,7 @@ public class Jeu {
 						chJoueur[2] = chJoueur[2].substring(1);
 					}
 		}
+		return true;
 	}
 
 	
@@ -475,7 +488,7 @@ public class Jeu {
 					etatTuile[i] = sc.nextLine();
 				}
 				
-				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03:RG" );
+				System.out.println( "\nExemple pour initialiser un Joueur => R6J5:J06R13G05:RG" );
 				for( int i=0; i<2; i++ ) {
 					System.out.print( "Initialiser le joueur " + (i+1) + " : " );
 					etatJoueur[i] = sc.nextLine();
