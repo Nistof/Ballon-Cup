@@ -488,7 +488,7 @@ public class Jeu {
 					etatTuile[i] = sc.nextLine();
 				}
 				
-				System.out.println( "\nExemple pour initialiser un Joueur => R6J5:J06R13G05:RG" );
+				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03:RG" );
 				for( int i=0; i<2; i++ ) {
 					System.out.print( "Initialiser le joueur " + (i+1) + " : " );
 					etatJoueur[i] = sc.nextLine();
