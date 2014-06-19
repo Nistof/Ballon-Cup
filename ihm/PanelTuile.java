@@ -30,6 +30,7 @@ public class PanelTuile extends JPanel implements MouseListener {
 	private JLayeredPane paysage;
 	private Panel        cubes  ;
 	private Tuile        tuile  ;
+	private char         cote   ;
 
 	public PanelTuile (Tuile tuile) {
 		this.setLayout(new GridLayout(1,3));
@@ -42,6 +43,9 @@ public class PanelTuile extends JPanel implements MouseListener {
 		gauche.setPreferredSize(new Dimension( CARTE_LARGEUR*tuile.getNombre(), CARTE_HAUTEUR+25));
 		droite.setPreferredSize(new Dimension( CARTE_LARGEUR*tuile.getNombre(), CARTE_HAUTEUR+25));				
 		paysage.setPreferredSize(new Dimension( TUILE_LARGEUR, TUILE_HAUTEUR));
+		
+		gauche.addMouseListener(this);
+		droite.addMouseListener(this);
 		
    		actualiser();
    		
@@ -101,39 +105,41 @@ public class PanelTuile extends JPanel implements MouseListener {
 		paysage.add( p, new Integer(1));
 	}
 
-	public void mouseClicked (MouseEvent e) {
-		//this.gauche[0].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	public void mouseClicked (MouseEvent e) {	
+		if ( e.getSource() == gauche && cote != 'G') {
+			this.gauche.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			this.droite.setBorder(null);
+			cote = 'G';
+		} else if ( e.getSource() == droite && cote != 'D') {
+			this.droite.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			this.gauche.setBorder(null);
+			cote = 'D';
+		}
 	}
 	
 	public void mouseExited (MouseEvent e) {
-		//this.gauche[0].setBorder(null);
+		if ( cote == 'G') {
+			this.droite.setBorder(null);
+		} else if ( cote == 'D' ) {
+			this.gauche.setBorder(null);
+		} else {
+			this.droite.setBorder(null);
+			this.gauche.setBorder(null);
+		}
 	}
 	
 	public void mouseEntered (MouseEvent e) {
-		//this.gauche[0].setBorder(BorderFactory.createLineBorder(Color.PINK));	
+		if ( e.getSource() == gauche && cote != 'G')
+			this.gauche.setBorder(BorderFactory.createLineBorder(Color.PINK));
+		else if ( e.getSource() == droite && cote != 'D')
+			this.droite.setBorder(BorderFactory.createLineBorder(Color.PINK));
 	}
 	
 	public void mouseReleased (MouseEvent e) {}
 	public void mousePressed (MouseEvent e) {}
-
-	public void ajouterImage(char objet, Image i) {
-		switch(Character.toUpperCase(objet)) {
-			case 'G':
-			
-			
-				break;
-			case 'D':
-			
-			
-				break;
-			case 'C':
-			
-			
-				break;
-		}
-		
-		
-	}
+	
+	public char getCote() { return this.cote; }
+	public void deselectionner() { cote = null; }
 	
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();
