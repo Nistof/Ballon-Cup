@@ -26,5 +26,14 @@ public class Defausse extends Tas<Carte> {
 	private void vider () {
 		getAlE().clear();
 	}
+	
+	public String toString() {
+		String s="Defausse :\n";
+		
+		for( Carte c : super.getAlE() )
+			s += "\t" + c + "\n";
+			
+		return s;
+	}
 
 }
