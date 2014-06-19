@@ -21,6 +21,18 @@ public class IHMCui {
 		System.out.println(msg);
 	}
 
+	public String recuperer () {
+		String s = "";
+		try {
+			Scanner sc = new Scanner(System.in);
+			s = sc.nextLine();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return s;
+	}
+
 	public String toString() {
 		String s="";
 		String s2 = "";
