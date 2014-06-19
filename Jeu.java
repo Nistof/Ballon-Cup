@@ -294,6 +294,13 @@ public class Jeu {
 		return false;
 	}
 	
+	public void transfertCartes () {
+		if(piocheCartes.estVide()) {
+			piocheCartes.ajouter(defausse.transferer());
+			piocheCartes.melanger();
+		}
+	}
+	
 	public void enleverTuiles (int index) {
 		this.tuiles.remove(index);
 	}
@@ -466,7 +473,7 @@ public class Jeu {
 					etatTuile[i] = sc.nextLine();
 				}
 				
-				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03" );
+				System.out.println( "\nExemple pour initialiser un Joueur => R4V2:R10V04J13G04B13J06J01B03:RG" );
 				for( int i=0; i<2; i++ ) {
 					System.out.print( "Initialiser le joueur " + (i+1) + " : " );
 					etatJoueur[i] = sc.nextLine();
@@ -501,11 +508,14 @@ public class Jeu {
 						carte = Integer.parseInt( choix );
 						
 						j.enleverCarteMain(	carte );
+						System.out.println(j);
 					}
 					
 					// Pioche des cartes
 					for( int i=0; i<nbCarteDefausse; i++ )
 						j.ajouterCarteMain();
+						
+					System.out.println(j);
 				}
 				
 				if( !j.peutJouer() )
@@ -550,7 +560,8 @@ public class Jeu {
 						} while( !j.echanger( c1, c2) );
 					}
 				}
-				j.changerJoueur();	
+				j.changerJoueur();
+				j.transfertCartes();
 			}
 			
 			sc.close();
