@@ -366,20 +366,14 @@ public class Jeu {
 		return 0;
 	}
 	
-	public boolean enleverCarteMain( int i ) {
-		if( i<=8 && i>=1 ) {
-			this.defausse.ajouter( joueurs[dernierJoueur].retirerCarte(i-1) );
-			return true;			
-		}
-		return false;
+	public void enleverCarteMain( int i ) {
+		if( i<=8 && i>=1 )
+			this.defausse.ajouter( joueurs[dernierJoueur].retirerCarte(i-1) );			
 	}
 	
-	public boolean ajouterCarteMain() {
+	public void ajouterCarteMain() {
 		transfertCartes();
-		if( this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() ) )	
-			return true;
-			
-		return false;
+		this.joueurs[dernierJoueur].ajouterCarte( this.piocheCartes.piocher() );
 	} 
 
 	public String  getNomJoueur () {
@@ -458,6 +452,18 @@ public class Jeu {
 			//Echange
 			if( j.echangePossible() ) ihm.demanderEchange();
 			changerJoueur();
+		}
+	}
+
+	public void action (char c, int n) {
+		switch(c) {
+			case 'P':
+				for(int i = 0 ; i < n ; i++)
+						ajouterCarteMain();
+				break;
+			case 'D':
+				enleverCarteMain(n);
+				break;
 		}
 	}
 	

@@ -40,6 +40,28 @@ public class IHMCui implements Ihm {
 		System.out.println(s);	
 	}
 
+	public void demandeDefausse () {
+		try {
+			Scanner sc = new Scanner (System.in);
+			int nb, indice;
+			do {
+				System.out.print("Combien de cartes voulez vous defaussez : ");
+				nb = sc.nextInt();
+			}while(nb < 1 && nb > 4);
+			for(int i = 0 ; i < nb ; i++) {
+				do {
+					System.out.println("Donnez l'indice de la carte n°" + (i+1) + " : ");
+					indice = sc.nextInt();
+				}while(indice < 1 && indice > Jeu.NB_CARTE_MAX);
+				jeu.action('D', indice);
+			}
+			jeu.action('P', nb);
+		}
+		catch(Exception e {
+
+		}
+	}
+
 	public String toString() 	
 		
 		return s;
