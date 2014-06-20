@@ -22,6 +22,7 @@ public class PanelTuile extends JPanel implements MouseListener {
 	private Tuile        tuile  ;
 	private char         cote   ;
 	private int          nombre ;
+	private boolean      select ;
 
 	public PanelTuile ( int nombre) {
 		this.setLayout(new GridLayout(1,3));
@@ -30,6 +31,7 @@ public class PanelTuile extends JPanel implements MouseListener {
 		this.gauche = new JLayeredPane();
 		this.droite = new JLayeredPane();
 		this.paysage = new JLayeredPane();
+		this.select = false;
 		
 		gauche.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*nombre, 
 											   Constantes.CARTE_HAUTEUR+25));
@@ -122,11 +124,11 @@ public class PanelTuile extends JPanel implements MouseListener {
 	}
 
 	public void mouseClicked (MouseEvent e) {	
-		if ( e.getSource() == gauche && cote != 'G') {
+		if ( select && e.getSource() == gauche && cote != 'G') {
 			this.gauche.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			this.droite.setBorder(null);
 			cote = 'G';
-		} else if ( e.getSource() == droite && cote != 'D') {
+		} else if ( select && e.getSource() == droite && cote != 'D') {
 			this.droite.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			this.gauche.setBorder(null);
 			cote = 'D';
@@ -134,9 +136,9 @@ public class PanelTuile extends JPanel implements MouseListener {
 	}
 	
 	public void mouseExited (MouseEvent e) {
-		if ( cote == 'G') {
+		if ( select && cote == 'G') {
 			this.droite.setBorder(null);
-		} else if ( cote == 'D' ) {
+		} else if ( select && cote == 'D' ) {
 			this.gauche.setBorder(null);
 		} else {
 			this.droite.setBorder(null);
@@ -145,7 +147,7 @@ public class PanelTuile extends JPanel implements MouseListener {
 	}
 	
 	public void mouseEntered (MouseEvent e) {
-		if ( e.getSource() == gauche && cote != 'G')
+		if ( select && e.getSource() == gauche && cote != 'G')
 			this.gauche.setBorder(BorderFactory.createLineBorder(Color.PINK));
 		else if ( e.getSource() == droite && cote != 'D')
 			this.droite.setBorder(BorderFactory.createLineBorder(Color.PINK));
@@ -155,7 +157,12 @@ public class PanelTuile extends JPanel implements MouseListener {
 	public void mousePressed (MouseEvent e) {}
 	
 	public char getCote() { return this.cote; }
-	public void deselectionner() { cote = ' '; }
+	public void setSelectionable ( boolean b) { this.select = b; }
+	public void deselectionner() {
+		cote = ' ';
+		this.droite.setBorder(null);
+		this.gauche.setBorder(null);
+	}
 	
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();
