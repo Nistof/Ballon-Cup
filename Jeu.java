@@ -494,6 +494,23 @@ public class Jeu {
 	public int getNbCartesJoueur (int i ) { return this.joueurs[i].getNbCarte(); }
 	public void enleverTuiles (int index) { this.tuiles.remove(index); }
 
+	public String getCartesTuile(int index, char cote) {
+		String s = "";
+		ArrayList<Carte> alTemp = ((cote=='G')?tuiles.get(index).getGauche():tuiles.get(index).getDroite());
+		for(Carte c : alTemp) {
+			s += c.getValeur() + c.getCouleur().name() + ":";
+		}
+		return s;
+	}
+	
+	public String getCubesTuile(int index) {
+		String s = "";
+		for(Cube c : tuiles.get(index).getCubes()) {
+			s+= c.getCouleur().name() + ":";
+		}
+		return s;
+	}
+
 	public static void main (String[] a) {
 		new Jeu();
 	}
