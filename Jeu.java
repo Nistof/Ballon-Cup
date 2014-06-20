@@ -42,8 +42,6 @@ public class Jeu {
 		for ( int i = 0; i < tuiles.size(); i++) 
 			if(!placerCubes(i))
 				i--;
-		
-		
 	}
 	
 	public Jeu ( char ihm, String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
@@ -56,7 +54,7 @@ public class Jeu {
 		defausse = new Defausse();
 		
 		trophees = new ArrayList<Trophee>();
-
+		
 		for(Integer i : Constantes.TROPHEES)
 			trophees.add( new Trophee(Couleur.getCouleur(Constantes.TROPHEES[0]-i), i)); // Maximum - celui en cours
 
@@ -71,7 +69,7 @@ public class Jeu {
 		if ( ihm == 'C')
 			this.ihm = new IHMCui(this);
 		else
-			this.ihm = new IHMCui(this);
+			this.ihm = new IHMGui(this);
 		lancerJeu();
 	}
 	
@@ -96,6 +94,8 @@ public class Jeu {
 				tuiles.add(new Tuile( i+1, Constantes.TYPES_PAYSAGE[0]));
 			else
 				tuiles.add(new Tuile( i+1, Constantes.TYPES_PAYSAGE[1]));
+		for ( int i = 0; i < Constantes.NB_TUILE; i++)
+			placerCubes(i);
 	}
 	
 	//Renvoie une liste de cartes en fonction d'une chaine donnee
@@ -444,8 +444,10 @@ public class Jeu {
 			
 			ihm.afficherJoueurs( );
 			//Defausse
-			if( !peutJouer() ) ihm.demanderDefausse();
-			if( !peutJouer() ) changerJoueur();
+			do {
+				if( !peutJouer() ) ihm.demanderDefausse();
+				if( !peutJouer() ) changerJoueur();
+			} while ( !peutJouer() );
 			
 			//Jouer une carte
 			do {
@@ -508,6 +510,6 @@ public class Jeu {
 	public String getCodeTropheesJoueur(int i) { return joueurs[i].getTrophees();}
 
 	public static void main (String[] a) {
-		new Jeu('C');
+		new Jeu('G');
 	}
 }
