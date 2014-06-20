@@ -487,7 +487,7 @@ public class Jeu {
 	public String getTropheesJoueur (int i) { return joueurs[i].afficherTrophees (); }
 	
 	public String afficheTuile (int i) { return tuiles.get(i).toString(); }
-
+	public String getPaysageTuile (int index) { return tuiles.get(index).getPaysage();}
 
 	public int getNbTuiles () { return this.tuiles.size(); }
 	public int getNbJoueurs () { return this.joueurs.length;}

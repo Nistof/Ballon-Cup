@@ -27,13 +27,15 @@ public class IHMGui extends JFrame implements Ihm{
 		pioche = new PanelPioche();
 		joueurs = new PanelJoueur[2];
 		for(int i = 0 ; i < tuiles.length ; i++) {
-			tuiles[i] = new PanelTuile(jeu.getCodeCartesTuile(i,'G'), jeu.getCodeCartesTuile(i,'D'), jeu.getCodeCubesTuile(i));
+			tuiles[i] = new PanelTuile(i+1);
+			tuiles[i].actualiser(jeu.getCodeCartesTuile(i,'G'), jeu.getCodeCartesTuile(i,'D'), jeu.getPaysageTuile(i), jeu.getCodeCubesTuile(i));
 			add(tuiles[i]);
 		}
 		JPanel bas = new JPanel(new BorderLayout());
-		for(int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new PanelJoueur(jeu.getCodeCartesJoueur(i), jeu.getCodeCubesJoueur(i), jeu.getCodeTropheesJoueur(i));
-		}
+		joueurs[0] = new PanelJoueur('G');
+		joueurs[1] = new PanelJoueur('D');
+		joueurs[0].actualiser(jeu.getCodeCartesJoueur(0), jeu.getCodeCubesJoueur(0), jeu.getCodeTropheesJoueur(0));
+		joueurs[1].actualiser(jeu.getCodeCartesJoueur(1), jeu.getCodeCubesJoueur(1), jeu.getCodeTropheesJoueur(1));
 		bas.add(joueurs[0],BorderLayout.WEST);
 		bas.add(joueurs[1],BorderLayout.EAST);
 		bas.add(pioche);
