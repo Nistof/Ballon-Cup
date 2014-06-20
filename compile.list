@@ -14,6 +14,7 @@ util/TexteUtil.java
 ihm/IHMCui.java
 ihm/IHMGui.java
 ihm/Ihm.java
+ihm/IHMGui.java
+ihm/PanelTuile.java
 ihm/PanelJoueur.java
 ihm/PanelPioche.java
-ihm/PanelTuile.java
