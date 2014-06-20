@@ -10,12 +10,11 @@ package BallonCup.ihm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import BallonCup.metier.*;
 import BallonCup.Constantes;
 import BallonCup.util.*;
 
 public class PanelJoueur extends JPanel {
-	private Joueur       joueur;
+	private char         cote;
 	private JLabel[]     cubes;
 	private JLabel[]     nbCubes;
 	private JLayeredPane cartes;
@@ -23,9 +22,9 @@ public class PanelJoueur extends JPanel {
 	
 	private JPanel       p;
 	
-	public PanelJoueur( Joueur joueur ) {
+	public PanelJoueur( char cote) {
+		this.cote = cote;
 		setLayout(new BorderLayout());
-		this.joueur = joueur;
 		
 		cubes   = new JLabel[5];
 		nbCubes = new JLabel[5];
@@ -38,43 +37,6 @@ public class PanelJoueur extends JPanel {
 		trophees.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR, 
 											    (Constantes.CARTE_HAUTEUR*Constantes.NB_TROPHE_VICTOIRE)/2+25));
 		
-		actualiser();
-		
-		add(p, BorderLayout.NORTH);
-		add(cartes);
-		if ( joueur.getCote() == 'G')
-			add(trophees, BorderLayout.WEST);
-		else
-			add(trophees, BorderLayout.EAST);
-	}
-	
-	public void actualiser() {
-		trophees.removeAll();
-		cartes.removeAll();
-		p.removeAll();
-	
-		//Main du joueur
-		int i = 0;
-		for(int j = 0; j < joueur.getNbCarte(); j++) {
-			if(joueur.getNomCarte(j) != null) {
-				ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + joueur.getNomCarte(j) + 
-												Constantes.FORMAT_IMG);
-											
-				Image img = icon.getImage();
-				img = img.getScaledInstance( Constantes.CARTE_LARGEUR, 
-											 Constantes.CARTE_HAUTEUR,
-											 java.awt.Image.SCALE_SMOOTH);
-										 
-				JLabel imgLab = new JLabel( new ImageIcon( img));
-				imgLab.setBounds(( Constantes.CARTE_LARGEUR/2)*i, -50, 
-							   icon.getIconWidth(), icon.getIconHeight());
-							   
-				cartes.add( imgLab, new Integer(j));
-				i++;
-			}
-		}
-		
-		// Cubes du joueur
 		for(Couleur c : Couleur.values()) {
 			this.cubes[c.ordinal()] = new JLabel( new ImageIcon(Constantes.CH_CUBES_IMG +  c.name() + 
 																Constantes.FORMAT_IMG) );
@@ -86,11 +48,60 @@ public class PanelJoueur extends JPanel {
 			p.add( nbCubes[j] );
 		}
 		
+		add(p, BorderLayout.NORTH);
+		add(cartes);
+		if ( cote == 'G')
+			add(trophees, BorderLayout.WEST);
+		else
+			add(trophees, BorderLayout.EAST);
+	}
+	
+	public void actualiser( String mainJ, String cubesJ, String trophee) {
+		trophees.removeAll();
+		cartes.removeAll();
+	
+		//Main du joueur
+		int i = 0;
+		String[] mTab = mainJ.split(":");
+		for( String s : mTab ) {
+			if ( s != "") {
+				ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + s + 
+												Constantes.FORMAT_IMG);
+											
+				Image img = icon.getImage();
+				img = img.getScaledInstance( Constantes.CARTE_LARGEUR, 
+											 Constantes.CARTE_HAUTEUR,
+											 java.awt.Image.SCALE_SMOOTH);
+										 
+				JLabel imgLab = new JLabel( new ImageIcon( img));
+				imgLab.setBounds(( Constantes.CARTE_LARGEUR/2)*i, -50, 
+							   icon.getIconWidth(), icon.getIconHeight());
+							   
+				cartes.add( imgLab, new Integer(i));
+				i++;
+			}
+		}
+		
+		// Cubes du joueur
+		String[] cTab = cubesJ.split(":");
+		for(Couleur c : Couleur.values()) {
+			nbCubes[c.ordinal()].setText( "0" );
+		}
+		for ( String s : cTab ) {
+			if ( s != "") {
+				int ind = Couleur.getCouleur( s).ordinal();
+				System.out.println(ind + "  " + (Integer.parseInt(this.nbCubes[ind].getText())+1));
+				this.nbCubes[ind].setText(""+(Integer.parseInt(this.nbCubes[ind].getText())+1));
+			}
+		}
+		
+		
 		//Trophées
 		i = 0;
-		for(int j = 0; j < joueur.getNbTrophee(); j++) {
-			if(joueur.getNomCarte(j) != null) {
-				ImageIcon icon = new ImageIcon( Constantes.CH_TROPHEES_IMG + joueur.getNomTrophee(j) + 
+		String[] tTab = trophee.split(":");
+		for( String s : tTab ) {
+			if( s != "") {
+				ImageIcon icon = new ImageIcon( Constantes.CH_TROPHEES_IMG + s + 
 												Constantes.FORMAT_IMG);
 														
 				Image img = icon.getImage();
@@ -102,7 +113,7 @@ public class PanelJoueur extends JPanel {
 				imgLab.setBounds( -50, (Constantes.CARTE_HAUTEUR/2)*i-50, 
 							      icon.getIconWidth(), icon.getIconHeight());
 							   
-				trophees.add( imgLab, new Integer(j));
+				trophees.add( imgLab, new Integer(i));
 				i++;
 			}
 		}
@@ -110,15 +121,9 @@ public class PanelJoueur extends JPanel {
 
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();
-		Joueur j = new Joueur("Thomas", 'G');
-		j.ajouterTrophee( new Trophee( Couleur.ROUGE, 7));
-		j.ajouterTrophee( new Trophee( Couleur.JAUNE, 6));
-		j.ajouterTrophee( new Trophee( Couleur.VERT , 5));
-		j.ajouterCube( new Cube (Couleur.ROUGE));
-		j.ajouterCarte(new Carte(Couleur.ROUGE, 13));
-		j.ajouterCarte(new Carte(Couleur.VERT , 13));
-		j.ajouterCarte(new Carte(Couleur.BLEU , 13));
-		f.add(new PanelJoueur(j) );
+		PanelJoueur pj = new PanelJoueur('G');
+		pj.actualiser("1ROUGE:13VERT:13BLEU:13GRIS","ROUGE:ROUGE:ROUGE", "ROUGE");
+		f.add( pj);
 		f.pack();
 		f.setVisible(true);
 	}
