@@ -496,7 +496,10 @@ public class Jeu {
 
 	public String getCartesTuile (int index, char cote) { return tuiles.get(index).getCartes( cote); }
 	public String getCubesTuile (int index) { return tuiles.get(index).getCubes(); }
-	public String getTropheeJoueur() { return joueurs[dernierJoueur].getTrophee();}
+
+	public String getCartesJoueur(int i) { return joueurs[i].getCartes(); }
+	public String getCubesJoueur(int i) { return joueurs[i].getCubes(); }
+	public String getTropheeJoueur(int i) { return joueurs[i].getTrophee();}
 
 	public static void main (String[] a) {
 		new Jeu();

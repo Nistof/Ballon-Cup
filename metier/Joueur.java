@@ -138,12 +138,28 @@ public class Joueur {
 	
 	public String getNom() { return this.nom; }
 	public char getCote() { return this.cote; }
-	public String getTrophee () {
+
+	public String getTrophees () {
 		String s = "";
 		for(Trophee t : trophees)
 			s+= t.getCouleur().name() + ":";
 		return s;
 	}
+
+	public String getCartes () {
+		String s = "";
+		for(Carte c : jeu) 
+			s += c.getValeur() + c.getCouleur.name() + ":";
+		return s;
+	}
+
+	public String getCubes () {
+		String s = "";
+		for(Cube c : jeu) 
+			s += c.getCouleur.name() + ":";
+		return s;
+	}
+
 	public int  getNbCarte() { return this.jeu.size(); }
 	public int getNbCubes (Couleur c) {
 		int nb = 0;
