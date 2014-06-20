@@ -15,7 +15,7 @@ public class main {
 			String choix;
 			Scanner sc = new Scanner(System.in);
 			do {
-				System.out.print( "Jeu avec etat [N]ormal ou avec etat [I]nitialisé : " );
+				System.out.print( "Jeu avec etat [N]ormal ou avec etat [I]nitialise : " );
 				choix = sc.nextLine().toUpperCase();
 			} while( choix.charAt(0)!='N' && choix.charAt(0)!='I' );
 			
