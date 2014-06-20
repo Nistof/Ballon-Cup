@@ -23,7 +23,7 @@ public class IHMGui extends JFrame implements Ihm{
 	public IHMGui (Jeu jeu) {
 		setSize(1200,750);
 		setLayout(new GridLayout(5,1));
-		setSize(500,500);
+
 		this.jeu = jeu;
 		tuiles = new PanelTuile[Constantes.NB_TUILE];
 		pioche = new PanelPioche();
