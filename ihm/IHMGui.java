@@ -44,8 +44,15 @@ public class IHMGui extends JFrame implements Ihm{
 		setVisible(true);
 	}
 
-	public void afficherTuiles  ( ){}
-	public void afficherJoueurs  (){}
+	public void afficherTuiles  ( ){
+		for(int i = 0 ; i < tuiles.length ; i++) 
+			tuiles[i].actualiser(jeu.getCodeCartesTuile(i,'G'), jeu.getCodeCartesTuile(i,'D'), jeu.getPaysageTuile(i), jeu.getCodeCubesTuile(i));
+	}
+
+	public void afficherJoueurs  (){
+		for(int i = 0 ; i < joueurs.length ; i++)
+			joueurs[i].actualiser(jeu.getCodeCartesJoueur(i), jeu.getCodeCubesJoueur(i), jeu.getCodeTropheesJoueur(i));
+	}
 	public void demanderDefausse ( ){}
 	public void demanderCarte   ( ){}
 	public void demanderTuile   ( ){}

@@ -442,12 +442,12 @@ public class Jeu {
 		while(continuer()) {
 			ihm.afficherTuiles();
 			
+			ihm.afficherJoueurs( );
 			//Defausse
 			if( !peutJouer() ) ihm.demanderDefausse();
 			if( !peutJouer() ) changerJoueur();
 			
 			//Jouer une carte
-			ihm.afficherJoueurs( );
 			do {
 				ihm.demanderCarte();
 				ihm.demanderTuile();
