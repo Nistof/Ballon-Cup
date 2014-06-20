@@ -9,6 +9,7 @@ package BallonCup.ihm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import BallonCup.Constantes;
  
 public class PanelPioche extends JPanel {
 	
@@ -18,7 +19,7 @@ public class PanelPioche extends JPanel {
 	
 	public PanelPioche() {
 		this.setLayout( new GridLayout( 1, 2, 5, 0 ) );
-		this.dosCarte = new ImageIcon("../ressources/images/cartes/dosCarte.jpg");
+		this.dosCarte = new ImageIcon(Constantes.CH_DOS_IMG);
 		pioche = new JLabel( dosCarte );
 		defausse = new JLabel();
 	

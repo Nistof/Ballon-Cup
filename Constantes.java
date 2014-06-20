@@ -26,6 +26,7 @@ public class Constantes {
 	//Pour l'ihm GUI
 	//Constantes pour les chemins
 	public final static String CH_CARTES_IMG   = "ressources/images/cartes/carte_";
+	public final static String CH_DOS_IMG      = "ressources/images/cartes/dosCarte.jpg";
 	public final static String CH_TROPHEES_IMG = "ressources/images/cartesTrophee/carte_Trophe";
 	public final static String CH_TUILES_IMG   = "ressources/images/tuiles/tuile" ;
 	public final static String CH_CUBES_IMG    = "ressources/images/cubes/cube_"  ;
