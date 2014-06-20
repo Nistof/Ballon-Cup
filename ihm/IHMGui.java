@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class IHMGui extends JFrame implements Ihm{
+public class IHMGui extends JFrame implements Ihm {
 
 	private Jeu jeu;
 	private PanelTuile[] tuiles;
@@ -23,7 +23,6 @@ public class IHMGui extends JFrame implements Ihm{
 	public IHMGui (Jeu jeu) {
 		setSize(1200,750);
 		setLayout(new GridLayout(5,1));
-
 		this.jeu = jeu;
 		tuiles = new PanelTuile[Constantes.NB_TUILE];
 		pioche = new PanelPioche();
@@ -55,13 +54,17 @@ public class IHMGui extends JFrame implements Ihm{
 		for(int i = 0 ; i < joueurs.length ; i++)
 			joueurs[i].actualiser(jeu.getCodeCartesJoueur(i), jeu.getCodeCubesJoueur(i), jeu.getCodeTropheesJoueur(i));
 	}
+
 	public void demanderDefausse ( ){}
+
 	public void demanderCarte   ( ){
 		while(joueurs[jeu.getJoueur()].getCarte()==-1) {
-			
 		}
+		jeu.action('C',joueurs[jeu.getJoueur()].getCarte());
 	}
-	public void demanderTuile   ( ){}
+
+	public void demanderTuile   ( ){
+	}
 	public void demanderCote   ( ){}
 	public void demanderEchange ( ){}
 

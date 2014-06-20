@@ -26,7 +26,7 @@ public class PanelJoueur extends JPanel implements MouseListener {
 	public PanelJoueur( char cote) {
 		this.cote = cote;
 		setLayout(new BorderLayout());
-		
+		selection = -1;	
 		cubes   = new JLabel[5];
 		nbCubes = new JLabel[5];
 		cartesImages = new JLabel[8];
@@ -132,7 +132,7 @@ public class PanelJoueur extends JPanel implements MouseListener {
 	}
 
 	public void mouseClicked (MouseEvent e) {	
-		System.out.println(cartes.getIndexOf((Component)e.getSource()));
+		selection = cartes.getIndexOf((Component)e.getSource()) + 1;
 	}
 	
 	public void mouseExited (MouseEvent e) {
