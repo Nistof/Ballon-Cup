@@ -35,18 +35,18 @@ public class Jeu {
 	private int                dernierJoueur;
 
 
-	public Jeu () {		
-		this("Joueur Gauche", "Joueur Droite", new String[0], new String[0]);
+	public Jeu ( char ihm ) {		
+		this( ihm, "Joueur Gauche", "Joueur Droite", new String[0], new String[0]);
 		
 		//Placement des cubes sur les tuiles
 		for ( int i = 0; i < tuiles.size(); i++) 
 			if(!placerCubes(i))
 				i--;
-		ihm = new IHMCui(this);
-		lancerJeu();
+		
+		
 	}
 	
-	public Jeu ( String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
+	public Jeu ( char ihm, String nomJoueur1, String nomJoueur2, String[] etatTuiles, String[] etatJoueur) {
 		tuiles = new ArrayList<Tuile>();
 		joueurs = new Joueur[2];
 		joueurs[0] = new Joueur( nomJoueur1, 'G');
@@ -67,6 +67,12 @@ public class Jeu {
 		piocheCubes.melanger();
 		initialiserTuiles( etatTuiles);
 		initialiserJoueurs( etatJoueur);
+		
+		if ( ihm == 'C')
+			this.ihm = new IHMCui(this);
+		else
+			this.ihm = new IHMCui(this);
+		lancerJeu();
 	}
 	
 	private static String chargerFichierCartes() {
@@ -502,6 +508,6 @@ public class Jeu {
 	public String getCodeTropheesJoueur(int i) { return joueurs[i].getTrophees();}
 
 	public static void main (String[] a) {
-		new Jeu();
+		new Jeu('C');
 	}
 }

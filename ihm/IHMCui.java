@@ -138,7 +138,7 @@ public class IHMCui implements Ihm {
 	}
 	
 	public static void main (String[] a) {
-		IHMCui ihm = new IHMCui(new Jeu());
+		IHMCui ihm = new IHMCui(new Jeu('C'));
 		System.out.println(ihm);
 	}
 }

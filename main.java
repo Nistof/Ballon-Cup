@@ -11,6 +11,7 @@ import java.util.Scanner;
  
 public class main {
 	public static void main ( String[] args) {
+		char cIhm = 'C';
 		try {
 			String choix;
 			Scanner sc = new Scanner(System.in);
@@ -20,7 +21,7 @@ public class main {
 			} while( choix.charAt(0)!='N' && choix.charAt(0)!='I' );
 			
 			if( choix.charAt(0) == 'N' )
-				new Jeu();
+				new Jeu( cIhm );
 				
 			else {
 				String joueur1, joueur2;
@@ -45,7 +46,7 @@ public class main {
 					etatJoueur[i] = sc.nextLine();
 				}
 				
-				new Jeu( joueur1, joueur2, etatTuile, etatJoueur);
+				new Jeu( cIhm, joueur1, joueur2, etatTuile, etatJoueur);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
