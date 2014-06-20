@@ -5,8 +5,9 @@
  * Groupe I2
  */
 
-package ihm;
-import metier.*;
+package BallonCup.ihm;
+import BallonCup.metier.*;
+import BallonCup.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,6 +20,5 @@ public class IHMGui extends JFrame {
 
 	public IHMGui (Jeu jeu) {
 		this.jeu = jeu;
-		add
 	}
 }

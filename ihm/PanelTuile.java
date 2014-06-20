@@ -5,14 +5,14 @@
  * Groupe I2
  */
 
-package ihm;
+package BallonCup.ihm;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import BallonCup.metier.*;
 import BallonCup.Constantes;
-import util.Couleur;
+import BallonCup.util.Couleur;
 
 public class PanelTuile extends JPanel implements MouseListener {
 	private JLayeredPane gauche ;

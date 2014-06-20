@@ -12,4 +12,8 @@ util/Couleur.java
 util/FichierCartes.java
 util/TexteUtil.java
 ihm/IHMCui.java
+ihm/IHMGui.java
 ihm/Ihm.java
+ihm/PanelJoueur.java
+ihm/PanelPioche.java
+ihm/PanelTuile.java

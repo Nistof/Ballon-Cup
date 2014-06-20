@@ -5,14 +5,14 @@
  * Groupe I2
  */
 
-package ihm;
+package BallonCup.ihm;
 
-import util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import BallonCup.metier.*;
 import BallonCup.Constantes;
+import BallonCup.util.*;
 
 public class PanelJoueur extends JPanel {
 	private Joueur       joueur;
@@ -32,11 +32,11 @@ public class PanelJoueur extends JPanel {
 		p = new JPanel( new GridLayout( 1, 10 ) );
 		
 		cartes = new JLayeredPane();
-		cartes.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*Joueur.NB_CARTE_MAX, 
+		cartes.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*Constantes.NB_CARTE_MAX, 
 											   Constantes.CARTE_HAUTEUR+25));
 		trophees = new JLayeredPane();
 		trophees.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR, 
-											    (Constantes.CARTE_HAUTEUR*Joueur.NB_TROPHE_VICTOIRE)/2+25));
+											    (Constantes.CARTE_HAUTEUR*Constantes.NB_TROPHE_VICTOIRE)/2+25));
 		
 		actualiser();
 		
