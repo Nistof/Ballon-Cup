@@ -33,7 +33,7 @@ public class PanelJoueur extends JPanel implements MouseListener {
 		p = new JPanel( new GridLayout( 1, 10 ) );
 		
 		cartes = new JLayeredPane();
-		cartes.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*Constantes.NB_CARTE_MAX, 
+		cartes.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*(Constantes.NB_CARTE_MAX+1), 
 											   Constantes.CARTE_HAUTEUR+25));
 		trophees = new JLayeredPane();
 		trophees.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR, 
@@ -82,7 +82,7 @@ public class PanelJoueur extends JPanel implements MouseListener {
 											 java.awt.Image.SCALE_SMOOTH);
 										 
 				cartesImages[i].setIcon(new ImageIcon( img));
-				cartesImages[i].setBounds(( Constantes.CARTE_LARGEUR/2)*i, -50, 
+				cartesImages[i].setBounds(( Constantes.CARTE_LARGEUR/3)*i, -50, 
 							   icon.getIconWidth(), icon.getIconHeight());
 							   
 				cartes.add( cartesImages[i], new Integer(i));
@@ -118,7 +118,7 @@ public class PanelJoueur extends JPanel implements MouseListener {
 											 java.awt.Image.SCALE_SMOOTH);
 										 
 				JLabel imgLab = new JLabel( new ImageIcon( img));
-				imgLab.setBounds( -50, (Constantes.CARTE_HAUTEUR/2)*i-50, 
+				imgLab.setBounds( -50, (Constantes.CARTE_HAUTEUR/2)*i, 
 							      icon.getIconWidth(), icon.getIconHeight());
 							   
 				trophees.add( imgLab, new Integer(i));

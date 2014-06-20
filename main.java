@@ -11,7 +11,7 @@ import java.util.Scanner;
  
 public class main {
 	public static void main ( String[] args) {
-		char cIhm = 'C';
+		char cIhm = 'G';
 		try {
 			String choix;
 			Scanner sc = new Scanner(System.in);
