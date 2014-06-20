@@ -152,9 +152,28 @@ public class Tuile {
 	
 	public String getPaysage() { return this.paysage; }
 	public int    getNombre () { return this.nombre ; }
-	public ArrayList<Carte> getGauche () { return this.gauche ; }
+	/*public ArrayList<Carte> getGauche () { return this.gauche ; }
 	public ArrayList<Carte> getDroite () { return this.droite ; }
-	public ArrayList<Cube>  getCubes  () { return this.cubes  ; }
+	public ArrayList<Cube>  getCubes  () { return this.cubes  ; }*/
+
+
+	public String getCartes(char cote) {
+		String s = "";
+		for(Carte c : ((cote=='G')?gauche:droite)) {
+			s += c.getValeur() + c.getCouleur().name() + ":";
+		}
+		return s;
+	}
+	
+	public String getCubes() {
+		String s = "";
+		for(Cube c : cubes) {
+			s+= c.getCouleur().name() + ":";
+		}
+		return s;
+	}
+	
+	
 	
 	public String toString () {
 		String cubes   = TexteUtil.centrer( this.cubes.toString()            , 55 );

@@ -138,6 +138,12 @@ public class Joueur {
 	
 	public String getNom() { return this.nom; }
 	public char getCote() { return this.cote; }
+	public String getTrophee () {
+		String s = "";
+		for(Trophee t : trophees)
+			s+= t.getCouleur().name() + ":";
+		return s;
+	}
 	public int  getNbCarte() { return this.jeu.size(); }
 	public int getNbCubes (Couleur c) {
 		int nb = 0;

@@ -25,5 +25,10 @@ public class IHMGui extends JFrame {
 		tuiles = new PanelTuile[Constantes.NB_TUILE];
 		pioche = new PanelPioche();
 		joueurs = new PanelJoueur[2];
+		for(int i = 0 ; i < tuiles.length ; i++) {
+			tuiles[i] = new PanelTuile(jeu.getCartesTuile(i,'G'), jeu.getCartesTuile(i,'D'));
+		}
+
+
 	}
 }
