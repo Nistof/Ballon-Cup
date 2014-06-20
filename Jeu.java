@@ -488,6 +488,7 @@ public class Jeu {
 		}
 	}
 	
+	public int getJoueur () { return dernierJoueur; }
 	public String getNomJoueur (int i) { return joueurs[i].getNom();}
 	public String getNomJoueurCourant () { return joueurs[dernierJoueur].getNom();}
 	public String getMainJoueur (int i) { return joueurs[i].afficherMain (); }

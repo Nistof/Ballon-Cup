@@ -23,6 +23,7 @@ public class IHMGui extends JFrame implements Ihm{
 	public IHMGui (Jeu jeu) {
 		setSize(1200,750);
 		setLayout(new GridLayout(5,1));
+		setSize(500,500);
 		this.jeu = jeu;
 		tuiles = new PanelTuile[Constantes.NB_TUILE];
 		pioche = new PanelPioche();
@@ -55,7 +56,11 @@ public class IHMGui extends JFrame implements Ihm{
 			joueurs[i].actualiser(jeu.getCodeCartesJoueur(i), jeu.getCodeCubesJoueur(i), jeu.getCodeTropheesJoueur(i));
 	}
 	public void demanderDefausse ( ){}
-	public void demanderCarte   ( ){}
+	public void demanderCarte   ( ){
+		while(joueurs[jeu.getJoueur()].getCarte()==-1) {
+			
+		}
+	}
 	public void demanderTuile   ( ){}
 	public void demanderCote   ( ){}
 	public void demanderEchange ( ){}
