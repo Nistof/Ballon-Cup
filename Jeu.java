@@ -494,12 +494,12 @@ public class Jeu {
 	public int getNbCartesJoueur (int i ) { return this.joueurs[i].getNbCarte(); }
 	public void enleverTuiles (int index) { this.tuiles.remove(index); }
 
-	public String getCartesTuile (int index, char cote) { return tuiles.get(index).getCartes( cote); }
-	public String getCubesTuile (int index) { return tuiles.get(index).getCubes(); }
+	public String getCodeCartesTuile (int index, char cote) { return tuiles.get(index).getCartes( cote); }
+	public String getCodeCubesTuile (int index) { return tuiles.get(index).getCubes(); }
 
-	public String getCartesJoueur(int i) { return joueurs[i].getCartes(); }
-	public String getCubesJoueur(int i) { return joueurs[i].getCubes(); }
-	public String getTropheeJoueur(int i) { return joueurs[i].getTrophee();}
+	public String getCodeCartesJoueur(int i) { return joueurs[i].getCartes(); }
+	public String getCodeCubesJoueur(int i) { return joueurs[i].getCubes(); }
+	public String getCodeTropheesJoueur(int i) { return joueurs[i].getTrophees();}
 
 	public static void main (String[] a) {
 		new Jeu();

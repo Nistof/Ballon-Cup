@@ -149,14 +149,14 @@ public class Joueur {
 	public String getCartes () {
 		String s = "";
 		for(Carte c : jeu) 
-			s += c.getValeur() + c.getCouleur.name() + ":";
+			s += c.getValeur() + c.getCouleur().name() + ":";
 		return s;
 	}
 
 	public String getCubes () {
 		String s = "";
-		for(Cube c : jeu) 
-			s += c.getCouleur.name() + ":";
+		for(Cube c : cubes) 
+			s += c.getCouleur().name() + ":";
 		return s;
 	}
 

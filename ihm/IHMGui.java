@@ -21,18 +21,18 @@ public class IHMGui extends JFrame implements Ihm{
 	private PanelJoueur[] joueurs;
 
 	public IHMGui (Jeu jeu) {
-		setLayout(new GridLayput(5,1));
+		setLayout(new GridLayout(5,1));
 		this.jeu = jeu;
 		tuiles = new PanelTuile[Constantes.NB_TUILE];
 		pioche = new PanelPioche();
 		joueurs = new PanelJoueur[2];
 		for(int i = 0 ; i < tuiles.length ; i++) {
-			tuiles[i] = new PanelTuile(jeu.getCartesTuile(i,'G'), jeu.getCartesTuile(i,'D'));
+			tuiles[i] = new PanelTuile(jeu.getCodeCartesTuile(i,'G'), jeu.getCodeCartesTuile(i,'D'), jeu.getCodeCubesTuile(i));
 			add(tuiles[i]);
 		}
 		JPanel bas = new JPanel(new BorderLayout());
 		for(int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new PanelJoueur(jeu.getCartesJoueurs(i), jeu.getCubesJoueur(i), jeu.getTropheesJoueur(i));
+			joueurs[i] = new PanelJoueur(jeu.getCodeCartesJoueur(i), jeu.getCodeCubesJoueur(i), jeu.getCodeTropheesJoueur(i));
 		}
 		bas.add(joueurs[0],BorderLayout.WEST);
 		bas.add(joueurs[1],BorderLayout.EAST);
@@ -41,4 +41,13 @@ public class IHMGui extends JFrame implements Ihm{
 		setResizable(false);
 		setVisible(true);
 	}
+
+	public void afficherTuiles  ( ){}
+	public void afficherJoueurs  (){}
+	public void demanderDefausse ( ){}
+	public void demanderCarte   ( ){}
+	public void demanderTuile   ( ){}
+	public void demanderCote   ( ){}
+	public void demanderEchange ( ){}
+
 }
