@@ -13,8 +13,9 @@ import java.awt.event.*;
 import BallonCup.Constantes;
 import BallonCup.util.*;
 
-public class PanelJoueur extends JPanel {
+public class PanelJoueur extends JPanel implements MouseListener {
 	private char         cote;
+	private JLabel[]     cartesImages;
 	private JLabel[]     cubes;
 	private JLabel[]     nbCubes;
 	private JLayeredPane cartes;
@@ -28,6 +29,7 @@ public class PanelJoueur extends JPanel {
 		
 		cubes   = new JLabel[5];
 		nbCubes = new JLabel[5];
+		cartesImages = new JLabel[8];
 		p = new JPanel( new GridLayout( 1, 10 ) );
 		
 		cartes = new JLayeredPane();
@@ -43,6 +45,11 @@ public class PanelJoueur extends JPanel {
 			this.nbCubes[c.ordinal()] = new JLabel( "0" );
 		}
 		
+		for(int i = 0 ; i < cartesImages.length; i++) {
+			cartesImages[i] = new JLabel();
+			cartesImages[i].addMouseListener(this);
+		}
+
 		for( int j = 0; j < this.nbCubes.length; j++ ) {
 			p.add( cubes[j] );
 			p.add( nbCubes[j] );
@@ -54,6 +61,7 @@ public class PanelJoueur extends JPanel {
 			add(trophees, BorderLayout.WEST);
 		else
 			add(trophees, BorderLayout.EAST);
+
 	}
 	
 	public void actualiser( String mainJ, String cubesJ, String trophee) {
@@ -73,11 +81,11 @@ public class PanelJoueur extends JPanel {
 											 Constantes.CARTE_HAUTEUR,
 											 java.awt.Image.SCALE_SMOOTH);
 										 
-				JLabel imgLab = new JLabel( new ImageIcon( img));
-				imgLab.setBounds(( Constantes.CARTE_LARGEUR/2)*i, -50, 
+				cartesImages[i].setIcon(new ImageIcon( img));
+				cartesImages[i].setBounds(( Constantes.CARTE_LARGEUR/2)*i, -50, 
 							   icon.getIconWidth(), icon.getIconHeight());
 							   
-				cartes.add( imgLab, new Integer(i));
+				cartes.add( cartesImages[i], new Integer(i));
 				i++;
 			}
 		}
@@ -118,6 +126,18 @@ public class PanelJoueur extends JPanel {
 			}
 		}
 	}
+
+	public void mouseClicked (MouseEvent e) {	
+	}
+	
+	public void mouseExited (MouseEvent e) {
+	}
+	
+	public void mouseEntered (MouseEvent e) {
+	}
+	
+	public void mouseReleased (MouseEvent e) {}
+	public void mousePressed (MouseEvent e) {}
 
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();

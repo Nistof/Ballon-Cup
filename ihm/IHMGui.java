@@ -44,7 +44,7 @@ public class IHMGui extends JFrame implements Ihm{
 		setVisible(true);
 	}
 
-	public void afficherTuiles  ( ){
+	public void afficherTuiles  (){
 		for(int i = 0 ; i < tuiles.length ; i++) 
 			tuiles[i].actualiser(jeu.getCodeCartesTuile(i,'G'), jeu.getCodeCartesTuile(i,'D'), jeu.getPaysageTuile(i), jeu.getCodeCubesTuile(i));
 	}
