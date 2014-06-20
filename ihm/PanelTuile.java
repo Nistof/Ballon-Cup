@@ -21,42 +21,42 @@ public class PanelTuile extends JPanel implements MouseListener {
 	private Panel        cubes  ;
 	private Tuile        tuile  ;
 	private char         cote   ;
+	private int          nombre ;
 
-	public PanelTuile (Tuile tuile) {
+	public PanelTuile ( int nombre) {
 		this.setLayout(new GridLayout(1,3));
-		this.tuile = tuile;
+		this.nombre = nombre;
 
-		gauche = new JLayeredPane();
-		droite = new JLayeredPane();
-		paysage = new JLayeredPane();
+		this.gauche = new JLayeredPane();
+		this.droite = new JLayeredPane();
+		this.paysage = new JLayeredPane();
 		
-		gauche.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*tuile.getNombre(), 
+		gauche.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*nombre, 
 											   Constantes.CARTE_HAUTEUR+25));
-		droite.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*tuile.getNombre(), 
+		droite.setPreferredSize(new Dimension( Constantes.CARTE_LARGEUR*nombre, 
 											   Constantes.CARTE_HAUTEUR+25));				
 		paysage.setPreferredSize(new Dimension( Constantes.TUILE_LARGEUR, 
 												Constantes.TUILE_HAUTEUR));
 		
 		gauche.addMouseListener(this);
 		droite.addMouseListener(this);
-		
-   		actualiser();
    		
 		this.add(gauche);
 		this.add(paysage);
 		this.add(droite);
 	}
 
-	public void actualiser() {
-		gauche.removeAll();
-		droite.removeAll();
-		paysage.removeAll();
+	public void actualiser( String cartesG, String cartesD, String paysage, String cubes) {
+		this.gauche.removeAll();
+		this.droite.removeAll();
+		this.paysage.removeAll();
 		
 		//Affichage des cartes à gauche
 		int i = 0;
-		for (Carte c : tuile.getGauche()) {
-			ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + c.getValeur() +
-											c.getCouleur().name() + Constantes.FORMAT_IMG);
+		String[] cgTab = cartesG.split(":");
+		for (String s : cgTab) {
+			ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + s
+										  + Constantes.FORMAT_IMG);
 											
 			Image img = icon.getImage();
 			img = img.getScaledInstance( Constantes.CARTE_LARGEUR, 
@@ -73,9 +73,10 @@ public class PanelTuile extends JPanel implements MouseListener {
 		
 		//Affichage des cartes à droite
 		i = 0;
-		for (Carte c : tuile.getDroite()) {
-			ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + c.getValeur() +
-											c.getCouleur().name() + Constantes.FORMAT_IMG);
+		String[] cdTab = cartesD.split(":");
+		for (String s : cdTab) {
+			ImageIcon icon = new ImageIcon( Constantes.CH_CARTES_IMG + s
+										  + Constantes.FORMAT_IMG);
 											
 			Image img = icon.getImage();
 			img = img.getScaledInstance( Constantes.CARTE_LARGEUR, 
@@ -94,18 +95,19 @@ public class PanelTuile extends JPanel implements MouseListener {
 		JLayeredPane p = new JLayeredPane();
 		p.setPreferredSize( new Dimension( 100, 50));
 		p.setLayout( new FlowLayout());
-		for ( Cube c : tuile.getCubes()) {
-			JLabel imgLab = new JLabel( new ImageIcon( Constantes.CH_CUBES_IMG + c.getCouleur().name()
+		String[] cTab = cubes.split(":");
+		for ( String s : cTab ) {
+			JLabel imgLab = new JLabel( new ImageIcon( Constantes.CH_CUBES_IMG + s
 													   + Constantes.FORMAT_IMG));
 			p.add( imgLab);
 		}
 		p.setBounds( 60, 50, Constantes.TUILE_LARGEUR, Constantes.TUILE_HAUTEUR);
 		
 		//Affichage du paysage
-		String str = "" + Character.toUpperCase( tuile.getPaysage().charAt(0)) +
-				   tuile.getPaysage().substring(1).toLowerCase();
+		String str = "" + Character.toUpperCase( paysage.charAt(0)) +
+				   paysage.substring(1).toLowerCase();
 				   
-		ImageIcon icon = new ImageIcon( Constantes.CH_TUILES_IMG + tuile.getNombre() + 
+		ImageIcon icon = new ImageIcon( Constantes.CH_TUILES_IMG + nombre + 
 										str + Constantes.FORMAT_IMG);
 
 		Image img = icon.getImage();
@@ -115,8 +117,8 @@ public class PanelTuile extends JPanel implements MouseListener {
 									 
 		JLabel imgLab = new JLabel( new ImageIcon( img));
 		imgLab.setBounds( 0, -50, icon.getIconWidth(), icon.getIconHeight());
-		paysage.add( imgLab, new Integer(0));
-		paysage.add( p, new Integer(1));
+		this.paysage.add( imgLab, new Integer(0));
+		this.paysage.add( p, new Integer(1));
 	}
 
 	public void mouseClicked (MouseEvent e) {	
@@ -158,21 +160,8 @@ public class PanelTuile extends JPanel implements MouseListener {
 	public static void main( String[] args ) {
 		JFrame f = new JFrame();
 		f.setTitle( "Test PanelTuile" );
-		Tuile t = new Tuile(4,"PLAINE");
-		t.ajouterCube( new Cube( Couleur.ROUGE));
-		t.ajouterCube( new Cube( Couleur.VERT));
-		t.ajouterCube( new Cube( Couleur.JAUNE));
-		t.ajouterCube( new Cube( Couleur.BLEU));
-		t.ajouterCube( new Cube( Couleur.ROUGE));
-		t.ajouterCube( new Cube( Couleur.VERT));
-		t.ajouterCube( new Cube( Couleur.JAUNE));
-		t.ajouterCarte('G', new Carte( Couleur.ROUGE, 5));
-		t.ajouterCarte('G', new Carte( Couleur.VERT,  1));
-		t.ajouterCarte('G', new Carte( Couleur.JAUNE, 1));
-		t.ajouterCarte('D', new Carte( Couleur.ROUGE, 6));
-		t.ajouterCarte('D', new Carte( Couleur.VERT,  2));
-		t.ajouterCarte('D', new Carte( Couleur.BLEU,  1));
-		PanelTuile pt = new PanelTuile( t );
+		PanelTuile pt = new PanelTuile( 2 );
+		pt.actualiser("13ROUGE","1ROUGE","MONTAGNE","ROUGE");
 		f.add( pt);
 		f.pack();
 		f.setVisible(true);
